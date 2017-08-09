@@ -133,11 +133,9 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    controller: 'SendDagsController',
-                    controllerAs: 'vm',
                     views: {
                         main: {
-                            templateUrl: 'views/send.html',
+                            templateUrl: 'controllers/send/send.template.html',
                         },
                     },
                 })

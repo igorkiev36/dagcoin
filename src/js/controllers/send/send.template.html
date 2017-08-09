@@ -1,6 +1,6 @@
 <dag-nav-bar state-title="Send Dagcoins"></dag-nav-bar>
 
-<div ng-controller="SendDagsController as home">
+<div ng-controller="SendDagsController as vm">
 
     <div id="send" class="send scrollable">
 
@@ -15,49 +15,36 @@
             </div>
         </div>
 
-        <div class="row m20t text-center" ng-show="home.current_payment_key">
-            <div class="columns large-12 medium-12 small-12">
-                <div class="spinner">
-                    <div class="rect1"></div>
-                    <div class="rect2"></div>
-                    <div class="rect3"></div>
-                    <div class="rect4"></div>
-                    <div class="rect5"></div>
-                </div>
-            </div>
-        </div>
+
         <div class="p-share js-introduction content">
             <div class="p-wrap">
-                <form class="page-form" name="sendForm" ng-submit="home.submitForm()"
-                      ng-disabled="home.blockUx || home.onGoingProcess" novalidate>
-                    <div class="box-notification" ng-show="home.error" ng-click="home.resetError()">
+
+                <form class="page-form" name="sendForm" ng-submit="vm.submitForm()"
+                      ng-disabled="vm.blockUx || vm.onGoingProcess" novalidate>
+                    <div class="box-notification" ng-show="vm.error" ng-click="vm.resetError()">
 					  <span class="text-warning">
-						{{home.error|translate}}
+						{{vm.error|translate}}
 					  </span>
                     </div>
                     <div class="form-group">
 
-                        <div class="title clearfix"><span class="name">Receiver</span>
+                        <div class="title clearfix">
+                            <span class="name">Receiver</span>
                             <div class="left" ng-hide="sendForm.address.$pristine ">
-									<span class="has-error right size-12"
-                                          ng-show="sendForm.address.$invalid && _address">
-								<i class="icon-close-circle size-14"></i>
-								<span class="vm" translate>Not valid</span>
-							</span>
-                                <small class="right text-primary" ng-show="!sendForm.address.$invalid">
-                                    <i class="icon-checkmark-circle size-14"></i>
-                                </small>
+                                <span class="has-error right size-12" ng-show="sendForm.address.$invalid && _address">
+                                    <i class="icon-close-circle size-14"></i>
+                                    <span class="vm" translate>Not valid</span>
+                                </span>
                             </div>
-
                         </div>
 
                         <div class="input-wrap">
-                            <input class="m0" type="text" id="address"
-                                   name="address"
-                                   ng-attr-placeholder="{{home.canSendExternalPayment() ? 'DAG address' : 'DAG address of your other wallet &#8594;'}}"
-                                   ng-model="_address" valid-address required
-                                   ng-blur="home.formFocus(false)">
+                            <input type="text" name="address" ng-attr-placeholder="{{vm.canSendExternalPayment() ? 'DAG address' : 'DAG address of your other wallet &#8594;'}}"
+                                   ng-model="_address" readonly="true" ng-click="vm.findReceiver()" valid-address required
+                                   ng-blur="vm.formFocus(false)">
 
+                            <qr-scanner ng-show="index.isComplete" on-scan="index.onQrCodeScanned(data)"
+                                        before-scan="index.onBeforeScan()"></qr-scanner>
                         </div>
 
 
@@ -76,12 +63,12 @@
                         </div>
 
                         <div class="input-wrap input-icon">
-                            <input type="number" id="amount" ng-disabled="home.blockUx || home.lockAmount"
+                            <input type="number" id="amount" ng-disabled="vm.blockUx || vm.lockAmount"
                                    name="amount" ng-attr-placeholder="{{'Amount'|translate}}" min="0.00000001"
                                    ng-minlength="0.00000001" ng-maxlength="10000000000" ng-model="_amount"
-                                   ng-required="!home.bSendAll"
-                                   autocomplete="off" ng-focus="home.formFocus('amount')"
-                                   ng-blur="home.formFocus(false)">
+                                   ng-required="!vm.bSendAll"
+                                   autocomplete="off" ng-focus="vm.formFocus('amount')"
+                                   ng-blur="vm.formFocus(false)">
 
 
                             <svg class="icon icon-d">
@@ -95,10 +82,7 @@
 
                 </form>
                 <div class="page-action">
-                    <qr-scanner ng-show="index.isComplete" on-scan="index.onQrCodeScanned(data)"
-                                before-scan="index.onBeforeScan()"></qr-scanner>
-                    <a href="#" class="btn btn_red-full" ng-click="home.submitForm()">Send</a>
-
+                    <a href="#" class="btn btn_red-full" ng-click="vm.submitForm()">Send</a>
                 </div>
             </div>
 
@@ -108,3 +92,4 @@
 </div>
 <div class="extra-margin-bottom"></div>
 <dag-bottom-bar></dag-bottom-bar>
+
