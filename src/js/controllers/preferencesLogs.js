@@ -18,10 +18,8 @@
           null, // CC: must be null or an array
           null, // BCC: must be null or an array
           null, // FILES: can be null, a string, or an array
-          () => {
-          },
-          () => {
-          }
+          () => {},
+          () => {}
         );
       };
     });

@@ -1,0 +1,39 @@
+@import "../../../css/variables";
+
+.send{
+
+  .content{
+    padding-top: 0;
+    top: 130px;
+  }
+
+  .content_hero{
+    padding: 20px 30px;
+  }
+
+  .send_available_balance{
+    color: #fff;
+    text-shadow: 1px 1px 1px darken($main_color, 10);
+
+
+    .send_available_balance_title{
+      opacity: 0.6;
+      font-size: 12px;
+    }
+
+    >div{
+      margin-top: 5px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    svg{
+      fill: #fff;
+      position: relative;
+      margin-right: -6px;
+      top: -1px;
+      height: 16px;
+      width: 16px;
+    }
+  }
+}

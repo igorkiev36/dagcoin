@@ -20,9 +20,9 @@
         f: '&',
       },
       link: ($scope, element) => {
-        element.bind('scroll', function () {
-          document.getElementsByClassName('topbar-container')[0].style.backgroundColor = `rgba(255,255,255,${this.scrollTop > 40 ? 1 : this.scrollTop / 40})`;
-        });
+        /*element.bind('scroll', function () {
+          document.getElementsByClassName('navbar-container')[0].style.backgroundColor = `rgba(255,255,255,${this.scrollTop > 40 ? 1 : this.scrollTop / 40})`;
+        });*/
       },
     };
   }

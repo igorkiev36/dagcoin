@@ -1,3 +1,12 @@
+$main_color: #e51e25;
+//$main_color: #3296dc;
+
+
+@mixin gradientBackground($colorFrom, $colorTo, $directionStart, $directionEnd){
+  background: linear-gradient(to $directionEnd, $colorFrom 0%,$colorTo 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$colorFrom, endColorstr=$colorTo,GradientType=0 );
+}
+
 @font-face {
   font-family: "Roboto";
   src: url("../font/Roboto-Thin.ttf") format("truetype");

@@ -1,0 +1,14 @@
+<div class="navbar-wrap">
+    <table>
+        <tbody>
+        <tr>
+            <td ng-repeat="link in links">
+                <a ui-sref-active="active" ui-sref="{{link.state}}" id="menu-{{link.state}}">
+                    <svg-icon name="{{link.icon}}"></svg-icon>
+                    <span>{{link.title}}</span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

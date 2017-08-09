@@ -1,0 +1,16 @@
+@import "../../../css/variables";
+
+.contacts{
+  margin: 10px;
+  background: #fff;
+
+  .contacts_list{
+    margin: 10px 0;
+    h4{
+      padding: 3px 10px;
+      font-size: 14px;
+      background: linear-gradient(to right, rgba(246,246,246,1) 0%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f6f6f6", endColorstr="#00ffffff",GradientType=1 );
+    }
+  }
+}

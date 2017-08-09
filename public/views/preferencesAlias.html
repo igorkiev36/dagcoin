@@ -1,8 +1,5 @@
-<div
-	class="topbar-container topbar-transparent"
-	ng-include="'views/includes/topbar.html'"
-	ng-init="titleSection='Wallet Alias'; goBackToState = 'preferences'">
-</div>
+<dag-nav-bar state-title="Wallet Alias" back-state="preferences"></dag-nav-bar>
+
 <div class="introduction-svg" ng-include="'views/includes/background.html'"></div>
 <div class="content" ng-controller="preferencesAliasController as prefAlias">
 	<div class="p-share js-introduction">

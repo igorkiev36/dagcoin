@@ -1,12 +1,14 @@
 <div class="navbar-wrap">
-    <ul>
-        <li ng-repeat="item in index.menu">
-            <a ui-sref="{{item.state}}" id="menu-{{item.state}}">
-                <svg class="icon {{item.icon}}">
-                    <use xlink:href="{{index.getSvgSrc(item.icon)}}"></use>
-                </svg>
-                <span>{{ item.title|translate }}</span>
-            </a>
-        </li>
-    </ul>
+    <table>
+        <tbody>
+        <tr>
+            <td ng-repeat="item in index.menu">
+                <a ui-sref-active="active" ui-sref="{{item.state}}" id="menu-{{item.state}}">
+                    <svg-icon name="{{item.icon}}"></svg-icon>
+                    <span>{{item.title}}</span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

@@ -1,0 +1,14 @@
+<div class="navbar-container">
+    <div class="navbar-container-triggers">
+        <div class="navbar-container-back-trigger" ng-if="showBack">
+            <a onclick="history.back()">
+                <svg-icon name="chevron-left"></svg-icon>
+                <span>Back</span>
+            </a>
+        </div>
+        <span ng-if="!showBack" ng-click="openLeftMenu()">
+            <svg-icon name="menu2"></svg-icon>
+        </span>
+    </div>
+    <div class="navbar-container-title">{{title || stateTitle}}</div>
+</div>

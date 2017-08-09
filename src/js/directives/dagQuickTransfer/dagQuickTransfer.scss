@@ -1,0 +1,69 @@
+@import "../../../css/variables";
+$background: #f5f3f3;
+
+.quick_transfer_list{
+  background: $background;
+  padding: 20px;
+  position: relative;
+
+  .quick_transfer_list_title{
+    font-size: 14px;
+    text-transform: uppercase;
+    color: darken($background, 15);
+    margin-bottom: 10px;
+  }
+
+  .quick_transfer_link_to_find_contact{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: $main_color;
+
+    svg{
+      fill: $main_color;
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
+  }
+
+  ul{
+    margin: 0;
+
+    li{
+      background: darken($background, 3);
+      padding: 10px;
+      border-radius: 5px;
+      display: inline-block;
+      color: #73767b;
+      margin-right: 10px;
+
+      .quick_transfer_list_avatar{
+        height: 60px;
+        width: 70px;
+        padding: 5px;
+        text-align: center;
+
+        .quick_transfer_list_avatar_image{
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 50px;
+          border-radius: 100%;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+      }
+
+      .quick_transfer_list_full_name{
+        font-size: 12px;
+        padding: 0 5px;
+        width: 70px;
+        text-align: center;
+        line-height: 14px;
+        margin-top: 10px;
+      }
+    }
+  }
+}

@@ -9,6 +9,9 @@ module.exports = (config) => {
       'src/js/app.js',
       'src/js/directives/svgIcon/svgIcon.directive.js',
       'src/js/directives/svgIcon/svgIcon.spec.js',
+
+      'src/js/services/exchangeRate/exchangeRate.service.js',
+      'src/js/services/exchangeRate/exchangeRate.spec.js',
       'public/views/**/*.html',
     ],
 

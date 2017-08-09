@@ -1,0 +1,25 @@
+<dag-nav-bar title="About Dagcoin" invert go-back></dag-nav-bar>
+
+<div class="content preferences" ng-controller="preferencesAbout as about">
+    <h4 translate>Release Information</h4>
+    <div ng-controller="versionController as v">
+        <ul class="no-bullet m0">
+            <li ng-conf class="no_arrow">
+                <span translate>Version</span>
+                <span class="right text-gray">v{{v.version}} Beta</span>
+            </li>
+        </ul>
+    </div>
+
+    <h4></h4>
+    <ul class="no-bullet m0">
+        <li ui-sref="disclaimer">
+            <span translate>Terms of Use</span>
+        </li>
+
+        <li ng-conf ui-sref="logs">
+            <span translate>Session log</span>
+        </li>
+    </ul>
+
+</div>

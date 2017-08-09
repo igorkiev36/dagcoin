@@ -38,7 +38,7 @@
 
         function renderSVG() {
           if ($templateCache.get(svgFile)) {
-            element.html($templateCache.get(svgFile)).addClass(`icon-${$scope.name}`);
+            element.html($templateCache.get(svgFile)).addClass(`svg-icon-${$scope.name}`);
           } else {
             loadTemplate();
           }

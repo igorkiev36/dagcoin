@@ -609,7 +609,7 @@
         Object.defineProperty($scope,
           '_address', {
             get() {
-              return $scope.__address;
+              return $scope.__address || '';
             },
             set(newValue) {
               $scope.__address = self.onAddressChange(newValue);
@@ -1139,7 +1139,7 @@
         $scope.currentSpendUnconfirmed = configService.getSync().wallet.spendUnconfirmed;
 
         this._amount = null;
-        this._address = null;
+        this._address = '';
         this.bSendAll = false;
 
         const form = $scope.sendForm;

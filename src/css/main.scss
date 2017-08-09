@@ -30,6 +30,13 @@ h1, h2, h3, h4, h5, h6 {
   color: #2c3e50;
 }
 
+svg-icon{
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
 .panel {
   background: #fff;
   border-radius: 3px;
@@ -129,16 +136,7 @@ h4 {
   }
 }
 
-
 .preferences {
-  background: #f1f3f5;
-
-  li {
-    cursor: pointer !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
 
   form {
     background: #fff;
@@ -151,22 +149,67 @@ h4 {
   }
 
   h4 {
-    background: #f1f3f5;
-    padding: 25px 0 5px 20px;
-    text-transform: uppercase;
-    color: #555;
-    font-size: 12px;
-    font-weight: 300;
-    margin: 0;
+    padding: 0 20px;
+    color: #a5b1bd;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 30px 0 5px;
   }
 
   ul {
     font-size: 14px;
-    background: #fff;
+    margin: 5px 20px;
+    box-shadow: 0 0 5px 1px rgba(80,80,80,0.1);
 
     li {
       padding: 13px 20px;
       border-bottom: 1px solid #e9e9ec;
+      background: #fff;
+      cursor: pointer !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #494d50;
+      position: relative;
+
+      &.left_icon{
+        padding-left: 44px;
+      }
+
+      &:not(.no_arrow){
+        &:after{
+          position: absolute;
+          right: 20px;
+          top: 50%;
+          content: ">";
+          color: #8597a7;
+          font-weight: 400;
+          font-size: 20px;
+          margin-top: -16px;
+        }
+      }
+
+      a{
+        color: #494d50;
+        display: block;
+      }
+
+      &:last-child{
+        border-bottom: none;
+      }
+
+      svg-icon{
+        position: absolute;
+        fill: #a7b4bc;
+        left: 15px;
+        top: 50%;
+        margin-top: -8px;
+
+        svg{
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
   }
 }
@@ -348,7 +391,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, inpu
 }
 
 .main {
-  background-color: #fff;
+  background-color: #fafafa;
   padding: 0 0 58px;
   position: relative;
 }
@@ -363,6 +406,10 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, inpu
   &.disclaimer {
     top: 0;
   }
+}
+
+.content_hero{
+  @include gradientBackground($main_color, darken($main_color, 10), top, bottom);
 }
 
 .box-setup-footer {
@@ -853,22 +900,6 @@ ul.manage li {
   font: normal 400 normal 18px "foundation-icons";
 }
 
-.sidebar {
-  li {
-    &.nav-item {
-      &.selected {
-        .name-wallet {
-          color: #fff;
-
-          i {
-            color: #b6e9df;
-          }
-        }
-      }
-    }
-  }
-}
-
 .locked {
   font-size: 11px;
   color: #7a8c9e;
@@ -1020,6 +1051,10 @@ button, .button {
 
   &.radius {
     border-radius: 3px;
+  }
+
+  &:hover {
+    background: darken($main_color, 5);
   }
 }
 
@@ -1898,7 +1933,6 @@ input.ng-invalid-match, input.ng-invalid-match:focus {
  * in this file all global variables of colors
 **/
 
-
 .ico {
   vertical-align: middle;
   display: inline-block;
@@ -2110,7 +2144,6 @@ button {
   width: 100%;
   border: 2px solid transparent;
   background-color: transparent;
-  font-family: "Montserrat", sans-serif;
   color: inherit;
   transition: color ease 0.3s;
   font-size: 16px;
@@ -2122,24 +2155,24 @@ button {
 }
 
 .btn_red {
-  border-color: #d52026;
+  border-color: $main_color;
   background: #fff;
-  color: #d52026;
+  color: $main_color;
 }
 
 .btn_red:focus,
 .btn_red:active {
-  color: #d52026;
+  color: $main_color;
 }
 
 .btn_red-full {
   color: #fff;
-  background: #d52026;
+  background: $main_color;
 }
 
 .btn_red-full:hover {
   color: #fff;
-  background: #d52026;
+  background: $main_color;
 }
 
 .btn_red-full:focus,
@@ -2178,12 +2211,12 @@ a.btn {
     li {
       border-bottom: 4px solid transparent;
 
-      &.active {
-        border-bottom: 4px solid #d52026;
-      }
-
       a {
         padding: 10px 20px;
+
+        &.active {
+          border-bottom: 4px solid #d52026;
+        }
       }
     }
   }
@@ -2327,10 +2360,11 @@ canvas {
   }
 }
 
-.p-wallet{
+.p-wallet {
   position: relative;
   width: 100%;
-  padding-top: 60px;
+  text-shadow: 0 0 4px darken($main_color, 10);
+  overflow: hidden;
 
   .price {
     position: relative;
@@ -2366,63 +2400,54 @@ canvas {
   right: 0;
   width: 100%;
   background: #fff;
-  border: 1px solid #eee;
+  border-top: 1px solid #f8f8f8;
   z-index: 2;
-  height: 53px;
-  padding: 0 21px;
+  padding: 0 10px;
 
-  ul {
-    padding-left: 0;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  table {
+    table-layout: fixed;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 
-    li {
-      display: inline-block;
-      vertical-align: middle;
+    td {
       text-align: center;
+      position: relative;
+      padding: 0;
 
       a {
-        text-decoration: none;
         display: block;
-        font-size: 10px;
-        color: #777;
-        padding: 10px;
+        margin: 0;
+        height: 100%;
+        border-top: 2px solid transparent;
+        padding: 5px 0;
+        color: #cecece;
+
+        svg {
+          fill: #cecece;
+          width: 26px;
+          height: 26px;
+        }
+
+        &.active {
+          border-top: 2px solid $main_color;
+          color: $main_color;
+
+          svg {
+            fill: $main_color;
+          }
+        }
 
         span {
           display: block;
-          margin-top: 3px;
-        }
-      }
-
-      .icon {
-        display: inline-block;
-        color: #777;
-        font-size: 20px;
-      }
-
-      &.active{
-        a {
-          color: #d52026;
-        }
-
-        .icon {
-          color: #d52026;
-        }
-      }
-
-      &:not(:last-child) {
-        margin-right: 20px;
-
-        @media (max-width: 375px) {
-          margin-right: 5px;
+          font-size: 10px;
+          margin-top: -7px;
         }
       }
     }
   }
 }
-
 
 .p-wallet__price-block {
   position: relative;
@@ -2431,13 +2456,29 @@ canvas {
   width: 100%;
   z-index: 2;
   text-align: center;
+  color: #fff;
+  padding: 30px 0 0;
 
   .price-wrapper {
-    color: #d52026;
     font-weight: 900;
     height: 90px;
     position: relative;
     display: inline-block;
+    text-shadow: 1px 1px 1px darken($main_color, 10);
+  }
+
+  .price-wrapper-title{
+    text-align: center;
+
+    span{
+      background: lighten($main_color, 10);
+      position: relative;
+      padding: 0 10px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
   }
 }
 
@@ -2446,7 +2487,6 @@ canvas {
   position: absolute;
   top: 50%;
   margin-top: -15px;
-  color: #ccc;
   left: -30px;
 }
 
@@ -2463,7 +2503,76 @@ canvas {
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
   display: block;
-  color: #aaa;
+  color: #fff;
+  opacity: 0.6;
+}
+
+.spending_this_month{
+  overflow: hidden;
+  width: 100%;
+  border-top: 1px solid rgba(250,250,250,0.21);
+  background: rgba(250,250,250,0.1);
+  clear: both;
+  margin-top: 10px;
+  position: relative;
+
+  &:before{
+    content: "";
+    @include gradientBackground(darken($main_color, 10), darken($main_color, 20), left, right);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.2;
+  }
+
+  .spending_this_month_income{
+    width: 50%;
+    float: left;
+    border-right: 1px solid rgba(250,250,250, 0.15);
+    color: #fff;
+    position: relative;
+    padding: 10px 0 10px 40px;
+    text-align: left;
+
+    svg-icon{
+      position: absolute;
+      left: 7px;
+
+      svg{
+        fill: #56dc9c;
+        text-shadow: 0 0 1px darken($main_color, 5);
+        height: 36px;
+        width: 36px;
+      }
+    }
+
+    span{
+      font-size: 12px;
+      color: rgba(250,250,250, 0.8);
+    }
+
+    strong{
+      display: block;
+      font-size: 18px;
+    }
+  }
+
+  .spending_this_month_expenses{
+    @extend .spending_this_month_income;
+    border-right: none;
+    left: 5px;
+
+    svg-icon{
+      svg{
+        fill: #ed7773;
+      }
+    }
+
+
+  }
 }
 
 .transactions {
@@ -2482,7 +2591,7 @@ canvas {
   font-size: 16px;
 }
 
-.transactions__table{
+.transactions__table {
   margin-top: 20px;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -2606,7 +2715,7 @@ canvas {
 }
 
 .page-form {
-  margin: 60px auto 0;
+  margin: 45px auto 0;
   max-width: 300px;
 }
 
@@ -2699,23 +2808,107 @@ input {
   height: 100%;
 }
 
-.topbar-transparent{
+.topbar-transparent {
   .tab-bar {
     background: transparent;
     border: 0;
   }
 }
 
-.topbar-container{
-  position: relative;
-  z-index: 2;
-  border-bottom: 1px solid #eee;
+.tab-view {
+  transform: translate3d(-100%, 0, 0);
+  width: 100%;
+  position: absolute;
+  padding-top: 0;
+  top: 45px;
+  bottom: 37px;
+  overflow: hidden;
+  padding-bottom: 40px;
+
+  &.tab-in {
+    transform: translate3d(0, 0, 0) !important;
+  }
 }
 
-.button:hover {
-  background: #d52026;
-  color: #0078a0;
+
+
+.navbar-container {
+  position: relative;
+  z-index: 2;
+  height: 45px;
+  background: $main_color;
+
+  .navbar-container-triggers {
+    position: absolute;
+    z-index: 1;
+    height: 45px;
+    line-height: 45px;
+    left: 15px;
+  }
+
+  .navbar-container-title {
+    width: 100%;
+    text-align: center;
+    line-height: 45px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .navbar-container-back-trigger {
+    svg {
+      width: 16px;
+      height: 16px;
+      margin-top: -8px;
+      fill: #fff;
+    }
+
+    span {
+      position: relative;
+      left: 25px;
+      color: #fff;
+    }
+  }
+
+  svg {
+    fill: #fff;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 50%;
+    margin-top: -11px;
+    left: 0;
+  }
+
+  &.invert{
+    background: transparent;
+
+    .navbar-container-title{
+      color: $main_color;
+    }
+
+    .navbar-container-back-trigger{
+      span{
+        color: $main_color;
+      }
+
+      svg{
+        fill: $main_color;
+      }
+    }
+
+    svg{
+      fill: $main_color;
+    }
+  }
+
+  &:not(.invert){
+    text-shadow: 1px 1px 1px darken($main_color, 10);
+  }
 }
+
+
 
 .wrappable-menu-item {
   width: 70%;
