@@ -117,6 +117,7 @@
     "karma-spec-reporter": "0.0.31",
     "phantomjs": "^2.1.7",
     "pixrem": "^4.0.1",
+    "sqlite3": "^3.1.9",
     "stringify": "^5.1.0",
     "stylelint": "^8.0.0",
     "stylelint-csstree-validator": "^1.1.1",

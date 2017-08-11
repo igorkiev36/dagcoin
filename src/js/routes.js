@@ -347,7 +347,6 @@
                     templateUrl: 'views/warning.html',
                     needProfile: false,
                 })
-
                 .state('add', {
                     url: '/add',
                     needProfile: true,
