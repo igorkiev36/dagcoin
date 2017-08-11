@@ -7,6 +7,23 @@ $main_color: #e51e25;
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$colorFrom, endColorstr=$colorTo,GradientType=0 );
 }
 
+.transition{
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+section{
+
+  &.ng-enter {
+    transition: 0.5s;
+    opacity: 0;
+  }
+
+  &.ng-enter-active {
+    opacity: 1;
+  }
+}
+
 @font-face {
   font-family: "Roboto";
   src: url("../font/Roboto-Thin.ttf") format("truetype");

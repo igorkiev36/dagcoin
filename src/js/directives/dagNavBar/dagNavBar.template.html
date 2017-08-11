@@ -3,7 +3,7 @@
         <div class="navbar-container-back-trigger" ng-if="showBack">
             <a onclick="history.back()">
                 <svg-icon name="chevron-left"></svg-icon>
-                <span>Back</span>
+                <span>{{showBackTitle || 'Back'}}</span>
             </a>
         </div>
         <span ng-if="!showBack" ng-click="openLeftMenu()">

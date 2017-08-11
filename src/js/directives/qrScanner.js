@@ -157,7 +157,6 @@
                                 $modalInstance.dismiss('cancel');
                             } catch (e) {
                                 e.bIgnore = true;
-                                //	throw e;
                             }
                         };
                     };

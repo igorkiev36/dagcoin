@@ -30,11 +30,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #2c3e50;
 }
 
-svg-icon{
+svg-icon {
   display: inline-block;
   position: relative;
   vertical-align: middle;
   fill: currentColor;
+  line-height: 0;
 }
 
 .panel {
@@ -132,84 +133,6 @@ h4 {
       font-weight: 400;
       padding: 7px;
       font-size: 12px;
-    }
-  }
-}
-
-.preferences {
-
-  form {
-    background: #fff;
-    padding-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .switch {
-    top: -5px !important;
-  }
-
-  h4 {
-    padding: 0 20px;
-    color: #a5b1bd;
-    font-size: 14px;
-    font-weight: 400;
-    margin: 30px 0 5px;
-  }
-
-  ul {
-    font-size: 14px;
-    margin: 5px 20px;
-    box-shadow: 0 0 5px 1px rgba(80,80,80,0.1);
-
-    li {
-      padding: 13px 20px;
-      border-bottom: 1px solid #e9e9ec;
-      background: #fff;
-      cursor: pointer !important;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: #494d50;
-      position: relative;
-
-      &.left_icon{
-        padding-left: 44px;
-      }
-
-      &:not(.no_arrow){
-        &:after{
-          position: absolute;
-          right: 20px;
-          top: 50%;
-          content: ">";
-          color: #8597a7;
-          font-weight: 400;
-          font-size: 20px;
-          margin-top: -16px;
-        }
-      }
-
-      a{
-        color: #494d50;
-        display: block;
-      }
-
-      &:last-child{
-        border-bottom: none;
-      }
-
-      svg-icon{
-        position: absolute;
-        fill: #a7b4bc;
-        left: 15px;
-        top: 50%;
-        margin-top: -8px;
-
-        svg{
-          width: 16px;
-          height: 16px;
-        }
-      }
     }
   }
 }
@@ -408,7 +331,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, inpu
   }
 }
 
-.content_hero{
+.content_hero {
   @include gradientBackground($main_color, darken($main_color, 10), top, bottom);
 }
 
@@ -2137,9 +2060,9 @@ button {
 
 .btn {
   display: inline-block;
-  border-radius: 40px;
-  font-weight: 400;
-  padding: 14px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 15px;
   max-width: 300px;
   width: 100%;
   border: 2px solid transparent;
@@ -2148,36 +2071,56 @@ button {
   transition: color ease 0.3s;
   font-size: 16px;
   letter-spacing: 0.3px;
-}
+  overflow: hidden;
+  position: relative;
 
-.btn + .btn {
-  margin-top: 13px;
-}
+  & + .btn {
+    margin-top: 13px;
+  }
 
-.btn_red {
-  border-color: $main_color;
-  background: #fff;
-  color: $main_color;
-}
+  &.btn_red {
+    border-color: $main_color;
+    background: #fff;
+    color: $main_color;
 
-.btn_red:focus,
-.btn_red:active {
-  color: $main_color;
-}
+    &:hover {
+      color: $main_color;
+    }
+  }
 
-.btn_red-full {
-  color: #fff;
-  background: $main_color;
-}
+  &.btn_red-full {
+    color: #fff;
+    @include gradientBackground($main_color, darken($main_color, 10), left, right);
+    text-shadow: 1px 1px 0 darken($main_color, 10);
+    border: 2px solid;
 
-.btn_red-full:hover {
-  color: #fff;
-  background: $main_color;
-}
+    &:hover {
+      color: #fff;
+      @include gradientBackground(darken($main_color, 2), darken($main_color, 12), left, right);
+    }
+  }
 
-.btn_red-full:focus,
-.btn_red-full:active {
-  color: #fff;
+  &:after {
+    @extend .transition;
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    opacity: 0.15;
+    right: -100px;
+    @include gradientBackground(#fff, darken(#fff, 10), left, right);
+    transform: skewX(30deg);
+
+  }
+
+  &:hover {
+    outline: none;
+
+    &:after{
+      right: 110%;
+    }
+  }
 }
 
 a.btn {
@@ -2393,62 +2336,6 @@ canvas {
   padding-top: 90px;
 }
 
-.navbar-wrap {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: #fff;
-  border-top: 1px solid #f8f8f8;
-  z-index: 2;
-  padding: 0 10px;
-
-  table {
-    table-layout: fixed;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    td {
-      text-align: center;
-      position: relative;
-      padding: 0;
-
-      a {
-        display: block;
-        margin: 0;
-        height: 100%;
-        border-top: 2px solid transparent;
-        padding: 5px 0;
-        color: #cecece;
-
-        svg {
-          fill: #cecece;
-          width: 26px;
-          height: 26px;
-        }
-
-        &.active {
-          border-top: 2px solid $main_color;
-          color: $main_color;
-
-          svg {
-            fill: $main_color;
-          }
-        }
-
-        span {
-          display: block;
-          font-size: 10px;
-          margin-top: -7px;
-        }
-      }
-    }
-  }
-}
-
 .p-wallet__price-block {
   position: relative;
   right: 0;
@@ -2467,10 +2354,10 @@ canvas {
     text-shadow: 1px 1px 1px darken($main_color, 10);
   }
 
-  .price-wrapper-title{
+  .price-wrapper-title {
     text-align: center;
 
-    span{
+    span {
       background: lighten($main_color, 10);
       position: relative;
       padding: 0 10px;
@@ -2507,16 +2394,16 @@ canvas {
   opacity: 0.6;
 }
 
-.spending_this_month{
+.spending_this_month {
   overflow: hidden;
   width: 100%;
-  border-top: 1px solid rgba(250,250,250,0.21);
-  background: rgba(250,250,250,0.1);
+  border-top: 1px solid rgba(250, 250, 250, 0.21);
+  background: rgba(250, 250, 250, 0.1);
   clear: both;
   margin-top: 10px;
   position: relative;
 
-  &:before{
+  &:before {
     content: "";
     @include gradientBackground(darken($main_color, 10), darken($main_color, 20), left, right);
     position: absolute;
@@ -2528,20 +2415,20 @@ canvas {
     opacity: 0.2;
   }
 
-  .spending_this_month_income{
+  .spending_this_month_income {
     width: 50%;
     float: left;
-    border-right: 1px solid rgba(250,250,250, 0.15);
+    border-right: 1px solid rgba(250, 250, 250, 0.15);
     color: #fff;
     position: relative;
     padding: 10px 0 10px 40px;
     text-align: left;
 
-    svg-icon{
+    svg-icon {
       position: absolute;
       left: 7px;
 
-      svg{
+      svg {
         fill: #56dc9c;
         text-shadow: 0 0 1px darken($main_color, 5);
         height: 36px;
@@ -2549,28 +2436,27 @@ canvas {
       }
     }
 
-    span{
+    span {
       font-size: 12px;
-      color: rgba(250,250,250, 0.8);
+      color: rgba(250, 250, 250, 0.8);
     }
 
-    strong{
+    strong {
       display: block;
       font-size: 18px;
     }
   }
 
-  .spending_this_month_expenses{
+  .spending_this_month_expenses {
     @extend .spending_this_month_income;
     border-right: none;
     left: 5px;
 
-    svg-icon{
-      svg{
+    svg-icon {
+      svg {
         fill: #ed7773;
       }
     }
-
 
   }
 }
@@ -2830,8 +2716,6 @@ input {
   }
 }
 
-
-
 .navbar-container {
   position: relative;
   z-index: 2;
@@ -2881,34 +2765,32 @@ input {
     left: 0;
   }
 
-  &.invert{
+  &.invert {
     background: transparent;
 
-    .navbar-container-title{
+    .navbar-container-title {
       color: $main_color;
     }
 
-    .navbar-container-back-trigger{
-      span{
+    .navbar-container-back-trigger {
+      span {
         color: $main_color;
       }
 
-      svg{
+      svg {
         fill: $main_color;
       }
     }
 
-    svg{
+    svg {
       fill: $main_color;
     }
   }
 
-  &:not(.invert){
+  &:not(.invert) {
     text-shadow: 1px 1px 1px darken($main_color, 10);
   }
 }
-
-
 
 .wrappable-menu-item {
   width: 70%;

@@ -102,6 +102,7 @@ module.exports = function (grunt) {
                     'bower_components/angular-elastic/elastic.js',
                     'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
                     'bower_components/ng-dialog/js/ngDialog.min.js',
+                    'bower_components/angular-animate/angular-animate.js',
                 ],
                 dest: 'public/angular.js',
             },

@@ -88,11 +88,7 @@
                 .state('splash', {
                     url: '/splash',
                     needProfile: false,
-                    views: {
-                        main: {
-                            templateUrl: 'views/splash.html',
-                        },
-                    },
+                    templateUrl: 'views/splash.html',
                 });
 
             $stateProvider
@@ -100,20 +96,12 @@
                     url: '/translators',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/translators.html',
-                        },
-                    },
+                    templateUrl: 'views/translators.html',
                 })
                 .state('disclaimer', {
                     url: '/disclaimer',
                     needProfile: false,
-                    views: {
-                        main: {
-                            templateUrl: 'views/disclaimer.html',
-                        },
-                    },
+                    templateUrl: 'views/disclaimer.html',
                 })
                 .state('walletHome', {
                     url: '/',
@@ -121,11 +109,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/walletHome.html',
-                        },
-                    },
+                    templateUrl: 'views/walletHome.html',
                 })
                 .state('send', {
                     url: '/send',
@@ -133,11 +117,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/send/send.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/send/send.template.html',
                 })
                 .state('receive', {
                     url: '/receive',
@@ -145,11 +125,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/receive.html',
-                        },
-                    },
+                    templateUrl: 'views/receive.html',
                 })
                 .state('contacts', {
                     url: '/contacts',
@@ -157,11 +133,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/contacts.html',
-                        },
-                    },
+                    templateUrl: 'views/contacts.html',
                 })
                 .state('history', {
                     url: '/history',
@@ -169,29 +141,16 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/history.html',
-                        },
-                    },
+                    templateUrl: 'views/history.html',
                 })
                 .state('unsupported', {
                     url: '/unsupported',
                     needProfile: false,
-                    views: {
-                        main: {
-                            templateUrl: 'views/unsupported.html',
-                        },
-                    },
+                    templateUrl: 'views/unsupported.html',
                 })
                 .state('payment', {
                     url: '/uri-payment/:data',
                     templateUrl: 'views/paymentUri.html',
-                    views: {
-                        main: {
-                            templateUrl: 'views/paymentUri.html',
-                        },
-                    },
                     needProfile: true,
                 })
                 .state('selectWalletForPayment', {
@@ -202,11 +161,7 @@
                 .state('import', {
                     url: '/import',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/import.html',
-                        },
-                    },
+                    templateUrl: 'views/import.html',
                 })
                 .state('importProfile', {
                     url: '/importProfile',
@@ -216,42 +171,24 @@
                 .state('importLegacy', {
                     url: '/importLegacy',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/importLegacy.html',
-                        },
-                    },
+                    templateUrl: 'views/importLegacy.html',
 
                 })
                 .state('create', {
                     url: '/create',
                     templateUrl: 'views/create.html',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/create.html',
-                        },
-                    },
                 })
                 .state('copayers', {
                     url: '/copayers',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/copayers.html',
-                        },
-                    },
+                    templateUrl: 'views/copayers.html',
                 })
                 .state('preferences', {
                     url: '/preferences',
-                    templateUrl: 'views/preferences.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferences.html',
-                        },
-                    },
+                    templateUrl: 'views/preferences.html',
                 })
                 .state('correspondentDevices', {
                     url: '/correspondentDevices',
@@ -259,90 +196,54 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    views: {
-                        chat: {
-                            templateUrl: 'views/correspondentDevices.html',
-                        },
-                    },
+                    templateUrl: 'views/correspondentDevices.html',
                 })
                 .state('correspondentDevices.correspondentDevice', {
                     url: '/correspondentDevice',
                     walletShouldBeComplete: false,
                     needProfile: true,
-                    views: {
-                        dialog: {
-                            templateUrl: 'views/correspondentDevice.html',
-                        },
-                    },
+                    templateUrl: 'views/correspondentDevice.html',
                 })
                 .state('correspondentDevices.editCorrespondentDevice', {
                     url: '/editCorrespondentDevice',
                     walletShouldBeComplete: false,
                     needProfile: true,
-                    views: {
-                        dialog: {
-                            templateUrl: 'views/editCorrespondentDevice.html',
-                        },
-                    },
+                    templateUrl: 'views/editCorrespondentDevice.html',
                 })
                 .state('correspondentDevices.addCorrespondentDevice', {
                     url: '/addCorrespondentDevice',
                     needProfile: true,
-                    views: {
-                        dialog: {
-                            templateUrl: 'views/addCorrespondentDevice.html',
-                        },
-                    },
+                    templateUrl: 'views/addCorrespondentDevice.html',
                 })
                 .state('correspondentDevices.inviteCorrespondentDevice', {
                     url: '/inviteCorrespondentDevice',
                     walletShouldBeComplete: false,
                     needProfile: true,
-                    views: {
-                        dialog: {
-                            templateUrl: 'views/inviteCorrespondentDevice.html',
-                        },
-                    },
+                    templateUrl: 'views/inviteCorrespondentDevice.html',
                 })
                 .state('correspondentDevices.acceptCorrespondentInvitation', {
                     url: '/acceptCorrespondentInvitation',
                     walletShouldBeComplete: false,
                     needProfile: true,
-                    views: {
-                        dialog: {
-                            templateUrl: 'views/acceptCorrespondentInvitation.html',
-                        },
-                    },
+                    templateUrl: 'views/acceptCorrespondentInvitation.html',
                 })
                 .state('authConfirmation', {
                     url: '/authConfirmation',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/authConfirmation.html',
-                        },
-                    },
+                    templateUrl: 'views/authConfirmation.html',
                 })
                 .state('preferencesDeviceName', {
                     url: '/preferencesDeviceName',
                     walletShouldBeComplete: false,
                     needProfile: false,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesDeviceName.html',
-                        },
-                    },
+                    templateUrl: 'views/preferencesDeviceName.html',
                 })
                 .state('preferencesLanguage', {
                     url: '/preferencesLanguage',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesLanguage.html',
-                        },
-                    },
+                    templateUrl: 'views/preferencesLanguage.html',
                 })
 
                 .state('preferencesAdvanced', {
@@ -350,22 +251,12 @@
                     templateUrl: 'views/preferencesAdvanced.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesAdvanced.html',
-                        },
-                    },
                 })
                 .state('preferencesColor', {
                     url: '/preferencesColor',
                     templateUrl: 'views/preferencesColor.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesColor.html',
-                        },
-                    },
                 })
 
                 .state('preferencesAlias', {
@@ -373,145 +264,82 @@
                     templateUrl: 'views/preferencesAlias.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesAlias.html',
-                        },
-
-                    },
                 })
                 .state('preferencesEmail', {
                     url: '/preferencesEmail',
                     templateUrl: 'views/preferencesEmail.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesEmail.html',
-                        },
-
-                    },
                 })
                 .state('information', {
                     url: '/information',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/preferencesInformation.html',
-                        },
-                    },
+                    templateUrl: 'views/preferencesInformation.html',
                 })
                 .state('about', {
                     url: '/settings/about',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/about/about.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/about/about.template.html',
                 })
                 .state('logs', {
                     url: '/settings/about/logs',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/about/logs/logs.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/about/logs/logs.template.html',
                 })
 
                 .state('about_device', {
                     url: '/settings/about_device',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/about_device/about_device.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/about_device/about_device.template.html',
                 })
                 .state('export', {
                     url: '/export',
                     templateUrl: 'views/export.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/export.html',
-                        },
-                    },
                 })
                 .state('paperWallet', {
                     url: '/paperWallet',
                     templateUrl: 'views/paperWallet.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/paperWallet.html',
-                        },
-                    },
                 })
                 .state('backup', {
                     url: '/backup',
                     templateUrl: 'views/backup.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/backup.html',
-                        },
-                    },
                 })
                 .state('recoveryFromSeed', {
                     url: '/recoveryFromSeed',
-                    templateUrl: 'views/recoveryFromSeed.html',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/recoveryFromSeed.html',
-                        },
-                    },
+                    templateUrl: 'views/recoveryFromSeed.html',
                 })
                 .state('settings', {
                     url: '/settings',
+                    title: 'Settings',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/settings.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/settings.template.html',
                 })
                 .state('settingsBackup', {
                     url: '/settings_backup',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/backup/backup.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/backup/backup.template.html',
                 })
                 .state('settingsSystem', {
                     url: '/settings_system',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/system/system.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/system/system.template.html',
                 })
                 .state('settings.about_device', {
                     url: '/about_device',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'controllers/settings/aboutDevice/aboutDevice.template.html',
-                        },
-                    },
+                    templateUrl: 'controllers/settings/aboutDevice/aboutDevice.template.html',
                 })
                 .state('warning', {
                     url: '/warning',
@@ -523,39 +351,31 @@
                 .state('add', {
                     url: '/add',
                     needProfile: true,
-                    views: {
-                        main: {
-                            templateUrl: 'views/add.html',
-                        },
-                    },
+                    templateUrl: 'views/add.html',
                 })
                 .state('cordova', { // never used
                     url: '/cordova/:status/:isHome',
-                    views: {
-                        main: {
-                            controller($rootScope, $state, $stateParams, $timeout, go, isCordova) {
-                                console.log(`cordova status: ${$stateParams.status}`);
-                                switch ($stateParams.status) {
-                                    case 'resume':
-                                        $rootScope.$emit('Local/Resume');
-                                        break;
-                                    case 'backbutton':
-                                        if (isCordova && $stateParams.isHome === 'true' && !$rootScope.modalOpened) {
-                                            navigator.app.exitApp();
-                                        } else {
-                                            $rootScope.$emit('closeModal');
-                                        }
-                                        break;
+                    controller($rootScope, $state, $stateParams, $timeout, go, isCordova) {
+                        console.log(`cordova status: ${$stateParams.status}`);
+                        switch ($stateParams.status) {
+                            case 'resume':
+                                $rootScope.$emit('Local/Resume');
+                                break;
+                            case 'backbutton':
+                                if (isCordova && $stateParams.isHome === 'true' && !$rootScope.modalOpened) {
+                                    navigator.app.exitApp();
+                                } else {
+                                    $rootScope.$emit('closeModal');
                                 }
-                                // why should we go home on resume or backbutton?
-                                /*
-                                 $timeout(function() {
-                                 $rootScope.$emit('Local/SetTab', 'walletHome', true);
-                                 }, 100);
-                                 go.walletHome();
-                                 */
-                            },
-                        },
+                                break;
+                        }
+                        // why should we go home on resume or backbutton?
+                        /*
+                         $timeout(function() {
+                         $rootScope.$emit('Local/SetTab', 'walletHome', true);
+                         }, 100);
+                         go.walletHome();
+                         */
                     },
                     needProfile: false,
                 });
@@ -585,7 +405,9 @@
                 win.menu = nativeMenuBar;
             }
 
-            $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState) => {
+            $rootScope.previousState = false;
+
+            $rootScope.$on('$stateChangeStart', (event, toState, toParams, from, fromParams) => {
 
                 backButton.menuOpened = false;
                 go.swipe();
@@ -621,13 +443,7 @@
                     event.preventDefault();
                 }
 
-                if (!animationService.transitionAnimated(fromState, toState)) {
-                    event.preventDefault();
-                    // Time for the backpane to render
-                    setTimeout(() => {
-                        $state.transitionTo(toState);
-                    }, 50);
-                }
+                $rootScope.previousState = from;
             });
         });
 }());
