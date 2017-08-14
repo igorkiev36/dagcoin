@@ -1,48 +1,46 @@
-/* global angular */
-
 (() => {
-  'use strict';
+    'use strict';
 
-  angular
-      .module('copayApp.services')
-      .factory('menuLinks', menuLinks);
+    angular
+        .module('copayApp.services')
+        .factory('menuLinks', menuLinks);
 
-  menuLinks.$inject = [];
-  function menuLinks() {
-    return [{
-      category: 'Wallet',
-      links: [
-        {
-          title: 'Accounts',
-          icon: 'credit-card',
-          state: 'walletHome',
-          menuBar: true,
+    menuLinks.$inject = [];
+    function menuLinks() {
+        return [{
+            category: 'Account',
+            links: [
+                {
+                    title: 'My Wallet',
+                    icon: 'wallet',
+                    state: 'walletHome',
+                    menuBar: true
+                }, {
+                    title: 'Send',
+                    icon: 'paperplane',
+                    state: 'send',
+                    menuBar: true
+                }, {
+                    title: 'Receive',
+                    icon: 'banknote',
+                    state: 'receive',
+                    menuBar: true
+                }, {
+                    title: 'Contacts',
+                    icon: 'business-card',
+                    state: 'contacts'
+                }
+            ]
         }, {
-          title: 'Send',
-          icon: 'paperplane',
-          state: 'send',
-          menuBar: true,
-        }, {
-          title: 'Receive',
-          icon: 'banknote',
-          state: 'receive',
-          menuBar: true,
-        },/* {
-          title: 'Contacts',
-          icon: 'business-card',
-          state: 'contacts',
-          menuBar: true,
-        },*/
-      ],
-    }, {
-      category: 'More',
-      links: [
-        {
-          title: 'Settings',
-          icon: 'cog',
-          state: 'settings',
-        },
-      ],
-    }];
-  }
+            category: 'More',
+            links: [
+                {
+                    title: 'Settings',
+                    icon: 'cog',
+                    state: 'settings',
+                    menuBar: true
+                }
+            ]
+        }];
+    }
 })();

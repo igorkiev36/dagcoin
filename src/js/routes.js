@@ -77,7 +77,7 @@
                         };
                     });
                     return $delegate;
-                },
+                }
             ]);
 
             // whitelist 'chrome-extension:' for chromeApp to work with image URLs processed by Angular
@@ -88,7 +88,7 @@
                 .state('splash', {
                     url: '/splash',
                     needProfile: false,
-                    templateUrl: 'views/splash.html',
+                    templateUrl: 'views/splash.html'
                 });
 
             $stateProvider
@@ -96,12 +96,12 @@
                     url: '/translators',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    templateUrl: 'views/translators.html',
+                    templateUrl: 'views/translators.html'
                 })
                 .state('disclaimer', {
                     url: '/disclaimer',
                     needProfile: false,
-                    templateUrl: 'views/disclaimer.html',
+                    templateUrl: 'views/disclaimer.html'
                 })
                 .state('walletHome', {
                     url: '/',
@@ -110,6 +110,9 @@
                     deepStateRedirect: true,
                     sticky: true,
                     templateUrl: 'views/walletHome.html',
+                    params: {
+                        selectedWallet: null
+                    }
                 })
                 .state('send', {
                     url: '/send',
@@ -117,7 +120,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    templateUrl: 'controllers/send/send.template.html',
+                    templateUrl: 'controllers/send/send.template.html'
                 })
                 .state('receive', {
                     url: '/receive',
@@ -125,7 +128,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    templateUrl: 'views/receive.html',
+                    templateUrl: 'controllers/receive/receive.template.html'
                 })
                 .state('contacts', {
                     url: '/contacts',
@@ -133,7 +136,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    templateUrl: 'views/contacts.html',
+                    templateUrl: 'views/contacts.html'
                 })
                 .state('history', {
                     url: '/history',
@@ -141,17 +144,17 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    templateUrl: 'views/history.html',
+                    templateUrl: 'views/history.html'
                 })
                 .state('unsupported', {
                     url: '/unsupported',
                     needProfile: false,
-                    templateUrl: 'views/unsupported.html',
+                    templateUrl: 'views/unsupported.html'
                 })
                 .state('payment', {
                     url: '/uri-payment/:data',
                     templateUrl: 'views/paymentUri.html',
-                    needProfile: true,
+                    needProfile: true
                 })
                 .state('selectWalletForPayment', {
                     url: '/selectWalletForPayment',
@@ -269,50 +272,50 @@
                     url: '/preferencesEmail',
                     templateUrl: 'views/preferencesEmail.html',
                     walletShouldBeComplete: true,
-                    needProfile: true,
+                    needProfile: true
                 })
                 .state('information', {
                     url: '/information',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    templateUrl: 'views/preferencesInformation.html',
+                    templateUrl: 'views/preferencesInformation.html'
                 })
                 .state('about', {
                     url: '/settings/about',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    templateUrl: 'controllers/settings/about/about.template.html',
+                    templateUrl: 'controllers/settings/about/about.template.html'
                 })
                 .state('logs', {
                     url: '/settings/about/logs',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    templateUrl: 'controllers/settings/about/logs/logs.template.html',
+                    templateUrl: 'controllers/settings/about/logs/logs.template.html'
                 })
 
                 .state('about_device', {
                     url: '/settings/about_device',
                     walletShouldBeComplete: true,
                     needProfile: true,
-                    templateUrl: 'controllers/settings/about_device/about_device.template.html',
+                    templateUrl: 'controllers/settings/about_device/about_device.template.html'
                 })
                 .state('export', {
                     url: '/export',
                     templateUrl: 'views/export.html',
                     walletShouldBeComplete: true,
-                    needProfile: true,
+                    needProfile: true
                 })
                 .state('paperWallet', {
                     url: '/paperWallet',
                     templateUrl: 'views/paperWallet.html',
                     walletShouldBeComplete: true,
-                    needProfile: true,
+                    needProfile: true
                 })
                 .state('backup', {
                     url: '/backup',
                     templateUrl: 'views/backup.html',
                     walletShouldBeComplete: true,
-                    needProfile: true,
+                    needProfile: true
                 })
                 .state('recoveryFromSeed', {
                     url: '/recoveryFromSeed',

@@ -1,4 +1,4 @@
-<dag-nav-bar state-title="Accounts"></dag-nav-bar>
+<dag-nav-bar state-title="My Wallet"></dag-nav-bar>
 
 <div ng-controller="walletHomeController as home">
     <div class="onGoingProcess" ng-show="index.isOffline">
@@ -77,7 +77,7 @@
                                  ng-click='index.updateAll(); index.updateHistoryFromNetwork()'>
 
                                 <div class="price-wrapper-title">
-                                    <span>Current Balance</span>
+                                    <span>Total Balance</span>
                                 </div>
                                 <div class="price-wrapper">
 
@@ -98,10 +98,6 @@
 
 
                                 </div>
-
-
-                                <!--<span ng-if="index.dagBalance.pending" class="ballance">Pending wallet balance: {{index.dagBalance.pendingStr}}</span>
-                                <span ng-if="!index.dagBalance.pending" class="ballance">Wallet balance</span>-->
 
 
                                 <div class="spending_this_month" >
@@ -135,7 +131,7 @@
                 </div>
             </div>
 
-            <!--<dag-quick-transfer></dag-quick-transfer>-->
+            <dag-quick-transfer></dag-quick-transfer>
 
             <div class="transactions">
                 <div class="transactions__head">

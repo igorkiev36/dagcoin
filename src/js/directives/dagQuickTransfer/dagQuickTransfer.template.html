@@ -2,20 +2,15 @@
     <div class="quick_transfer_list_title">Quick Transfer</div>
     <a class="quick_transfer_link_to_find_contact"><svg-icon name="search" ></svg-icon>Find Contact</a>
     <ul>
-        <li>
+        <li ng-repeat="person in quickTransferList">
             <div class="quick_transfer_list_avatar">
                 <div class="quick_transfer_list_avatar_image" style="background-image:url('img/default-gravatar.png')"></div>
             </div>
-            <div class="quick_transfer_list_full_name">
-                Roman Shabanov
-            </div>
+            <div class="quick_transfer_list_full_name">{{person.full_name}}</div>
         </li>
-        <li>
+        <li ng-if="quickTransferList.length <= 3">
             <div class="quick_transfer_list_avatar">
-                <div class="quick_transfer_list_avatar_image" style="background-image:url('img/default-gravatar.png')"></div>
-            </div>
-            <div class="quick_transfer_list_full_name">
-                Yary Ribero
+                <svg-icon name="plus"></svg-icon>
             </div>
         </li>
     </ul>

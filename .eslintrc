@@ -26,3 +26,6 @@ rules:
     - ignoreComments : true
     - ignoreStrings: true
   func-names: 0
+  comma-dangle:
+    - error
+    - never

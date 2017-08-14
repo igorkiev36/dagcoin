@@ -1,10 +1,8 @@
-/* global angular */
-
 (() => {
   'use strict';
 
   /**
-   * @desc displaying dagcoins to USD exchange rate
+   * @desc displaying "DAG => USD" exchange rate
    * @example <dag-exchange-rate-view></dag-exchange-rate-view>
    */
   angular

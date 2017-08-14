@@ -1,5 +1,3 @@
-/* global inject */
-
 describe('exchange rate api service', () => {
 
   let $exchangeRate;

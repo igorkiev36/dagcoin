@@ -17,33 +17,33 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         exec: {
             version: {
-                command: 'node ./util/version.js',
+                command: 'node ./util/version.js'
             },
             clear: {
-                command: 'rm -Rf bower_components node_modules',
+                command: 'rm -Rf bower_components node_modules'
             },
             osx64: {
-                command: '../byteballbuilds/build-osx.sh osx64',
+                command: '../byteballbuilds/build-osx.sh osx64'
             },
             osx32: {
-                command: '../byteballbuilds/build-osx.sh osx32',
-            },
+                command: '../byteballbuilds/build-osx.sh osx32'
+            }
         },
 
         sass: {
             main: {
                 options: {
                     style: 'compressed',
-                    sourcemap: 'none',
+                    sourcemap: 'none'
                 },
                 files: {
-                    'src/css/main.css': 'src/css/main.scss',
-                },
+                    'src/css/main.css': 'src/css/main.scss'
+                }
             },
             components: {
                 options: {
                     style: 'compressed',
-                    sourcemap: 'none',
+                    sourcemap: 'none'
                 },
                 files: [
                     {
@@ -51,10 +51,10 @@ module.exports = function (grunt) {
                         cwd: 'src/js/',
                         src: ['**/*.scss'],
                         dest: 'src/js/',
-                        ext: '.css',
-                    },
-                ],
-            },
+                        ext: '.css'
+                    }
+                ]
+            }
         },
 
         postcss: {
@@ -64,24 +64,24 @@ module.exports = function (grunt) {
                 processors: [
                     require('pixrem')(), // add fallbacks for rem units
                     require('autoprefixer')({
-                        browsers: 'last 4 versions',
+                        browsers: 'last 4 versions'
                     }), // add vendor prefixes
-                    require('cssnano')(), // minify the result
-                ],
+                    require('cssnano')() // minify the result
+                ]
             },
             dist: {
-                src: 'public/css/dagcoin.css',
-            },
+                src: 'public/css/dagcoin.css'
+            }
         },
 
         stylelint: {
-            all: ['src/css/*.scss', 'src/js/**/*.scss'],
+            all: ['src/css/*.scss', 'src/js/**/*.scss']
         },
 
         concat: {
             options: {
                 sourceMap: false,
-                sourceMapStyle: 'link', // embed, link, inline
+                sourceMapStyle: 'link' // embed, link, inline
             },
             angular: {
                 src: [
@@ -103,8 +103,10 @@ module.exports = function (grunt) {
                     'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
                     'bower_components/ng-dialog/js/ngDialog.min.js',
                     'bower_components/angular-animate/angular-animate.js',
+                    'bower_components/angular-swipe/dist/angular-swipe.min.js',
+                    'bower_components/gsap/src/minified/TweenMax.min.js'
                 ],
-                dest: 'public/angular.js',
+                dest: 'public/angular.js'
             },
             js: {
                 src: [
@@ -120,19 +122,19 @@ module.exports = function (grunt) {
                     'src/js/version.js',
                     'src/js/init.js',
                     'src/js/live-reload.js',
-                    '!src/js/**/*.spec.js',
+                    '!src/js/**/*.spec.js'
                 ],
-                dest: 'public/dagcoin.js',
+                dest: 'public/dagcoin.js'
             },
             css: {
                 src: ['src/css/*.css', 'src/js/**/*.css'],
-                dest: 'public/css/dagcoin.css',
+                dest: 'public/css/dagcoin.css'
             },
             foundation: {
                 src: [
-                    'bower_components/foundation/css/foundation.css',
+                    'bower_components/foundation/css/foundation.css'
                 ],
-                dest: 'public/css/foundation.css',
+                dest: 'public/css/foundation.css'
             },
             cssVendors: {
                 src: [
@@ -141,21 +143,21 @@ module.exports = function (grunt) {
                     'bower_components/angular-ui-switch/angular-ui-switch.css',
                     'bower_components/angular-carousel/dist/angular-carousel.css',
                     'bower_components/ng-dialog/css/ngDialog.min.css',
-                    'bower_components/ng-dialog/css/ngDialog-theme-default.min.css',
+                    'bower_components/ng-dialog/css/ngDialog-theme-default.min.css'
                 ],
-                dest: 'public/css/vendors.css',
-            },
+                dest: 'public/css/vendors.css'
+            }
         },
         uglify: {
             options: {
-                mangle: false,
+                mangle: false
             },
             prod: {
                 files: {
                     'public/dagcoin.js': ['public/dagcoin.js'],
-                    'public/angular.js': ['public/angular.js'],
-                },
-            },
+                    'public/angular.js': ['public/angular.js']
+                }
+            }
         },
         nggettext_extract: {
             pot: {
@@ -166,16 +168,16 @@ module.exports = function (grunt) {
                         'public/views/**/*.html',
                         'src/js/routes.js',
                         'src/js/services/*.js',
-                        'src/js/controllers/*.js',
-                    ],
-                },
-            },
+                        'src/js/controllers/*.js'
+                    ]
+                }
+            }
         },
         nggettext_compile: {
             all: {
                 options: {
                     format: 'json',
-                    module: 'copayApp',
+                    module: 'copayApp'
                 },
                 files: [
                     {
@@ -184,10 +186,10 @@ module.exports = function (grunt) {
                         cwd: 'i18n/po',
                         dest: 'public/languages',
                         src: ['*.po'],
-                        ext: '.json',
-                    },
-                ],
-            },
+                        ext: '.json'
+                    }
+                ]
+            }
         },
         copy: {
             osx: {
@@ -195,15 +197,15 @@ module.exports = function (grunt) {
                 flatten: true,
                 options: {
                     timestamp: true,
-                    mode: true,
+                    mode: true
                 },
                 src: ['webkitbuilds/build-osx.sh', 'webkitbuilds/Background.png'],
-                dest: '../byteballbuilds/',
+                dest: '../byteballbuilds/'
             },
             linux: {
                 options: {
                     timestamp: true,
-                    mode: true,
+                    mode: true
                 },
                 files: [
                     {
@@ -215,8 +217,8 @@ module.exports = function (grunt) {
                         filter: 'isFile',
                         options: {
                             timestamp: true,
-                            mode: true,
-                        },
+                            mode: true
+                        }
                     },
                     {
                         expand: true,
@@ -227,21 +229,21 @@ module.exports = function (grunt) {
                         filter: 'isFile',
                         options: {
                             timestamp: true,
-                            mode: true,
-                        },
-                    },
-                ],
-            },
+                            mode: true
+                        }
+                    }
+                ]
+            }
         },
         karma: {
             unit: {
                 configFile: 'test/karma.conf.js',
-                singleRun: true,
+                singleRun: true
             },
             prod: {
                 configFile: 'test/karma.conf.js',
-                singleRun: false,
-            },
+                singleRun: false
+            }
         },
         coveralls: {
             options: {
@@ -249,8 +251,8 @@ module.exports = function (grunt) {
                 coverageDir: 'coverage/report-lcov',
                 dryRun: true,
                 force: true,
-                recursive: false,
-            },
+                recursive: false
+            }
         },
         nwjs: {
             options: {
@@ -268,38 +270,38 @@ module.exports = function (grunt) {
                 macPlist: {
                     CFBundleURLTypes: [{
                         CFBundleURLName: 'Dagcoin action',
-                        CFBundleURLSchemes: ['DAGCOIN-TN'],
+                        CFBundleURLSchemes: ['DAGCOIN-TN']
                     }],
-                    LSHasLocalizedDisplayName: 0,
-                    /* CFBundleIconFile: 'nw.icns',*/
-                },
+                    LSHasLocalizedDisplayName: 0
+                    /* CFBundleIconFile: 'nw.icns', */
+                }
             },
-            src: ['./package.json', './public/**/*', './angular-bitcore-wallet-client/**/*'],
+            src: ['./package.json', './public/**/*', './angular-bitcore-wallet-client/**/*']
         },
         compress: {
             linux32: {
                 options: {
-                    archive: '../byteballbuilds/dagcoin-linux32.zip',
+                    archive: '../byteballbuilds/dagcoin-linux32.zip'
                 },
                 expand: true,
                 cwd: '../byteballbuilds/DAGCOIN-TN/linux32/',
                 src: ['**/*'],
-                dest: 'dagcoin-linux32/',
+                dest: 'dagcoin-linux32/'
             },
             linux64: {
                 options: {
-                    archive: '../byteballbuilds/dagcoin-linux64.zip',
+                    archive: '../byteballbuilds/dagcoin-linux64.zip'
                 },
                 expand: true,
                 cwd: '../byteballbuilds/DAGCOIN-TN/linux64/',
                 src: ['**/*'],
-                dest: 'dagcoin-linux64/',
-            },
+                dest: 'dagcoin-linux64/'
+            }
         },
         babel: {
             options: {
                 sourceMap: false,
-                presets: ['es2015'],
+                presets: ['es2015']
             },
             src: {
                 files: [
@@ -307,19 +309,19 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'src/js/',
                         src: ['**/*.js'],
-                        dest: 'build/src',
-                    },
-                ],
-            },
+                        dest: 'build/src'
+                    }
+                ]
+            }
         },
         browserify: {
             dist: {
                 options: {
-                    exclude: ['sqlite3', 'nw.gui', 'mysql', 'ws', 'regedit'],
+                    exclude: ['sqlite3', 'nw.gui', 'mysql', 'ws', 'regedit']
                 },
                 src: 'public/dagcoin.js',
-                dest: 'public/dagcoin.js',
-            },
+                dest: 'public/dagcoin.js'
+            }
         },
         // .deb proved to be very slow to produce and install: lintian spends a lot of time verifying a .bin file
         debian_package: {
@@ -329,56 +331,52 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '../byteballbuilds/dagcoin-test/linux64/',
                         src: ['**/*'],
-                        dest: '/opt/dagcoin-test/',
-                    },
-                    //{expand: true, cwd: '../byteballbuilds/byteball-test/linux64', src: ['dagcoin.desktop'], dest: '/usr/share/applications/byteball-test.desktop'}
+                        dest: '/opt/dagcoin-test/'
+                    }
+                    // {expand: true, cwd: '../byteballbuilds/byteball-test/linux64', src: ['dagcoin.desktop'], dest: '/usr/share/applications/byteball-test.desktop'}
                 ],
                 options: {
                     maintainer: {
                         name: 'Dagcoin',
-                        email: 'byteball@byteball.org',
+                        email: 'byteball@byteball.org'
                     },
                     long_description: 'A wallet for decentralized value',
-                    target_architecture: 'amd64',
-                },
-            },
+                    target_architecture: 'amd64'
+                }
+            }
         },
         innosetup_compiler: {
             win64: {
                 options: {
                     gui: false,
-                    verbose: false,
+                    verbose: false
                 },
-                script: 'webkitbuilds/setup-win64.iss',
+                script: 'webkitbuilds/setup-win64.iss'
             },
             win32: {
                 options: {
                     gui: false,
-                    verbose: false,
+                    verbose: false
                 },
-                script: 'webkitbuilds/setup-win32.iss',
-            },
+                script: 'webkitbuilds/setup-win32.iss'
+            }
         },
         svgmin: {
             options: {
                 plugins: [
-                    {
-                        removeViewBox: false,
-                    }, {
-                        removeUselessStrokeAndFill: true,
-                    }, {
-                        removeEmptyAttrs: true,
-                    },
-                ],
+                    { removeViewBox: false },
+                    { removeUselessStrokeAndFill: true },
+                    { removeEmptyAttrs: true }
+                ]
             },
             dist: {
                 files: [{
                     expand: true,
                     cwd: 'src/css/svg/',
                     src: ['*.svg'],
-                    dest: 'public/css/svg/',
-                }],
-            },
+                    dest: 'public/css/svg/'
+                }]
+            }
         },
         ngtemplates: {
             copayApp: {
@@ -395,33 +393,33 @@ module.exports = function (grunt) {
                         removeEmptyAttributes: true,
                         removeRedundantAttributes: true,
                         removeScriptTypeAttributes: true,
-                        removeStyleLinkTypeAttributes: true,
-                    },
-                },
-            },
+                        removeStyleLinkTypeAttributes: true
+                    }
+                }
+            }
         },
         watch: {
             options: {
                 dateFormat(time) {
                     grunt.log.writeln(`The watch finished in ${time}ms at ${(new Date()).toString()}`);
                     grunt.log.writeln('Waiting for more changes...');
-                },
+                }
             },
             svg: {
                 files: ['src/css/svg/*.svg'],
-                tasks: ['svgmin'],
+                tasks: ['svgmin']
             },
             sass: {
                 files: ['src/css/*.scss', 'src/css/icons.css'],
-                tasks: ['sass:main', 'concat:css', 'postcss'],
+                tasks: ['sass:main', 'concat:css', 'postcss']
             },
             components: {
                 files: ['src/js/**/*.scss'],
-                tasks: ['sass:components', 'concat:css', 'postcss'],
+                tasks: ['sass:components', 'concat:css', 'postcss']
             },
             html_templates: {
                 files: ['src/js/**/*.html'],
-                tasks: ['ngtemplates'],
+                tasks: ['ngtemplates']
             },
             main: {
                 files: [
@@ -433,11 +431,11 @@ module.exports = function (grunt) {
                     'src/js/services/**/*.js',
                     'src/js/models/**/*.js',
                     'src/js/controllers/**/*.js',
-                    'src/js/factories/**/*.js',
+                    'src/js/factories/**/*.js'
                 ],
-                tasks: ['concat:js', 'karma:unit'],
-            },
-        },
+                tasks: ['concat:js', 'karma:unit']
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-svgmin');
@@ -464,7 +462,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', ['watch']);
 
-    grunt.registerTask('default', ['nggettext_compile', 'exec:version', 'stylelint', 'sass', 'concat', 'postcss']);
+    grunt.registerTask('default', ['nggettext_compile', 'exec:version', 'stylelint', 'sass', 'concat', 'postcss', 'svgmin', 'ngtemplates']);
     grunt.registerTask('cordova', ['default', 'browserify']);
     grunt.registerTask('cordova-prod', ['cordova', 'uglify']);
     // grunt.registerTask('prod', ['default', 'uglify']);

@@ -18,6 +18,7 @@ const modules = [
     'ct.ui.router.extras',
     'ngDialog',
     'ngAnimate',
+    'swipe'
 ];
 
 const copayApp = angular.module('copayApp', modules);

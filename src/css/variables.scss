@@ -1,6 +1,8 @@
 $main_color: #e51e25;
 //$main_color: #3296dc;
 
+$nav_bar_height: 50px;
+
 
 @mixin gradientBackground($colorFrom, $colorTo, $directionStart, $directionEnd){
   background: linear-gradient(to $directionEnd, $colorFrom 0%,$colorTo 100%);

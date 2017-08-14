@@ -1,0 +1,77 @@
+@import "../../../css/variables";
+
+.navbar-container {
+  position: relative;
+  z-index: 2;
+  height: $nav_bar_height;
+  background: $main_color;
+
+  .navbar-container-triggers {
+    position: absolute;
+    z-index: 1;
+    height: $nav_bar_height;
+    line-height: $nav_bar_height;
+    left: 20px;
+  }
+
+  .navbar-container-title {
+    width: 100%;
+    padding-left: 80px;
+    line-height: $nav_bar_height;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .navbar-container-back-trigger {
+    svg {
+      width: 16px;
+      height: 16px;
+      margin-top: -8px;
+      fill: #fff;
+    }
+
+    span {
+      position: relative;
+      left: 25px;
+      color: #fff;
+    }
+  }
+
+  svg {
+    fill: #fff;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 50%;
+    margin-top: -11px;
+    left: 0;
+  }
+
+  &.invert {
+    background: transparent;
+
+    .navbar-container-title {
+      color: $main_color;
+    }
+
+    .navbar-container-back-trigger {
+      span {
+        color: $main_color;
+      }
+
+      svg {
+        fill: $main_color;
+      }
+    }
+
+    svg {
+      fill: $main_color;
+    }
+  }
+
+  &:not(.invert) {
+    text-shadow: 1px 1px 1px darken($main_color, 10);
+  }
+}

@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('copayApp.controllers')
-        .controller('walletHomeController',
+        .controller('receiveController',
             function ($scope,
                       $rootScope,
                       $timeout,
