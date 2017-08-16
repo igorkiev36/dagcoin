@@ -2,10 +2,17 @@
   'use strict';
 
   angular.module('copayApp.controllers').controller('preferencesGlobalController',
-    function ($scope, $rootScope, $log, configService, uxLanguage, pushNotificationsService, profileService) {
+    function ($scope, $q, $rootScope, $timeout, $log, configService, uxLanguage, pushNotificationsService, profileService, fundingNodeService) {
       const conf = require('byteballcore/conf.js');
+      const self = this;
+      self.fundingNodeSettings = {};
 
       $scope.encrypt = !!profileService.profile.xPrivKeyEncrypted;
+
+      self.initFundingNode = () => {
+        self.fundingNode = fundingNodeService.isActivated();
+        self.fundingNodeSettings = fundingNodeService.getSettings();
+      };
 
       this.init = function () {
         const config = configService.getSync();
@@ -17,8 +24,9 @@
         this.currentLanguageName = uxLanguage.getCurrentLanguageName();
         this.torEnabled = conf.socksHost && conf.socksPort;
         $scope.pushNotifications = config.pushNotifications.enabled;
-      };
 
+        self.initFundingNode();
+      };
 
       const unwatchPushNotifications = $scope.$watch('pushNotifications', (newVal, oldVal) => {
         if (newVal === oldVal) return;
@@ -71,10 +79,48 @@
         }
       });
 
+      const unwatchFundingNode = $scope.$watch(() => self.fundingNode, (newVal, oldVal) => {
+        if (oldVal === null || oldVal === undefined || newVal === oldVal) {
+          return;
+        }
+
+        fundingNodeService.canEnable().then(() => {
+          fundingNodeService.update(newVal).then(() => {
+            self.fundingNodeSettings = fundingNodeService.getSettings();
+          });
+        }, () => {
+          self.fundingNode = false;
+        });
+      }, true);
+
+      function getCorrectValue(oldValue, newValue, isFloat) {
+        const newValueParsed = isFloat ? parseFloat(newValue) : parseInt(newValue, 10);
+        if (newValue && newValueParsed.toString() === newValue.toString() && newValueParsed >= 0) {
+          return newValueParsed;
+        }
+        return oldValue;
+      }
+
+      self.onFundingNodeSettingBlur = function () {
+        const oldSettings = fundingNodeService.getSettings();
+        const newSettings = {
+          exchangeFee: getCorrectValue(oldSettings.exchangeFee, self.fundingNodeSettings.exchangeFee, true),
+          totalBytes: getCorrectValue(oldSettings.totalBytes, self.fundingNodeSettings.totalBytes, false),
+          bytesPerAddress: getCorrectValue(oldSettings.bytesPerAddress, self.fundingNodeSettings.bytesPerAddress, false),
+          maxEndUserCapacity: getCorrectValue(oldSettings.maxEndUserCapacity, self.fundingNodeSettings.maxEndUserCapacity, false)
+        };
+
+        fundingNodeService.setSettings(newSettings).then(() => {
+          self.fundingNodeSettings = fundingNodeService.getSettings();
+        }, () => {
+          self.fundingNodeSettings = fundingNodeService.getSettings();
+        });
+      };
 
       $scope.$on('$destroy', () => {
         unwatchPushNotifications();
         unwatchEncrypt();
+        unwatchFundingNode();
       });
     });
 }());

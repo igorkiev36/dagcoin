@@ -1,35 +1,62 @@
 <nav class="sidebar left-off-canvas-menu" ng-controller="sidebarController as sidebar">
-    <div style="position: relative;height: 80px;"></div>
-    <h4>Account</h4>
-    <ul class="list">
-        <li>
-            <a ui-sref-active="active" ui-sref="walletHome">
-                <svg-icon name="credit-card2"></svg-icon>
-                <span>Accounts</span>
+    <header>
+        <!--<logo ng-if="!sidebar.isWindowsPhoneApp" negative="true" width="80"></logo>-->
+        <!--<img ng-if="sidebar.isWindowsPhoneApp" src="img/logo-negative.png" alt="Byteball" width="80">-->
+        <div>Dagcoin</div>
+        <div ng-include="'views/includes/versionAndWalletType.html'"></div>
+    </header>
+    <ul class="off-canvas-list">
+        <li ng-show="sidebar.wallets[0]"
+            ng-repeat="item in sidebar.wallets track by $index"
+            ng-class="{'selected': item.id == index.walletId}"
+            class="nav-item">
+            <a ng-click="sidebar.switchWallet(item.id, index.walletId)" class="oh">
+                <div class="avatar-wallet"
+                     ng-style="{'background-color':item.color}">{{(item.name || item.id) | limitTo: 1}}
+                </div>
+                <div class="name-wallet text-ellipsis" ng-class="{'m8t':item.n == 1}">{{item.name || item.id}}</div>
+                <div class="size-12" ng-show="item.n > 1" translate>{{item.m}}-of-{{item.n}}</div>
             </a>
         </li>
         <li>
-            <a ui-sref-active="active" ui-sref="send">
-                <svg-icon name="align-top"></svg-icon>
-                <span>Send</span>
+            <a ng-click="$root.go('create')" class="oh">
+                <i class="icon-arrow-right3 size-18 right m10t"></i>
+                <i class="fi-plus size-24 icon"></i>
+                <div class="tu text-bold">
+                    <span class="size-12" translate>Add wallet</span>
+                </div>
+                <div translate>Create a new wallet</div>
             </a>
         </li>
         <li>
-            <a ui-sref-active="active" ui-sref="receive">
-                <svg-icon name="align-bottom"></svg-icon>
-                <span>Receive</span>
+            <a ng-click="sidebar.closeMenu(); $root.go('correspondentDevices')" class="oh">
+                <i class="icon-arrow-right3 size-18 right m10t vm"></i>
+                <i class="fi-plus size-24 icon vm"></i>
+                <div class="tu text-bold">
+                    <span class="size-12" translate>Paired devices</span>
+                </div>
+                <div translate>Co-signers for multisig</div>
+            </a>
+        </li>
+        <li>
+            <a ng-click="sidebar.closeMenu(); $root.go('preferences')" class="oh">
+                <i class="icon-arrow-right3 size-18 right m10t vm"></i>
+                <i class="fi-widget size-24 icon vm"></i>
+                <div class="tu text-bold">
+                    <span class="size-12" translate>Settings</span>
+                </div>
+                <div translate>Wallet preferences</div>
+            </a>
+        </li>
+        <li>
+            <a ng-click="sidebar.closeMenu(); $root.go('preferencesGlobal')" class="oh">
+                <i class="icon-arrow-right3 size-18 right m10t vm"></i>
+                <i class="fi-widget size-24 icon vm"></i>
+                <div class="tu text-bold">
+                    <span class="size-12" translate>Settings</span>
+                </div>
+                <div translate>Global preferences</div>
             </a>
         </li>
     </ul>
-
-    <h4>More</h4>
-    <ul class="list">
-        <li>
-            <a ui-sref-active="active" ui-sref="settings">
-                <svg-icon name="cog"></svg-icon>
-                <span>Settings</span>
-            </a>
-        </li>
-    </ul>
-    <dag-exchange-rate-view></dag-exchange-rate-view>
 </nav>

@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 (function () {
   'use strict';
 
@@ -19,7 +18,7 @@
         $scope.totalCosigners = n;
         self.RCValues = lodash.range(1, n + 1);
         if ($scope.requiredCosigners > n || !$scope.requiredCosigners) {
-          $scope.requiredCosigners = parseInt((n / 2) + 1);
+          $scope.requiredCosigners = parseInt((n / 2) + 1, 10);
         }
       };
 
@@ -131,6 +130,7 @@
         }
         if (self.cosigners.length !== $scope.totalCosigners - 1) {
           setError('invalid number of cosigners');
+          return;
         }
 
         const opts = {
@@ -144,10 +144,12 @@
           opts.cosigners = lodash.uniq(self.cosigners.map(cosigner => cosigner.device_address));
           if (opts.cosigners.length !== $scope.totalCosigners - 1) {
             setError('Please select different co-signers');
+            return;
           }
           for (let i = 0; i < opts.cosigners.length; i += 1) {
             if (!opts.cosigners[i] || opts.cosigners[i].length !== 33) {
               setError('Please fill all co-signers');
+              return;
             }
           }
         }
