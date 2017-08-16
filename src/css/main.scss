@@ -1,6 +1,10 @@
 ﻿@import "variables";
 @import "mobile";
 
+/* Components */
+
+@import "components/buttons";
+
 html {
   height: 100%;
   width: 100%;
@@ -322,7 +326,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, inpu
 .content {
   width: 100%;
   position: absolute;
-  top: 45px;
+  top: $nav_bar_height;
   bottom: 0;
   overflow: auto;
 

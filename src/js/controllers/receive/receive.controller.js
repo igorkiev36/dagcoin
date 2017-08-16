@@ -408,6 +408,12 @@
                     } else if (nodeWebkit.isDefined()) {
                         nodeWebkit.writeToClipboard(addr);
                     }
+
+                    $scope.tooltipCopiedShown = true;
+
+                    $timeout(() => {
+                        $scope.tooltipCopiedShown = false;
+                    }, 1000);
                 };
 
                 this.shareAddress = function (addr) {

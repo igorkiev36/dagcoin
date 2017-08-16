@@ -15,15 +15,12 @@ $nav_bar_height: 50px;
 }
 
 section{
-
-  &.ng-enter {
-    transition: 0.5s;
-    opacity: 0;
-  }
-
-  &.ng-enter-active {
-    opacity: 1;
-  }
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 1 !important;
 }
 
 @font-face {

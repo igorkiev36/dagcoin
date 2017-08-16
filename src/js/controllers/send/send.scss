@@ -35,4 +35,113 @@
       width: 16px;
     }
   }
+
+  #qr-scanner{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #eee;
+    width: 50px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+
+    svg-icon{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -15px;
+      margin-top: -14px;
+
+      svg{
+        width: 26px;
+        height: 26px;
+        fill: #666;
+      }
+    }
+  }
+
+  .input_receiver{
+    input{
+      padding-right: 50px;
+    }
+  }
+}
+
+.receiverModal{
+  padding: 20px;
+
+  #receiverModalInput{
+    position: relative;
+    top: -30px;
+    opacity: 0;
+    width: 100%;
+
+    label{
+      color: white;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    input{
+      color: #fff;
+      background: transparent;
+      outline: none;
+      border: 2px solid #fff;
+      margin: 0;
+      width: 100%;
+      font-weight: 400;
+    }
+  }
+
+  #receiverQuickAccess{
+    position: relative;
+    top: -30px;
+    opacity: 0;
+    width: 100%;
+    margin-top: 20px;
+
+    ul{
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      li{
+        color: white;
+        font-weight: 400;
+        font-size: 14px;
+        border-bottom: 1px solid rgba(250,250,250,0.4);
+        padding: 5px 0;
+        cursor: pointer;
+
+        &:hover{
+          background: rgba(250,250,250,0.1);
+        }
+      }
+    }
+  }
+
+  .ngdialog-content{
+    background: transparent;
+    position: absolute;
+    z-index: 12;
+    width: 100%;
+    padding-top: 50px;
+  }
+
+  .ngdialog-overlay{
+    background: rgba(0,0,0,0.9);
+  }
+
+  .ngdialog-close{
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 30px;
+
+    &:hover{
+      background: transparent;
+    }
+  }
 }

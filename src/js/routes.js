@@ -109,7 +109,7 @@
                     needProfile: true,
                     deepStateRedirect: true,
                     sticky: true,
-                    templateUrl: 'views/walletHome.html',
+                    templateUrl: 'controllers/walletHome/walletHome.template.html',
                     params: {
                         selectedWallet: null
                     }
@@ -327,7 +327,12 @@
                     url: '/settings',
                     title: 'Settings',
                     needProfile: true,
-                    templateUrl: 'controllers/settings/settings.template.html',
+                    templateUrl: 'controllers/settings/settings.template.html'
+                })
+                .state('settingsSecurity', {
+                    url: '/settings_security',
+                    needProfile: true,
+                    templateUrl: 'controllers/settings/security/security.template.html'
                 })
                 .state('settingsBackup', {
                     url: '/settings_backup',
@@ -339,11 +344,7 @@
                     needProfile: true,
                     templateUrl: 'controllers/settings/system/system.template.html',
                 })
-                .state('settings.about_device', {
-                    url: '/about_device',
-                    needProfile: true,
-                    templateUrl: 'controllers/settings/aboutDevice/aboutDevice.template.html',
-                })
+
                 .state('warning', {
                     url: '/warning',
                     controller: 'warningController',

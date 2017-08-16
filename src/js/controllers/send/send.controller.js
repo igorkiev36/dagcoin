@@ -18,9 +18,17 @@
 
         function findReceiver() {
             ngDialog.open({
-                template: '<p>find receiver</p>',
+                template: '<div id="receiverModalInput"><label><strong>Receiver:</strong><input type="text"></label></div><div id="receiverQuickAccess"><ul><li>Roman Shabanov</li><li>Roman Shabanov</li><li>Roman Shabanov</li></ul></div>',
                 plain: true,
-                className: 'ngdialog-theme-default',
+                className: 'receiverModal',
+                height: '100%',
+                controller: ['$scope', ($scope) => {
+                    $scope.text = 'LONG UPPERSPACE TEXT';
+                }],
+                onOpenCallback: () => {
+                    TweenMax.to('#receiverModalInput', 0.4, { opacity: '1', top: 0, delay: 0.5 });
+                    TweenMax.to('#receiverQuickAccess', 0.4, { opacity: '1', top: 0, delay: 1.0 });
+                }
             });
         }
 

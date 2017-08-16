@@ -6,6 +6,7 @@ globals:
   angular: true
   nw: true
   cordova: true
+  TweenMax: true
 extends:
   - airbnb-base
 rules:

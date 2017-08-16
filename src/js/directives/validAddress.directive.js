@@ -1,57 +1,61 @@
-/* global angular */
-(function () {
-  'use strict';
+(() => {
+    'use strict';
 
-  const ValidationUtils = require('byteballcore/validation_utils.js');
+    const ValidationUtils = require('byteballcore/validation_utils.js');
 
-  /**
-   * @desc validating DAG address
-   * @example <input valid-address></div>
-   */
-  angular
-    .module('copayApp.directives')
-    .directive('validAddress', validAddress);
+    /**
+     * @desc validating DAG address
+     * @example <input valid-address></div>
+     */
+    angular
+        .module('copayApp.directives')
+        .directive('validAddress', validAddress);
 
-  validAddress.$inject = ['$rootScope', 'profileService'];
+    validAddress.$inject = ['$rootScope', 'profileService'];
 
-  function validAddress($rootScope, profileService) {
-    return {
-      restrict: 'A',
-      require: 'ngModel',
-      link(scope, elem, attrs, ctrl) {
-        const validator = (value) => {
-          if (!profileService.focusedClient) {
-            return false;
-          }
+    function validAddress($rootScope, profileService) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link(scope, elem, attrs, ctrl) {
+                const validator = (value) => {
+                    if (!value && typeof value === 'undefined') {
+                        return;
+                    }
 
-          if (typeof value === 'undefined') {
-            ctrl.$pristine = true;
-            return false;
-          }
+                    if (!profileService.focusedClient) {
+                        return false;
+                    }
 
-          // Regular url
-          if (/^https?:\/\//.test(value)) {
-            ctrl.$setValidity('validAddress', true);
-            return value;
-          }
+                    if (typeof value === 'undefined') {
+                        ctrl.$pristine = true;
+                        return false;
+                    }
 
-          // byteball uri
-          const conf = require('byteballcore/conf.js');
-          const re = new RegExp(`^${conf.program}:([A-Z2-7]{32})\b`, 'i');
-          const arrMatches = value.match(re);
-          if (arrMatches) {
-            ctrl.$setValidity('validAddress', ValidationUtils.isValidAddress(arrMatches[1]));
-            return value;
-          }
+                    // Regular url
+                    if (/^https?:\/\//.test(value)) {
+                        ctrl.$setValidity('validAddress', true);
+                        return value;
+                    }
 
-          // Regular Address
-          ctrl.$setValidity('validAddress', ValidationUtils.isValidAddress(value));
-          return value;
+                    // byteball uri
+                    const conf = require('byteballcore/conf.js');
+                    const re = new RegExp(`^${conf.program}:([A-Z2-7]{32})\b`, 'i');
+                    const arrMatches = value.match(re);
+                    if (arrMatches) {
+                        ctrl.$setValidity('validAddress', ValidationUtils.isValidAddress(arrMatches[1]));
+                        return value;
+                    }
+
+                    // Regular Address
+                    ctrl.$setValidity('validAddress', ValidationUtils.isValidAddress(value));
+                    return value;
+                };
+
+                ctrl.$parsers.unshift(validator);
+                ctrl.$formatters.unshift(validator);
+            }
         };
+    }
+})();
 
-        ctrl.$parsers.unshift(validator);
-        ctrl.$formatters.unshift(validator);
-      },
-    };
-  }
-}());

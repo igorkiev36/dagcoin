@@ -25,11 +25,12 @@
                     icon: 'banknote',
                     state: 'receive',
                     menuBar: true
-                }, {
+                }/*, {
                     title: 'Contacts',
                     icon: 'business-card',
-                    state: 'contacts'
-                }
+                    state: 'contacts',
+                    menuBar: true
+                }*/
             ]
         }, {
             category: 'More',
@@ -37,8 +38,7 @@
                 {
                     title: 'Settings',
                     icon: 'cog',
-                    state: 'settings',
-                    menuBar: true
+                    state: 'settings'
                 }
             ]
         }];

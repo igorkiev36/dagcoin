@@ -1,0 +1,212 @@
+<dag-nav-bar state-title="My Wallet"></dag-nav-bar>
+
+<div ng-controller="walletHomeController as home">
+    <div class="onGoingProcess" ng-show="index.isOffline">
+        <div class="onGoingProcess-content" ng-style="{'background-color':'#222'}">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+            <span translate>Reconnecting to Wallet Service...</span>
+        </div>
+    </div>
+
+    <div class="onGoingProcess" ng-show="index.anyOnGoingProcess && !index.isOffline">
+        <div class="onGoingProcess-content" ng-style="{'background-color':'#222'}">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+            <span translate ng-show="
+        index.onGoingProcessName == 'openingWallet'
+        || index.onGoingProcessName == 'updatingStatus'
+        || index.onGoingProcessName == 'updatingBalance'
+        || index.onGoingProcessName == 'updatingPendingTxps'
+        "> Updating Wallet... </span>
+            <span translate ng-show="index.onGoingProcessName == 'scanning'">Scanning Wallet funds...</span>
+            <span translate ng-show="index.onGoingProcessName == 'recreating'">Recreating Wallet...</span>
+            <span translate ng-show="index.onGoingProcessName == 'generatingCSV'">Generating .csv file...</span>
+            <span translate ng-show="index.onGoingProcessName == 'Syncing'">Syncing... {{index.syncProgress}}</span>
+            <span translate ng-show="index.onGoingProcessName == 'sending'">Sending...</span>
+        </div>
+    </div>
+
+    <div class="onGoingProcess" ng-show="home.onGoingProcess && !index.anyOnGoingProces && !index.isOffline">
+        <div class="onGoingProcess-content" ng-style="{'background-color':'#222'}">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+            {{home.onGoingProcess|translate}}...
+        </div>
+    </div>
+
+    <div class="oh" ng-show="!index.noFocusedWallet">
+
+        <div id="walletHome" class="walletHome content">
+
+            <div class="content_hero">
+                <div class="p-wallet">
+                    <div class="p-wallet__price-block">
+                        <div ng-if="!index.anyOnGoingProcess || 1">
+                            <div class="text-gray text-center size-12 p10t" ng-show="index.updateError"
+                                 ng-click='index.openWallet(); index.updateTxHistory()'>
+                                <span class="size-12 db m10b">{{index.updateError|translate}}</span>
+                                <button class=" btn_red tiny round" translate>Tap to retry</button>
+                            </div>
+
+                            <div class="text-gray text-center size-12 p10t" ng-show="index.walletScanStatus == 'error'"
+                                 ng-click='index.retryScan()'>
+                                <span class="size-12 db m10b">Scan status finished with error</span>
+                                <button class=" btn_red tiny round" translate>Tap to retry</button>
+                            </div>
+
+                            <div ng-show="!index.updateError && index.walletScanStatus != 'error'"
+                                 ng-click='index.updateAll(); index.updateHistoryFromNetwork()'>
+
+                                <div class="price-wrapper-title">
+                                    <span>Total Balance</span>
+                                </div>
+                                <div class="price-wrapper">
+
+                                    <div class="price">
+                                        <svg-icon class="price-icon icon icon-d" name="dag-symbol"></svg-icon>
+
+                                        <div class="price_digits">
+                                            <div class="price_digits_wrapper">
+                                            <span class="price-number"
+                                                  ng-style="home.getFontSizeForWalletNumber(index.dagBalance.totalStr)">{{index.dagBalance.totalStr.split('.')[0]}}</span>
+                                                <span class="price-sup"
+                                                      ng-style="home.getFontSizeForWalletNumber(index.dagBalance.totalStr, 'sup')">{{index.dagBalance.totalStr.split('.')[1]}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="spending_this_month" >
+                                    <div class="spending_this_month_income">
+                                        <span>Available Balance</span>
+                                        <strong>0</strong>
+                                    </div>
+                                    <div class="spending_this_month_expenses">
+                                        <span>Pending Balance</span>
+                                        <strong>0</strong>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div ng-if="index.anyOnGoingProcess && 0">
+                            <div class="size-36">
+                                <strong>...</strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="svg-container wallet" style="bottom: 0;left: auto;right: 0;">
+                        <svg class="icon icon-BG-shapw-2-left" style="transform: rotate(90deg); opacity: 0.1; font-size: 170px;">
+                            <use xlink:href="img/svg/symbol-defs.svg#icon-BG-shapw-2-left"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!--<dag-quick-transfer></dag-quick-transfer>-->
+
+            <div class="transactions">
+                <div class="transactions__head">
+                    <span>Recent transactions</span>
+                </div>
+                <div class="oh text-center" ng-show="index.updatingTxHistory">
+
+					<span ng-show="!index.txHistory[0] && index.txHistoryError" ng-click='index.updateTxHistory()'>
+					  <p class="size-12 m10b db text-gray" translate>Could not fetch transaction history</p>
+					  <button class="btn_red-full round light-gray tiny" translate>Tap to retry</button>
+					</span>
+                    <br/>
+                    <div class="onGoingProcess-content" ng-style="{'background-color':'#222'}">
+                        <div class="spinner">
+                            <div class="rect1"></div>
+                            <div class="rect2"></div>
+                            <div class="rect3"></div>
+                            <div class="rect4"></div>
+                            <div class="rect5"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="oh text-center"
+                     ng-show="!index.updatingTxHistory">
+					<span class="text-center" ng-show="!index.txHistory[0] && !index.txHistoryError">
+					  No recent transactions yet
+					</span>
+                </div>
+                <div ng-show="index.txHistory[0] && !index.updatingTxHistory">
+                    <div class="transactions__table ">
+                        <table>
+                            <tbody>
+                            <tr ng-repeat="btx in index.txHistory | limitTo: 3" class="row ">
+                                <td><span class="details-price"
+                                          ng-class="btx.action == 'received'? 'success':'danger'">{{btx.amountStr}}</span>
+                                    <div class="details-wrap"><span class="details-info">My Account</span>
+                                        <svg class="icon"
+                                             ng-class="btx.action == 'received'? 'icon-arrow-left':'icon-arrow-right'">
+                                            <use
+                                                    xlink:href="{{index.getSvgSrc(btx.action == 'received'? 'icon-arrow-left':'icon-arrow-right')}}"></use>
+                                        </svg>
+
+                                        <span ng-if="btx.action == 'received'"
+                                              ng-repeat="address in btx.arrPayerAddresses" class="details-info">{{address}}</span>
+                                        <span ng-if="btx.action == 'sent'"
+                                              class="details-info">{{btx.addressTo}}</span>
+                                    </div>
+                                </td>
+                                <td><span class="details-time">{{ btx.time * 1000 | amDateFormat:'HH:mm'}}</span>
+                                    <span class="details-date">{{ btx.time * 1000 | amDateFormat:'MM.DD.YYYY'}}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="index.txps[0]">
+                <h4 ng-show="index.requiresMultipleSignatures" class="title m0" translate>Payment Proposals</h4>
+                <h4 ng-show="!index.requiresMultipleSignatures" class="title m0" translate>Unsent transactions</h4>
+                <div class="last-transactions pr" ng-repeat="tx in index.txps"
+                     ng-include="index.txTemplateUrl">
+                </div>
+
+                <div class="text-gray text-center size-12 p10t"
+                     ng-show="index.lockedBalanceBytes && !index.updatingStatus">
+                    <span translate>Total Locked Balance</span>:
+                    <b>{{index.lockedBalanceStr}} </b>
+                </div>
+            </div>
+            <div class="extra-margin-bottom"></div>
+
+        </div>
+
+        <!-- END WalletHome -->
+
+        <div id="{{view.id}}" class="{{view.class}} tab-view" ng-repeat="view in index.addonViews"
+             ng-include="view.template">
+        </div>
+
+    </div>
+</div>
+<div class="extra-margin-bottom"></div>
+<dag-bottom-bar></dag-bottom-bar>

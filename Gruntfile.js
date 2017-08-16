@@ -433,7 +433,7 @@ module.exports = function (grunt) {
                     'src/js/controllers/**/*.js',
                     'src/js/factories/**/*.js'
                 ],
-                tasks: ['concat:js', 'karma:unit']
+                tasks: ['concat:js'/*, 'karma:unit'*/]
             }
         }
     });
