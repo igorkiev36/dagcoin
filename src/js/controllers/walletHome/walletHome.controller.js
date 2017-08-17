@@ -40,6 +40,7 @@
                 $scope.currentSpendUnconfirmed = configWallet.spendUnconfirmed;
 
                 // INIT
+
                 const walletSettings = configWallet.settings;
                 this.unitValue = walletSettings.unitValue;
                 this.dagUnitValue = walletSettings.dagUnitValue;

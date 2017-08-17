@@ -42,22 +42,7 @@
         self.setWallets();
       };
 
-      self.setWallets = function () {
-        if (!profileService.profile) return;
-        const config = configService.getSync();
-        config.colorFor = config.colorFor || {};
-        config.aliasFor = config.aliasFor || {};
-        const ret = lodash.map(profileService.profile.credentials, c => ({
-          m: c.m,
-          n: c.n,
-          name: config.aliasFor[c.walletId] || c.walletName,
-          id: c.walletId,
-          color: config.colorFor[c.walletId] || '#4A90E2',
-        }));
-        self.wallets = lodash.sortBy(ret, 'name');
-      };
-
-      self.setWallets();
+      1
     });
 }());
 

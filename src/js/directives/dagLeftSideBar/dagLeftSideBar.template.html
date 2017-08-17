@@ -1,7 +1,15 @@
 <nav class="sidebar left-off-canvas-menu">
-    <div class="sidebar_profile">
-        <div class="sidebar_profile_title">Roman.mac.machine</div>
-    </div>
+
+    <header>
+        <div>
+            <svg-icon name="Dagcoin_logo_color_text"></svg-icon>
+        </div>
+        <div ng-controller="versionAndWalletTypeController as v">
+            <span>v{{v.version}} Beta.</span>
+            <strong>{{v.type}}</strong>
+        </div>
+    </header>
+
     <div ng-repeat="list in ::lists">
         <ul class="list">
             <li ng-repeat="link in ::list.links">
