@@ -6,6 +6,7 @@
     height: 2000px;
   }
 
+  /* stylelint-disable */
   .cards_swiper{
 
     .swiper-container{
@@ -16,7 +17,7 @@
       .swiper-slide {
         text-align: center;
         font-size: 18px;
-        background: white;
+        background: #fff;
         color: #333;
         width: 60%;
         /* Center slide text vertically */
@@ -34,7 +35,7 @@
         align-items: center;
       }
     }
-
   }
+  /* stylelint-enable */
 
 }

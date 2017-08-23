@@ -74,8 +74,8 @@
                                  ng-click='index.updateAll(); index.updateHistoryFromNetwork()'>
 
                                 <ks-swiper-container class="cards_swiper" override-parameters="{'slidesPerView': '2', 'centeredSlides': 'true', 'spaceBetween': 30}">
-                                    <ks-swiper-slide class="swiper-slide" ng-repeat="s in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
-                                        <div>{{s}}</div>
+                                    <ks-swiper-slide class="swiper-slide" ng-repeat="wallet in home.wallets">
+                                        <div>{{wallet.color}}</div>
                                     </ks-swiper-slide>
                                 </ks-swiper-container>
 
