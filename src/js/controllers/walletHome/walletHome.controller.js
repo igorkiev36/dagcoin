@@ -21,6 +21,23 @@
 
         // INIT
 
+        home.swiper = {};
+
+        home.onReadySwiper = (swiper) => {
+          home.swiper = swiper;
+
+          if (!home.activeWallet) {
+            home.activeWallet = home.wallets[swiper.activeIndex].id;
+          }
+
+          swiper.on('transitionEnd', () => {
+
+            if (home.wallets[swiper.activeIndex] && home.activeWallet !== home.wallets[swiper.activeIndex].id) {
+              home.switchWallet(home.wallets[swiper.activeIndex].id, home.activeWallet);
+              home.activeWallet = home.wallets[swiper.activeIndex].id;
+            }
+          });
+        };
 
         this.isWindowsPhoneApp = isMobile.Windows() && isCordova;
         this.walletSelection = false;
@@ -42,20 +59,21 @@
           profileService.signout();
         };
 
-        this.switchWallet = function (selectedWalletId, currentWalletId) {
+        home.switchWallet = function (selectedWalletId, currentWalletId) {
+
           backButton.menuOpened = false;
           if (selectedWalletId === currentWalletId) {
             return;
           }
-          this.walletSelection = false;
+          home.walletSelection = false;
           profileService.setAndStoreFocus(selectedWalletId, () => {
           });
         };
 
-        this.switchWalletOpenPreferences = function (selectedWalletId, currentWalletId) {
+        /*this.switchWalletOpenPreferences = function (selectedWalletId, currentWalletId) {
           this.switchWallet(selectedWalletId, currentWalletId);
           $state.go('preferences');
-        };
+        };*/
 
         this.toggleWalletSelection = function () {
           this.walletSelection = !this.walletSelection;
@@ -70,6 +88,9 @@
           const config = configService.getSync();
           config.colorFor = config.colorFor || {};
           config.aliasFor = config.aliasFor || {};
+
+          this.initialWallet = 1;
+
           const ret = lodash.map(profileService.profile.credentials, c => ({
             m: c.m,
             n: c.n,
@@ -79,9 +100,10 @@
           }));
           this.wallets = lodash.sortBy(ret, 'name');
 
-          console.group('SIDEBAR WALLETS');
-          console.log(console.log(this.wallets));
-          console.groupEnd('SIDEBAR WALLETS');
+          this.wallets.map((wallet, index) => {
+            console.log(wallet);
+            console.log(index);
+          });
         };
 
         this.setWallets();
@@ -967,7 +989,7 @@
           const ModalInstanceCtrl = function ($scope, $modalInstance) {
             $scope.color = fc.backgroundColor;
             $scope.arrPublicAssetInfos = indexScope.arrBalances.filter(b => !b.is_private).map((b) => {
-              const info = {asset: b.asset};
+              const info = { asset: b.asset };
               if (b.asset === 'base') {
                 info.displayName = self.unitName;
               } else if (b.asset === constants.DAGCOIN_ASSET) {
@@ -1125,7 +1147,7 @@
           }
 
           if (asset) {
-            const assetIndex = lodash.findIndex($scope.index.arrBalances, {asset});
+            const assetIndex = lodash.findIndex($scope.index.arrBalances, { asset });
             if (assetIndex < 0) {
               throw Error(`failed to find asset index of asset ${asset}`);
             }
@@ -1255,7 +1277,7 @@
           const fc = profileService.focusedClient;
           const ModalInstanceCtrl = function ($scope, $modalInstance) {
             $scope.btx = btx;
-            const assetIndex = lodash.findIndex(indexScope.arrBalances, {asset: btx.asset});
+            const assetIndex = lodash.findIndex(indexScope.arrBalances, { asset: btx.asset });
             $scope.isPrivate = indexScope.arrBalances[assetIndex].is_private;
             $scope.settings = walletSettings;
             $scope.color = fc.backgroundColor;

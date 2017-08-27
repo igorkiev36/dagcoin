@@ -19,7 +19,8 @@
 // Setting up route
   angular
     .module('copayApp')
-    .config((historicLogProvider, $provide, $logProvider, $stateProvider, $urlRouterProvider, $compileProvider) => {
+    .config((historicLogProvider, $provide, $logProvider, $stateProvider, $urlRouterProvider, $compileProvider, $locationProvider) => {
+
       $urlRouterProvider.otherwise('/');
 
       $logProvider.debugEnabled(true);
@@ -158,33 +159,19 @@
         })
         .state('create', {
           url: '/create',
-          templateUrl: 'views/create.html',
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/create.html',
-            },
-          },
+          templateUrl: 'views/create.html'
         })
         .state('copayers', {
           url: '/copayers',
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/copayers.html',
-            },
-          },
+          templateUrl: 'views/copayers.html'
         })
         .state('preferences', {
           url: '/preferences',
           templateUrl: 'views/preferences.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferences.html',
-            },
-          },
+          needProfile: true
         })
         .state('correspondentDevices', {
           url: '/correspondentDevices',
@@ -192,241 +179,137 @@
           needProfile: true,
           deepStateRedirect: true,
           sticky: true,
-          views: {
-            chat: {
-              templateUrl: 'views/correspondentDevices.html',
-            },
-          },
+          templateUrl: 'views/correspondentDevices.html'
         })
         .state('correspondentDevices.correspondentDevice', {
           url: '/correspondentDevice',
           walletShouldBeComplete: false,
           needProfile: true,
-          views: {
-            dialog: {
-              templateUrl: 'views/correspondentDevice.html',
-            },
-          },
+          templateUrl: 'views/correspondentDevice.html'
         })
         .state('correspondentDevices.editCorrespondentDevice', {
           url: '/editCorrespondentDevice',
           walletShouldBeComplete: false,
           needProfile: true,
-          views: {
-            dialog: {
-              templateUrl: 'views/editCorrespondentDevice.html',
-            },
-          },
+          templateUrl: 'views/editCorrespondentDevice.html'
         })
         .state('correspondentDevices.addCorrespondentDevice', {
           url: '/addCorrespondentDevice',
           needProfile: true,
-          views: {
-            dialog: {
-              templateUrl: 'views/addCorrespondentDevice.html',
-            },
-          },
+          templateUrl: 'views/addCorrespondentDevice.html'
         })
         .state('correspondentDevices.inviteCorrespondentDevice', {
           url: '/inviteCorrespondentDevice',
           walletShouldBeComplete: false,
           needProfile: true,
-          views: {
-            dialog: {
-              templateUrl: 'views/inviteCorrespondentDevice.html',
-            },
-          },
+          templateUrl: 'views/inviteCorrespondentDevice.html'
         })
         .state('correspondentDevices.acceptCorrespondentInvitation', {
           url: '/acceptCorrespondentInvitation',
           walletShouldBeComplete: false,
           needProfile: true,
-          views: {
-            dialog: {
-              templateUrl: 'views/acceptCorrespondentInvitation.html',
-            },
-          },
+          templateUrl: 'views/acceptCorrespondentInvitation.html'
         })
         .state('authConfirmation', {
           url: '/authConfirmation',
           walletShouldBeComplete: true,
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/authConfirmation.html',
-            },
-          },
+          templateUrl: 'views/authConfirmation.html'
         })
         .state('preferencesDeviceName', {
           url: '/preferencesDeviceName',
           walletShouldBeComplete: false,
           needProfile: false,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesDeviceName.html',
-            },
-          },
+          templateUrl: 'views/preferencesDeviceName.html'
         })
         .state('preferencesLanguage', {
           url: '/preferencesLanguage',
           walletShouldBeComplete: true,
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesLanguage.html',
-            },
-          },
+          templateUrl: 'views/preferencesLanguage.html'
         })
-
         .state('preferencesAdvanced', {
           url: '/preferencesAdvanced',
           templateUrl: 'views/preferencesAdvanced.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesAdvanced.html',
-            },
-          },
+          needProfile: true
         })
         .state('preferencesDeleteWallet', {
           url: '/delete',
           templateUrl: 'views/preferencesDeleteWallet.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            'main@': {
-              templateUrl: 'views/preferencesDeleteWallet.html'
-            },
-          }
+          needProfile: true
         })
         .state('preferencesColor', {
           url: '/preferencesColor',
-          templateUrl: 'views/preferencesColor.html',
           walletShouldBeComplete: true,
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesColor.html',
-            },
-          },
+          templateUrl: 'views/preferencesColor.html'
         })
-
         .state('preferencesAlias', {
           url: '/preferencesAlias',
           templateUrl: 'views/preferencesAlias.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesAlias.html',
-            },
-
-          },
+          needProfile: true
         })
         .state('preferencesEmail', {
           url: '/preferencesEmail',
           templateUrl: 'views/preferencesEmail.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesEmail.html',
-            },
-
-          },
+          needProfile: true
         })
         .state('information', {
           url: '/information',
           walletShouldBeComplete: true,
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesInformation.html',
-            },
-          },
+          templateUrl: 'views/preferencesInformation.html'
         })
 
         .state('about', {
           url: '/about',
           templateUrl: 'views/preferencesAbout.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesAbout.html',
-            },
-          },
+          needProfile: true
         })
         .state('logs', {
           url: '/logs',
           templateUrl: 'views/preferencesLogs.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesLogs.html',
-            },
-          },
+          needProfile: true
         })
         .state('export', {
           url: '/export',
           templateUrl: 'views/export.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/export.html',
-            },
-          },
+          needProfile: true
         })
         .state('paperWallet', {
           url: '/paperWallet',
           templateUrl: 'views/paperWallet.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/paperWallet.html',
-            },
-          },
+          needProfile: true
         })
         .state('backup', {
           url: '/backup',
           templateUrl: 'views/backup.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/backup.html',
-            },
-          },
+          needProfile: true
         })
         .state('recoveryFromSeed', {
           url: '/recoveryFromSeed',
           templateUrl: 'views/recoveryFromSeed.html',
           walletShouldBeComplete: true,
-          needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/recoveryFromSeed.html',
-            },
-          },
+          needProfile: true
         })
         .state('preferencesGlobal', {
           url: '/preferencesGlobal',
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/preferencesGlobal.html',
-            },
-          },
+          templateUrl: 'views/preferencesGlobal.html'
         })
         .state('settings', {
           url: '/settings',
-          controller: 'settingsController',
-          templateUrl: 'views/settings.html',
-          needProfile: false,
+          templateUrl: 'controllers/settings/settings.template.html',
+          needProfile: false
         })
         .state('warning', {
           url: '/warning',
@@ -438,11 +321,7 @@
         .state('add', {
           url: '/add',
           needProfile: true,
-          views: {
-            main: {
-              templateUrl: 'views/add.html',
-            },
-          },
+          templateUrl: 'views/add.html'
         })
         .state('cordova', { // never used
           url: '/cordova/:status/:isHome',
@@ -479,6 +358,8 @@
     })
     .run(($rootScope, $state, $log, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService) => {
       FastClick.attach(document.body);
+
+      $rootScope.no_animation = !!document.getElementsByTagName("body")[0].className.match(/no_animation/);
 
       uxLanguage.init();
 

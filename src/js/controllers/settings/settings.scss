@@ -33,8 +33,17 @@
       color: #4e4e4e;
       position: relative;
 
+      .description{
+        font-size: 12px;
+        color: #999;
+      }
+
       &.left_icon {
         padding-left: 60px;
+      }
+
+      &.right_icon {
+        padding-right: 60px;
       }
 
       svg-icon {

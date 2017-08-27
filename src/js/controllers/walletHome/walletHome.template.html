@@ -1,4 +1,4 @@
-<dag-nav-bar state-title="My Wallet"></dag-nav-bar>
+<dag-nav-bar title="My Wallet"></dag-nav-bar>
 
 <div ng-controller="walletHomeController as home">
     <div class="onGoingProcess" ng-show="index.isOffline">
@@ -73,13 +73,16 @@
                             <div ng-show="!index.updateError && index.walletScanStatus != 'error'"
                                  ng-click='index.updateAll(); index.updateHistoryFromNetwork()'>
 
-                                <ks-swiper-container class="cards_swiper" override-parameters="{'slidesPerView': '2', 'centeredSlides': 'true', 'spaceBetween': 30}">
-                                    <ks-swiper-slide class="swiper-slide" ng-repeat="wallet in home.wallets">
-                                        <div>{{wallet.color}}</div>
+                                <ks-swiper-container pagination-is-active="true" pagination-clickable="false" swiper="swiper" on-ready="home.onReadySwiper(swiper)" class="cards_swiper" override-parameters="{'slidesPerView': 'auto', 'spaceBetween': 0, 'centeredSlides': true, 'hashnav': true, 'hashnavWatchState': true, 'replaceState': true}">
+                                    <ks-swiper-slide class="swiper-slide" ng-repeat="wallet in home.wallets track by $index">
+                                        <div>{{$index+1}}/{{home.wallets.length}} - {{wallet.name}}<br/><a ui-sref="preferences">Preferences</a></div>
                                     </ks-swiper-slide>
+                                    <!--<ks-swiper-slide>
+                                        <div><a ui-sref="create">create</a></div>
+                                    </ks-swiper-slide>-->
                                 </ks-swiper-container>
 
-                                <div class="price-wrapper-title">
+                                <!--<div class="price-wrapper-title">
                                     <span>Total Balance</span>
                                 </div>
                                 <div class="price-wrapper">
@@ -96,7 +99,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                             </div>
 
@@ -119,65 +122,70 @@
                 </div>
             </div>
 
-            <!--<dag-quick-transfer></dag-quick-transfer>-->
-
-            <div class="transactions">
-                <div class="transactions__head">
-                    <span>Recent transactions</span>
-                </div>
-                <div class="oh text-center" ng-show="index.updatingTxHistory">
+            <dag-tabset>
+                <dag-tab heading="Transactions" active>
+                    <div class="transactions">
+                        <div class="transactions__head">
+                            <span>Recent transactions</span>
+                        </div>
+                        <div class="oh text-center" ng-show="index.updatingTxHistory">
 
 					<span ng-show="!index.txHistory[0] && index.txHistoryError" ng-click='index.updateTxHistory()'>
 					  <p class="size-12 m10b db text-gray" translate>Could not fetch transaction history</p>
 					  <button class="btn_red-full round light-gray tiny" translate>Tap to retry</button>
 					</span>
-                    <br/>
-                    <div class="onGoingProcess-content" ng-style="{'background-color':'#222'}">
-                        <div class="spinner">
-                            <div class="rect1"></div>
-                            <div class="rect2"></div>
-                            <div class="rect3"></div>
-                            <div class="rect4"></div>
-                            <div class="rect5"></div>
+                            <br/>
+                            <div class="onGoingProcess-content" ng-style="{'background-color':'#222'}">
+                                <div class="spinner">
+                                    <div class="rect1"></div>
+                                    <div class="rect2"></div>
+                                    <div class="rect3"></div>
+                                    <div class="rect4"></div>
+                                    <div class="rect5"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="oh text-center"
-                     ng-show="!index.updatingTxHistory">
+                        <div class="oh text-center"
+                             ng-show="!index.updatingTxHistory">
 					<span class="text-center" ng-show="!index.txHistory[0] && !index.txHistoryError">
 					  No recent transactions yet
 					</span>
-                </div>
-                <div ng-show="index.txHistory[0] && !index.updatingTxHistory">
-                    <div class="transactions__table ">
-                        <table>
-                            <tbody>
-                            <tr ng-repeat="btx in index.txHistory | limitTo: 3" class="row ">
-                                <td><span class="details-price"
-                                          ng-class="btx.action == 'received'? 'success':'danger'">{{btx.amountStr}}</span>
-                                    <div class="details-wrap"><span class="details-info">My Account</span>
-                                        <svg class="icon"
-                                             ng-class="btx.action == 'received'? 'icon-arrow-left':'icon-arrow-right'">
-                                            <use
-                                                    xlink:href="{{index.getSvgSrc(btx.action == 'received'? 'icon-arrow-left':'icon-arrow-right')}}"></use>
-                                        </svg>
+                        </div>
+                        <div ng-show="index.txHistory[0] && !index.updatingTxHistory">
+                            <div class="transactions__table ">
+                                <table>
+                                    <tbody>
+                                    <tr ng-repeat="btx in index.txHistory | limitTo: 3" class="row ">
+                                        <td><span class="details-price"
+                                                  ng-class="btx.action == 'received'? 'success':'danger'">{{btx.amountStr}}</span>
+                                            <div class="details-wrap"><span class="details-info">My Account</span>
+                                                <svg class="icon"
+                                                     ng-class="btx.action == 'received'? 'icon-arrow-left':'icon-arrow-right'">
+                                                    <use
+                                                            xlink:href="{{index.getSvgSrc(btx.action == 'received'? 'icon-arrow-left':'icon-arrow-right')}}"></use>
+                                                </svg>
 
-                                        <span ng-if="btx.action == 'received'"
-                                              ng-repeat="address in btx.arrPayerAddresses" class="details-info">{{address}}</span>
-                                        <span ng-if="btx.action == 'sent'"
-                                              class="details-info">{{btx.addressTo}}</span>
-                                    </div>
-                                </td>
-                                <td><span class="details-time">{{ btx.time * 1000 | amDateFormat:'HH:mm'}}</span>
-                                    <span class="details-date">{{ btx.time * 1000 | amDateFormat:'MM.DD.YYYY'}}</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                                <span ng-if="btx.action == 'received'"
+                                                      ng-repeat="address in btx.arrPayerAddresses" class="details-info">{{address}}</span>
+                                                <span ng-if="btx.action == 'sent'"
+                                                      class="details-info">{{btx.addressTo}}</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="details-time">{{ btx.time * 1000 | amDateFormat:'HH:mm'}}</span>
+                                            <span class="details-date">{{ btx.time * 1000 | amDateFormat:'MM.DD.YYYY'}}</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </dag-tab>
+                <dag-tab heading="Details">
+                    Details
+                </dag-tab>
+            </dag-tabset>
 
             <div ng-if="index.txps[0]">
                 <h4 ng-show="index.requiresMultipleSignatures" class="title m0" translate>Payment Proposals</h4>
