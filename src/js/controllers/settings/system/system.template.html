@@ -4,16 +4,8 @@
 
     <h4>Device</h4>
     <ul>
-        <li ui-sref="settingsSystem">
-            <svg-icon name="chevron-thin-right"></svg-icon>
-            <div translate>Device Name</div>
-            <div class="value"></div>
-        </li>
-
-        <li class="left_icon" ui-sref="settingsSecurity">
-            <svg-icon name="shield"></svg-icon>
-            <svg-icon name="chevron-thin-right"></svg-icon>
-            <div translate>Security</div>
+        <li dag-right-icon="chevron-thin-right">
+            <a ui-sref="settings({ category: params.category, sub: 'deviceName' })">Device Name</a>
         </li>
     </ul>
 </div>

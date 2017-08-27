@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('copayApp.controllers').controller('preferencesDeviceNameController',
-        function ($scope, $timeout, configService, go) {
+        function ($scope, $timeout, configService, $window) {
             const config = configService.getSync();
             this.deviceName = config.deviceName;
 
@@ -18,7 +18,7 @@
                         return;
                     }
                     $timeout(() => {
-                        go.path('preferencesGlobal');
+                      $window.history.back();
                     }, 50);
                 });
             };

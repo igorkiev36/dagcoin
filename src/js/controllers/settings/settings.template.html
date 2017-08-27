@@ -4,27 +4,27 @@
 
     <h4>General</h4>
     <ul>
-        <li dag-left-icon="globe" dag-right-icon="chevron-thin-right" ui-sref="settingsSystem">
-            <div translate>System</div>
+        <li dag-left-icon="globe" dag-right-icon="chevron-thin-right">
+            <a ui-sref="settings({ category: 'system' })">System</a>
         </li>
 
-        <li dag-left-icon="shield" dag-right-icon="chevron-thin-right" ui-sref="settingsSecurity">
-            <div translate>Security</div>
+        <li dag-left-icon="shield" dag-right-icon="chevron-thin-right">
+            <a ui-sref="settings({ category: 'security' })">Security</a>
         </li>
     </ul>
     <h4>Backup</h4>
     <ul>
-        <li dag-left-icon="backup" dag-right-icon="chevron-thin-right" ui-sref="settingsBackup">
-            <div translate>Backup</div>
+        <li dag-left-icon="backup" dag-right-icon="chevron-thin-right">
+            <a ui-sref="settingsBackup">Backup</a>
         </li>
     </ul>
     <h4>Other</h4>
     <ul>
-        <li dag-left-icon="devices_other" dag-right-icon="chevron-thin-right" ui-sref="about_device">
-            <div translate>About Device</div>
+        <li dag-left-icon="devices_other" dag-right-icon="chevron-thin-right">
+            <a ui-sref="about_device">About Device</a>
         </li>
-        <li dag-left-icon="info" dag-right-icon="chevron-thin-right" ui-sref="about">
-            <div translate>About Dagcoin</div>
+        <li dag-left-icon="info" dag-right-icon="chevron-thin-right">
+            <a ui-sref="about">About Dagcoin</a>
         </li>
     </ul>
     <div class="extra-margin-bottom"></div>

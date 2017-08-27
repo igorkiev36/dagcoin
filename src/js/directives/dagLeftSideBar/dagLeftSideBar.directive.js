@@ -8,8 +8,8 @@
    * @example <dag-left-side-bar></dag-left-side-bar>
    */
   angular
-      .module('copayApp.directives')
-      .directive('dagLeftSideBar', dagLeftSideBar);
+    .module('copayApp.directives')
+    .directive('dagLeftSideBar', dagLeftSideBar);
 
   dagLeftSideBar.$inject = ['menuLinks'];
 
@@ -21,7 +21,7 @@
       scope: {},
       link: ($scope) => {
         $scope.lists = menuLinks;
-      },
+      }
     };
   }
 })();

@@ -307,8 +307,18 @@
           templateUrl: 'views/preferencesGlobal.html'
         })
         .state('settings', {
-          url: '/settings',
-          templateUrl: 'controllers/settings/settings.template.html',
+          url: '/settings/:category/:sub',
+          templateUrl: (stateParams) => {
+            if (stateParams.category && stateParams.sub) {
+              return `controllers/settings/${stateParams.category}/${stateParams.sub}/${stateParams.sub}.template.html`;
+            }
+
+            if (stateParams.category) {
+              return `controllers/settings/${stateParams.category}/${stateParams.category}.template.html`;
+            }
+
+            return 'controllers/settings/settings.template.html';
+          },
           needProfile: false
         })
         .state('warning', {
@@ -356,10 +366,10 @@
           needProfile: false,
         });
     })
-    .run(($rootScope, $state, $log, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService) => {
+    .run(($rootScope, $state, $log, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService, backButton, go) => {
       FastClick.attach(document.body);
 
-      $rootScope.no_animation = !!document.getElementsByTagName("body")[0].className.match(/no_animation/);
+      $rootScope.no_animation = !!document.getElementsByTagName('body')[0].className.match(/no_animation/);
 
       uxLanguage.init();
 
@@ -384,6 +394,12 @@
       }
 
       $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState) => {
+
+        $rootScope.params = toParams;
+
+        backButton.menuOpened = false;
+        go.swipe();
+
         if (!profileService.profile && toState.needProfile) {
           // Give us time to open / create the profile
           event.preventDefault();
