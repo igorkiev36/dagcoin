@@ -34,6 +34,7 @@
 
     &.active {
       border-top: 2px solid $main_color;
+      color: $main_color;
     }
 
     svg-icon{
@@ -43,10 +44,6 @@
     svg {
       width: 20px;
       height: 20px;
-    }
-
-    &.active {
-      color: $main_color;
     }
 
     span {
