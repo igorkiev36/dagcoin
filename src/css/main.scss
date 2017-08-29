@@ -257,7 +257,11 @@ ul.button-group {
 }
 
 a {
-  color: #3498db;
+  color: $main_color;
+
+  &:hover{
+    color: darken($main_color, 10);
+  }
 
   &.close-notification {
     position: absolute;
@@ -2066,7 +2070,6 @@ a.a_none {
   display: none;
 }
 
-
 .c-header {
   position: relative;
   left: 0;
@@ -2354,7 +2357,7 @@ canvas {
 .transactions__table {
   margin-top: 20px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  //overflow-y: scroll;
 
   table {
     width: 100%;
@@ -2427,6 +2430,11 @@ canvas {
   z-index: 2;
   text-align: center;
   padding-bottom: 70px;
+}
+
+.send.tab-in .p-wrap{
+  max-height: 485px;
+  overflow-y: auto;
 }
 
 .p-wrap_android {

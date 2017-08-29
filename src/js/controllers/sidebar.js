@@ -3,51 +3,51 @@
 
   angular.module('copayApp.controllers').controller('sidebarController',
     function ($rootScope, $timeout, lodash, profileService, configService, go, isMobile, isCordova, backButton, $state) {
-
-      this.isWindowsPhoneApp = isMobile.Windows() && isCordova;
-      this.walletSelection = false;
+      const self = this;
+      self.isWindowsPhoneApp = isMobile.Windows() && isCordova;
+      self.walletSelection = false;
 
       $rootScope.$on('Local/WalletListUpdated', () => {
-        this.walletSelection = false;
-        this.setWallets();
+        self.walletSelection = false;
+        self.setWallets();
       });
 
       $rootScope.$on('Local/ColorUpdated', () => {
-        this.setWallets();
+        self.setWallets();
       });
 
       $rootScope.$on('Local/AliasUpdated', () => {
-        this.setWallets();
+        self.setWallets();
       });
 
-      this.signout = function () {
+      self.signout = function () {
         profileService.signout();
       };
 
-      this.switchWallet = function (selectedWalletId, currentWalletId) {
+      self.switchWallet = function (selectedWalletId, currentWalletId) {
         backButton.menuOpened = false;
         if (selectedWalletId === currentWalletId) {
           return;
         }
-        this.walletSelection = false;
+        self.walletSelection = false;
         profileService.setAndStoreFocus(selectedWalletId, () => {
         });
       };
 
-      this.switchWalletOpenPreferences = function (selectedWalletId, currentWalletId) {
-        this.switchWallet(selectedWalletId, currentWalletId);
+      self.switchWalletOpenPreferences = function (selectedWalletId, currentWalletId) {
+        self.switchWallet(selectedWalletId, currentWalletId);
         $state.go('preferences');
       };
 
-      this.toggleWalletSelection = function () {
-        this.walletSelection = !this.walletSelection;
-        if (!this.walletSelection) {
+      self.toggleWalletSelection = function () {
+        self.walletSelection = !self.walletSelection;
+        if (!self.walletSelection) {
           return;
         }
-        this.setWallets();
+        self.setWallets();
       };
 
-      this.setWallets = function () {
+      self.setWallets = function () {
         if (!profileService.profile) return;
         const config = configService.getSync();
         config.colorFor = config.colorFor || {};
@@ -57,16 +57,12 @@
           n: c.n,
           name: config.aliasFor[c.walletId] || c.walletName,
           id: c.walletId,
-          color: config.colorFor[c.walletId] || '#4A90E2'
+          color: config.colorFor[c.walletId] || '#d51f26',
         }));
-        this.wallets = lodash.sortBy(ret, 'name');
-
-        console.group('SIDEBAR WALLETS');
-        console.log(console.log(this.wallets));
-        console.groupEnd('SIDEBAR WALLETS');
+        self.wallets = lodash.sortBy(ret, 'name');
       };
 
-      this.setWallets();
+      self.setWallets();
     });
 }());
 

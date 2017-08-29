@@ -1,0 +1,31 @@
+<div class="topbar-container topbar-transparent "
+	ng-include="'views/includes/topbar.html'"
+	ng-init="titleSection='Device name'; goBackToState = 'preferencesGlobal'">
+</div>
+<div class="introduction-svg" ng-include="'views/includes/background.html'"></div>
+<div class="content " ng-controller="preferencesDeviceNameController as prefDeviceName">
+	<div class="p-share js-introduction">
+		<div class="p-wrap">
+			<form name="settingsDeviceNameForm" ng-submit="prefDeviceName.save()" class="page-form">
+				<div class="form-group">
+					<div class="title clearfix">
+
+						<span class="name" translate>Device name</span>
+					</div>
+					<div class="input-wrap">
+						<input id="deviceName" type="text" name="deviceName" ng-model="prefDeviceName.deviceName">
+					</div>
+				</div>
+
+
+				<button type="submit" class="btn btn_red-full">{{'Save'|translate}}</button>
+			</form>
+			<div class="text-gray size-12 text-center" translate>Device name is visible to other devices you communicate
+				with.
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="extra-margin-bottom"></div>

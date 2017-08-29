@@ -65,7 +65,7 @@ module.exports = function (grunt) {
           require('pixrem')(), // add fallbacks for rem units
           require('autoprefixer')({
             browsers: 'last 4 versions'
-          }), // add vendor prefixes
+          }),
           require('cssnano')() // minify the result
         ]
       },
@@ -237,6 +237,7 @@ module.exports = function (grunt) {
           }
         ]
       }
+
     },
     karma: {
       unit: {
@@ -301,25 +302,11 @@ module.exports = function (grunt) {
         dest: 'dagcoin-linux64/'
       }
     },
-    babel: {
-      options: {
-        sourceMap: false,
-        presets: ['es2015']
-      },
-      src: {
-        files: [
-          {
-            expand: true,
-            cwd: 'src/js/',
-            src: ['**/*.js'],
-            dest: 'build/src'
-          }
-        ]
-      }
-    },
+
     browserify: {
       dist: {
         options: {
+          transform: [['babelify', { presets: ['es2015'] }]],
           exclude: ['sqlite3', 'nw.gui', 'mysql', 'ws', 'regedit']
         },
         src: 'public/dagcoin.js',
@@ -367,9 +354,9 @@ module.exports = function (grunt) {
     svgmin: {
       options: {
         plugins: [
-          {removeViewBox: false},
-          {removeUselessStrokeAndFill: true},
-          {removeEmptyAttrs: true}
+          { removeViewBox: false },
+          { removeUselessStrokeAndFill: true },
+          { removeEmptyAttrs: true }
         ]
       },
       dist: {
@@ -467,6 +454,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['nggettext_compile', 'exec:version', 'stylelint', 'sass', 'concat', 'postcss', 'svgmin', 'ngtemplates']);
   grunt.registerTask('cordova', ['default', 'browserify']);
+
+  // todo: uglify doesn't work
   grunt.registerTask('cordova-prod', ['cordova', 'uglify']);
   // grunt.registerTask('prod', ['default', 'uglify']);
   grunt.registerTask('translate', ['nggettext_extract']);
