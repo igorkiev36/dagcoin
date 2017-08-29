@@ -1,8 +1,4 @@
-<div
-        class="topbar-container"
-        ng-include="'views/includes/topbar.html'"
-        ng-init="titleSection='Create new wallet';  closeToHome = true; noColor = true">
-</div>
+<dag-nav-bar invert title="Create new wallet" go-back></dag-nav-bar>
 
 <div class="content p20v" ng-controller="createController as create" ng-init="create.setTotalCosigners(1)">
 
@@ -18,8 +14,6 @@
             <span translate>Creating Wallet...</span>
         </div>
     </div>
-
-
     <div class="create-tab small-only-text-center" ng-hide="create.hideTabs">
         <div class="row">
             <div class="tab-container small-6 medium-3 large-2" ng-class="{'selected': totalCosigners == 1}">

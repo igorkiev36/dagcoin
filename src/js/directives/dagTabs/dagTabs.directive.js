@@ -42,6 +42,23 @@
           self.slider_width = ($element[0].getElementsByClassName('dag_tabs')[0].clientWidth / self.tabs.length);
         };
 
+        function moveSlide(index) {
+          if (!$rootScope.no_animation) {
+            TweenMax.to($element[0].getElementsByClassName('dag_tabs_slider')[0], 0.3, {
+              ease: Expo.easeOut,
+              x: (self.slider_width * index)
+            });
+          }
+        }
+
+        self.restoreSlide = () => {
+          moveSlide(self.activeTab);
+        };
+
+        self.moveSlide = (index) => {
+          moveSlide(index);
+        };
+
         self.select = (selectedTab, index) => {
           if (self.activeTab === index) {
             return false;
@@ -52,17 +69,7 @@
             return tab;
           });
 
-          if (!$rootScope.no_animation) {
-            TweenMax.to($element[0].getElementsByClassName('dag_tabs_slider')[0], 0.3, {
-              x: (self.slider_width * index)
-            });
-
-            TweenMax.to($element[0].getElementsByClassName('dag_tabs_slider')[0], 0.1, {
-              width: (self.slider_width * 1.2),
-              repeat: 1,
-              yoyo: true
-            });
-          }
+          moveSlide(index);
 
           self.activeTab = index;
 
