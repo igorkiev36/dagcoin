@@ -39,7 +39,7 @@
 
         function renderSVG() {
           if ($templateCache.get(svgFile)) {
-            element.html($templateCache.get(svgFile)).addClass(`svg-icon-${$scope.name}`);
+            element.html($templateCache.get(svgFile)).addClass(`svg-icon-${$scope.name || $scope.title}`);
           } else {
             loadTemplate();
           }

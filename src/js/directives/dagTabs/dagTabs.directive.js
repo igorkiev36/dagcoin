@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('copayApp')
+    .module('copayApp.directives')
 
 
     /**
@@ -88,7 +88,8 @@
       template: '<div class="dag_tabs_tabpanel" ng-show="active" ng-transclude></div>',
       require: '^dagTabset',
       scope: {
-        heading: '@'
+        heading: '@',
+        tabClick: '&'
       },
       link: ($scope, element, attr, dagtabsetCtrl) => {
         $scope.active = false;

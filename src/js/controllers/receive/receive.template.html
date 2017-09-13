@@ -51,10 +51,10 @@
                     </div>
                 </div>
                 <div class="page-action" style="margin-top: 30px;">
-                    <a ng-if="!index.shared_address" class="btn btn_red-full" ng-click="home.setAddress(true)"
+                    <!--<a ng-if="!index.shared_address" class="btn btn_red-full" ng-click="home.setAddress(true)"
                        ng-disabled="home.blockUx || index.isOffline ||home.generatingAddress" translate>
                         Generate new address
-                    </a>
+                    </a>-->
                     <a ng-show="index.isCordova" ng-click="home.shareAddress(home.addr[index.walletId])"
                        class="btn btn_red-full">Share wallet link</a>
                     <div ng-show="index.isCordova" class="page-action__info">

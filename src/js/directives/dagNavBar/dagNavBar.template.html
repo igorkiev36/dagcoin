@@ -1,4 +1,5 @@
 <div class="navbar-container">
+
     <div class="navbar-container-triggers">
         <div class="navbar-container-back-trigger" ng-if="showBack">
             <a onclick="history.back()">
@@ -9,5 +10,12 @@
             <svg-icon name="menu2"></svg-icon>
         </span>
     </div>
+
     <div class="navbar-container-title">{{title || stateTitle}}</div>
+
+    <div class="navbar-container-triggers navbar-container-triggers-right" ng-if="triggerIcon">
+        <a ng-click="triggerUrl()">
+            <svg-icon name="{{triggerIcon}}"></svg-icon>
+        </a>
+    </div>
 </div>

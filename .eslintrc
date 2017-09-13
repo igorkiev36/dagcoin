@@ -4,6 +4,7 @@ env:
   jasmine: true
 globals:
   angular: true
+  require: true
   nw: true
   cordova: true
   TweenMax: true
@@ -36,3 +37,6 @@ rules:
   comma-dangle:
     - error
     - never
+  arrow-body-style:
+    - error
+    - always

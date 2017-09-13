@@ -63,10 +63,6 @@
          }, false);
          */
 
-        document.addEventListener('menubutton', () => {
-          window.location = '#/preferences';
-        }, false);
-
         setTimeout(() => {
           navigator.splashscreen.hide();
         }, 2000);

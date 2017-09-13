@@ -1,4 +1,4 @@
-<dag-nav-bar title="My Wallet"></dag-nav-bar>
+<dag-nav-bar title="My Wallets" trigger-icon="add" trigger-state="create"></dag-nav-bar>
 
 <div ng-controller="walletHomeController as home">
     <div class="onGoingProcess" ng-show="index.isOffline">
@@ -73,36 +73,13 @@
                             <div ng-show="!index.updateError && index.walletScanStatus != 'error'"
                                  ng-click='index.updateAll(); index.updateHistoryFromNetwork()'>
 
-                                <ks-swiper-container pagination-is-active="true" pagination-clickable="false" swiper="swiper" on-ready="home.onReadySwiper(swiper)" class="cards_swiper" override-parameters="{'slidesPerView': 'auto', 'spaceBetween': 0, 'centeredSlides': true, 'hashnav': true, 'hashnavWatchState': true, 'replaceState': true}">
+                                <ks-swiper-container initial-slide="home.swiper_initial_wallet" pagination-is-active="true" swiper="swiper" on-ready="home.onReadySwiper(swiper)" class="cards_swiper" override-parameters="{'slidesPerView': 1, 'spaceBetween': 0, 'centeredSlides': true}">
                                     <ks-swiper-slide class="swiper-slide" ng-repeat="wallet in home.wallets track by $index">
-                                        <div>{{$index+1}}/{{home.wallets.length}} - {{wallet.name}}<br/><a ui-sref="preferences">Preferences</a></div>
-                                    </ks-swiper-slide>
-                                    <ks-swiper-slide>
-                                        <div><a ui-sref="create">create</a></div>
+                                        <dag-wallet data="wallet"></dag-wallet>
+                                        <!--<div dag-wallet="wallet">{{$index+1}}/{{home.wallets.length}} - {{wallet.name}}<br/><a ui-sref="preferences"><svg-icon title="more_vert"></svg-icon></a></div>-->
                                     </ks-swiper-slide>
                                 </ks-swiper-container>
-
-                                <!--<div class="price-wrapper-title">
-                                    <span>Total Balance</span>
-                                </div>
-                                <div class="price-wrapper">
-
-                                    <div class="price">
-                                        <svg-icon class="price-icon icon icon-d" name="dag-symbol"></svg-icon>
-
-                                        <div class="price_digits">
-                                            <div class="price_digits_wrapper">
-                                            <span class="price-number"
-                                                  ng-style="home.getFontSizeForWalletNumber(index.dagBalance.totalStr)">{{index.dagBalance.totalStr.split('.')[0]}}</span>
-                                                <span class="price-sup"
-                                                      ng-style="home.getFontSizeForWalletNumber(index.dagBalance.totalStr, 'sup')">{{index.dagBalance.totalStr.split('.')[1]}}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
-
                             </div>
-
                         </div>
 
                         <div ng-if="index.anyOnGoingProcess && 0">
@@ -182,9 +159,6 @@
                         </div>
                     </div>
                 </dag-tab>
-                <dag-tab heading="Details">
-                    Details
-                </dag-tab>
             </dag-tabset>
 
             <div ng-if="index.txps[0]">
@@ -200,17 +174,11 @@
                     <b>{{index.lockedBalanceStr}} </b>
                 </div>
             </div>
-            <div class="extra-margin-bottom"></div>
 
         </div>
 
         <!-- END WalletHome -->
-
-        <div id="{{view.id}}" class="{{view.class}} tab-view" ng-repeat="view in index.addonViews"
-             ng-include="view.template">
-        </div>
-
     </div>
 </div>
-<div class="extra-margin-bottom"></div>
+
 <dag-bottom-bar></dag-bottom-bar>

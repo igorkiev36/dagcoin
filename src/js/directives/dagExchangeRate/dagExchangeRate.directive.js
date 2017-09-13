@@ -6,19 +6,19 @@
    * @example <dag-exchange-rate-view></dag-exchange-rate-view>
    */
   angular
-      .module('copayApp.directives')
-      .directive('dagExchangeRateView', dagExchangeRateView);
+    .module('copayApp.directives')
+    .directive('dagExchangeRateView', dagExchangeRateView);
 
-  dagExchangeRateView.$inject = ['exchangeRate'];
+  dagExchangeRateView.$inject = ['exchangeRates'];
 
-  function dagExchangeRateView(exchangeRate) {
+  function dagExchangeRateView(exchangeRates) {
     return {
       restrict: 'E',
       templateUrl: 'directives/dagExchangeRate/dagExchangeRate.template.html',
       replace: true,
       scope: {},
       link: ($scope) => {
-        exchangeRate.get().then((json) => {
+        exchangeRates.dag().then((json) => {
           $scope.price_usd = json.price_usd;
           $scope.percent_change = json.percent_change_24h;
           $scope.last_updated = json.last_updated;
@@ -30,7 +30,7 @@
           }
           return 'negative';
         };
-      },
+      }
     };
   }
 })();

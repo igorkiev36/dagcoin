@@ -1809,22 +1809,23 @@ input.ng-invalid-match, input.ng-invalid-match:focus {
   visibility: visible;
 }
 
-.input-wrap > input[type="text"],
-.input-wrap > input[type="number"],
-.input-wrap > input[type="email"],
-.input-wrap > input[type="password"] {
+.input-wrap input[type="text"],
+.input-wrap input[type="number"],
+.input-wrap input[type="email"],
+.input-wrap input[type="password"],
+.input-wrap select{
   border: 2px solid #eee;
   border-radius: 5px;
   padding: 14px 22px;
   height: auto;
-  font-family: "Montserrat", sans-serif;
   font-size: 14px;
-  font-weight: 300;
-  color: #aaa;
-  max-width: 300px;
+  font-weight: 400;
+  color: #666;
+  max-width: 100%;
   width: 100%;
   outline: none;
   box-shadow: none;
+  background: #fff;
 
   &.min {
     padding: 4px 10px;

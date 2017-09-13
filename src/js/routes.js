@@ -19,8 +19,7 @@
 // Setting up route
   angular
     .module('copayApp')
-    .config((historicLogProvider, $provide, $logProvider, $stateProvider, $urlRouterProvider, $compileProvider, $locationProvider) => {
-
+    .config((historicLogProvider, $provide, $logProvider, $stateProvider, $urlRouterProvider, $compileProvider) => {
       $urlRouterProvider.otherwise('/');
 
       $logProvider.debugEnabled(true);
@@ -78,7 +77,7 @@
             };
           });
           return $delegate;
-        },
+        }
       ]);
 
       // whitelist 'chrome-extension:' for chromeApp to work with image URLs processed by Angular
@@ -90,9 +89,12 @@
           url: '/splash',
           needProfile: false,
           templateUrl: 'views/splash.html'
-        });
-
-      $stateProvider
+        })
+        .state('intro', {
+          url: '/intro',
+          needProfile: false,
+          templateUrl: 'controllers/intro/intro.template.html'
+        })
         .state('translators', {
           url: '/translators',
           walletShouldBeComplete: true,
@@ -360,8 +362,8 @@
                  }, 100);
                  go.walletHome();
                  */
-              },
-            },
+              }
+            }
           },
           needProfile: false,
         });
@@ -369,7 +371,17 @@
     .run(($rootScope, $state, $log, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService, backButton, go) => {
       FastClick.attach(document.body);
 
-      $rootScope.no_animation = !!document.getElementsByTagName('body')[0].className.match(/no_animation/);
+      if (!isCordova && process.platform === 'win32' && navigator.userAgent.indexOf('Windows NT 5.1') >= 0) {
+        $rootScope.$emit('Local/ShowAlert', 'Windows XP is not supported', 'fi-alert', () => {
+          process.exit();
+        });
+      }
+
+      /**
+       * TODO: Apply no_animation setting from user preferences
+       */
+
+      $rootScope.no_animation = false;
 
       uxLanguage.init();
 
@@ -383,7 +395,7 @@
         const win = gui.Window.get();
         win.setResizable(false);
         const nativeMenuBar = new gui.Menu({
-          type: 'menubar',
+          type: 'menubar'
         });
         try {
           nativeMenuBar.createMacBuiltin('DAGCOIN');
@@ -409,10 +421,10 @@
             if (err) {
               if (err.message && err.message.match('NOPROFILE')) {
                 $log.debug('No profile... redirecting');
-                $state.transitionTo('splash');
+                $state.go('splash');
               } else if (err.message && err.message.match('NONAGREEDDISCLAIMER')) {
                 $log.debug('Display disclaimer... redirecting');
-                $state.transitionTo('disclaimer');
+                $state.go('disclaimer');
               } else {
                 throw new Error(err); // TODO
               }
@@ -427,7 +439,7 @@
           profileService.focusedClient && !profileService.focusedClient.isComplete() &&
           toState.walletShouldBeComplete
         ) {
-          $state.transitionTo('copayers');
+          $state.go('copayers');
           event.preventDefault();
         }
 
@@ -435,7 +447,7 @@
           event.preventDefault();
           // Time for the backpane to render
           setTimeout(() => {
-            $state.transitionTo(toState);
+            $state.go(toState);
           }, 50);
         }
       });

@@ -4,7 +4,7 @@
 
   angular.module('copayApp.controllers')
     .controller('walletHomeController',
-      function ($scope, $rootScope, $timeout, $filter, $modal, $log, notification, isCordova, profileService, lodash, configService, storageService, gettext, gettextCatalog, nodeWebkit, addressService, confirmDialog, animationService, addressbookService, correspondentListService, isMobile, backButton) { // eslint-disable-line max-len
+      function ($scope, $rootScope, $timeout, $filter, $modal, $log, notification, isCordova, profileService, lodash, configService, storageService, gettext, gettextCatalog, nodeWebkit, addressService, confirmDialog, animationService, addressbookService, correspondentListService, isMobile, backButton, $state) { // eslint-disable-line max-len
         const constants = require('byteballcore/constants.js');
         const eventBus = require('byteballcore/event_bus.js');
         const breadcrumbs = require('byteballcore/breadcrumbs.js');
@@ -22,6 +22,7 @@
         // INIT
 
         home.swiper = {};
+        home.swiper_initial_wallet = $rootScope.active_wallet_index || 0;
 
         home.onReadySwiper = (swiper) => {
           home.swiper = swiper;
@@ -31,8 +32,9 @@
           }
 
           swiper.on('transitionEnd', () => {
-
             if (home.wallets[swiper.activeIndex] && home.activeWallet !== home.wallets[swiper.activeIndex].id) {
+              $rootScope.active_wallet_index = swiper.activeIndex;
+
               home.switchWallet(home.wallets[swiper.activeIndex].id, home.activeWallet);
               home.activeWallet = home.wallets[swiper.activeIndex].id;
             }
@@ -71,9 +73,9 @@
         };
 
         /*this.switchWalletOpenPreferences = function (selectedWalletId, currentWalletId) {
-          this.switchWallet(selectedWalletId, currentWalletId);
-          $state.go('preferences');
-        };*/
+         this.switchWallet(selectedWalletId, currentWalletId);
+         $state.go('preferences');
+         };*/
 
         this.toggleWalletSelection = function () {
           this.walletSelection = !this.walletSelection;

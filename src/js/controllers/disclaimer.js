@@ -1,39 +1,38 @@
-(function () {
+(() => {
   'use strict';
 
-  angular.module('copayApp.controllers').controller('disclaimerController',
-    ($scope, $timeout, storageService, gettextCatalog, isCordova, uxLanguage, go, $rootScope) => {
-      if (!isCordova && process.platform === 'win32' && navigator.userAgent.indexOf('Windows NT 5.1') >= 0) {
-        $rootScope.$emit('Local/ShowAlert', 'Windows XP is not supported', 'fi-alert', () => {
-          process.exit();
-        });
+  angular
+    .module('copayApp.controllers')
+    .controller('disclaimerController', disclaimerController);
+
+  disclaimerController.$inject = ['$scope', '$timeout', 'storageService', 'gettextCatalog', 'isCordova', 'uxLanguage', '$state'];
+  function disclaimerController($scope, $timeout, storageService, gettextCatalog, isCordova, uxLanguage, $state) {
+    $scope.agree = function () {
+      if (isCordova) {
+        window.plugins.spinnerDialog.show(null, gettextCatalog.getString('Loading...'), true);
       }
-
-      $scope.agree = function () {
-        if (isCordova) {
-          window.plugins.spinnerDialog.show(null, gettextCatalog.getString('Loading...'), true);
-        }
-        $scope.loading = true;
-        $timeout(() => {
-          storageService.setDisclaimerFlag(() => {
-            $timeout(() => {
-              if (isCordova) {
-                window.plugins.spinnerDialog.hide();
-              }
-              go.walletHome();
-            }, 1000);
-          });
-        }, 100);
-      };
-
-      $scope.init = function () {
-        storageService.getDisclaimerFlag((err, val) => {
-          $scope.lang = uxLanguage.currentLanguage;
-          $scope.agreed = val;
+      $scope.loading = true;
+      $timeout(() => {
+        storageService.setDisclaimerFlag(() => {
           $timeout(() => {
-            $scope.$digest();
-          }, 1);
+            if (isCordova) {
+              window.plugins.spinnerDialog.hide();
+            }
+            $state.go('walletHome');
+          }, 1000);
         });
-      };
-    });
-}());
+      }, 100);
+    };
+
+    $scope.init = function () {
+      storageService.getDisclaimerFlag((err, val) => {
+        $scope.lang = uxLanguage.currentLanguage;
+        $scope.agreed = val;
+        $timeout(() => {
+          $scope.$digest();
+        }, 1);
+      });
+    };
+  }
+})();
+
