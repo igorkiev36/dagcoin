@@ -320,7 +320,7 @@
               $scope.humanReadableDefinition = correspondentListService.getHumanReadableDefinition(arrDefinition, arrMyAddresses, [], true);
               $scope.creation_ts = creationTs;
               walletDefinedByAddresses.readSharedAddressCosigners(address, (cosigners) => {
-                $scope.cosigners = cosigners.map(cosigner => cosigner.name).join(', ');
+                $scope.cosigners = cosigners.map((cosigner) => { return cosigner.name; }).join(', ');
                 $scope.$apply();
               });
             });
@@ -328,7 +328,7 @@
 
           // clicked a link in the definition
           $scope.sendPayment = function (receiverAddress, amount, asset) {
-            if (asset && indexScope.arrBalances.filter(balance => (balance.asset === asset)).length === 0) {
+            if (asset && indexScope.arrBalances.filter((balance) => { return (balance.asset === asset); }).length === 0) {
               return console.log(`i do not own anything of asset ${asset}`);
             }
             $modalInstance.dismiss('done');
@@ -483,7 +483,6 @@
 
 
           $scope.shareAddress = function (uri) {
-            debugger
             if (isCordova) {
               if (isMobile.Android() || isMobile.Windows()) {
                 window.ignoreMobilePause = true;
@@ -850,7 +849,7 @@
                   }
                 });
               } else if (indexScope.shared_address) {
-                arrSigningDeviceAddresses = indexScope.copayers.map(copayer => copayer.device_address);
+                arrSigningDeviceAddresses = indexScope.copayers.map((copayer) => { return copayer.device_address; });
               }
               breadcrumbs.add(`sending payment in ${asset}`);
 
@@ -977,7 +976,7 @@
 
         const ModalInstanceCtrl = function ($scope, $modalInstance) {
           $scope.color = fc.backgroundColor;
-          $scope.arrPublicAssetInfos = indexScope.arrBalances.filter(b => !b.is_private).map((b) => {
+          $scope.arrPublicAssetInfos = indexScope.arrBalances.filter((b) => { return !b.is_private; }).map((b) => {
             const info = { asset: b.asset };
             if (b.asset === 'base') {
               info.displayName = self.unitName;

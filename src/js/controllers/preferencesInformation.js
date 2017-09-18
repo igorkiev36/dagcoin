@@ -42,7 +42,7 @@
         $scope.addrs = null;
 
         fc.getAddresses({
-          doNotVerify: true,
+          doNotVerify: true
         }, (err, addrs) => {
           if (err) {
             $log.warn(err);
@@ -113,7 +113,7 @@
 
         $timeout(() => {
           fc.getAddresses({
-            doNotVerify: true,
+            doNotVerify: true
           }, (err, addrs) => {
             self.loading = false;
             if (err) {
@@ -123,7 +123,7 @@
 
             let body = `Dagcoin Wallet "${$scope.walletName}" Addresses.\n\n`;
             body += '\n';
-            body += addrs.map(v => (`* ${v.address} ${v.path} ${formatDate(v.createdOn)}`)).join('\n');
+            body += addrs.map((v) => { return (`* ${v.address} ${v.path} ${formatDate(v.createdOn)}`); }).join('\n');
 
             window.plugins.socialsharing.shareViaEmail(
               body,

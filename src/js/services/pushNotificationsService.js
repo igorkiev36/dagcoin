@@ -54,7 +54,7 @@
           alert(`err= ${e}`);
         }, {
           senderID: projectNumber,
-          ecb: 'onNotification',
+          ecb: 'onNotification'
         });
 
       configService.set({ pushNotifications: { enabled: true } }, (err) => {

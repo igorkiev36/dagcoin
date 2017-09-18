@@ -206,7 +206,7 @@
             network,
             passphrase: options.passphrase,
             account: options.account || 0,
-            derivationStrategy: options.derivationStrategy || 'BIP44',
+            derivationStrategy: options.derivationStrategy || 'BIP44'
           });
         } catch (ex) {
           $log.info(ex);
@@ -223,7 +223,7 @@
         try {
           walletClient.seedFromExtendedPublicKey(options.extendedPublicKey, options.externalSource, options.entropySource, {
             account: options.account || 0,
-            derivationStrategy: options.derivationStrategy || 'BIP44',
+            derivationStrategy: options.derivationStrategy || 'BIP44'
           });
         } catch (ex) {
           $log.warn('Creating wallet from Extended Public Key Arg:', ex, options);
@@ -237,7 +237,7 @@
             network,
             passphrase: options.passphrase,
             language: lang,
-            account: options.account || 0,
+            account: options.account || 0
           });
         } catch (e) {
           $log.info(`Error creating seed: ${e.message}`);
@@ -246,7 +246,7 @@
             walletClient.seedFromRandomWithMnemonic({
               network,
               passphrase: options.passphrase,
-              account: options.account || 0,
+              account: options.account || 0
             });
           } else {
             return cb(e);
@@ -273,7 +273,7 @@
         walletClient.initDeviceProperties(walletClient.credentials.xPrivKey, null, config.hub, config.deviceName);
         const walletName = gettextCatalog.getString('Small Expenses Wallet');
         return walletClient.createWallet(walletName, 1, 1, {
-          network: 'livenet',
+          network: 'livenet'
         }, (error) => {
           if (error) {
             return cb(`${gettext('Error creating wallet')}: ${error}`);
@@ -287,7 +287,7 @@
             xPrivKey,
             mnemonic,
             tempDeviceKey: tempDeviceKey.toString('base64'),
-            my_device_address: device.getMyDeviceAddress(),
+            my_device_address: device.getMyDeviceAddress()
           });
           device.setTempKeys(tempDeviceKey, null, saveTempKeys);
           return cb(null, p);
@@ -327,7 +327,7 @@
           return walletClient.createWallet(opts.name, opts.m, opts.n, {
             network: opts.networkName,
             account: opts.account,
-            cosigners: opts.cosigners,
+            cosigners: opts.cosigners
           }, (error) => {
             if (error) {
               return cb(`${gettext('Error creating wallet')}: ${error}`);
@@ -339,7 +339,7 @@
     };
 
 
-    root.getClient = walletId => root.walletClients[walletId];
+    root.getClient = (walletId) => { return root.walletClients[walletId]; };
 
     root.deleteWallet = function (opts, cb) {
       const client = opts.client || root.focusedClient;
@@ -348,7 +348,7 @@
       breadcrumbs.add(`Deleting Wallet: ${client.credentials.walletName}`);
 
       root.profile.credentials = lodash.reject(root.profile.credentials, {
-        walletId,
+        walletId
       });
 
       delete root.walletClients[walletId];
@@ -403,13 +403,15 @@
       const color = configService.colorOpts[walletId.charCodeAt(0) % configService.colorOpts.length];
       const configOpts = { colorFor: {} };
       configOpts.colorFor[walletId] = color;
-      return configService.set(configOpts, configServiceError => root.setAndStoreFocus(walletId, () => {
+      return configService.set(configOpts, (configServiceError) => {
+return root.setAndStoreFocus(walletId, () => {
         if (configServiceError) return cb(configServiceError);
         return storageService.storeProfile(root.profile, (storeProfileError) => {
           const config = configService.getSync();
           cb(storeProfileError, walletId);
         });
-      }));
+      });
+});
     };
 
 
@@ -420,7 +422,7 @@
       try {
         walletClient.import(str, {
           compressed: opts.compressed,
-          password: opts.password,
+          password: opts.password
         });
       } catch (err) {
         $log.warn(err);
@@ -471,7 +473,7 @@
       walletClient.importFromMnemonic(inputWords, {
         network: opts.networkName,
         passphrase: opts.passphrase,
-        account: opts.account || 0,
+        account: opts.account || 0
       }, (err) => {
         if (err) {
           return cb(`${gettext('Could not import')}: ${err}`);
@@ -487,7 +489,7 @@
 
       walletClient.importFromExtendedPublicKey(opts.extendedPublicKey, opts.externalSource, opts.entropySource, {
         account: opts.account || 0,
-        derivationStrategy: opts.derivationStrategy || 'BIP44',
+        derivationStrategy: opts.derivationStrategy || 'BIP44'
       }, (err) => {
         if (err) {
           // in HW wallets, req key is always the same. They can't addAccess.
@@ -513,7 +515,7 @@
           if (createNewProfileError) return cb(createNewProfileError);
           return root.bindProfile(p, (bindProfileError) => {
             if (bindProfileError) cb(bindProfileError);
-            storageService.storeNewProfile(p, storeNewProfileError => cb(storeNewProfileError));
+            storageService.storeNewProfile(p, (storeNewProfileError) => { return cb(storeNewProfileError); });
           });
         });
       });
@@ -524,7 +526,7 @@
       const fc = root.focusedClient;
 
       const newCredentials = lodash.reject(root.profile.credentials, {
-        walletId: fc.credentials.walletId,
+        walletId: fc.credentials.walletId
       });
       newCredentials.push(JSON.parse(fc.export()));
       root.profile.credentials = newCredentials;
@@ -614,7 +616,7 @@
       $rootScope.$emit('Local/NeedsPassword', false, error, (err2, password) => {
         if (err2 || !password) {
           return cb({
-            message: (err2 || gettext('Password needed')),
+            message: (err2 || gettext('Password needed'))
           });
         }
         const fc = root.focusedClient;
@@ -624,7 +626,7 @@
         } catch (e) {
           $log.debug(e);
           return cb({
-            message: gettext('Wrong password'),
+            message: gettext('Wrong password')
           });
         }
         const autolock = () => {
@@ -668,16 +670,18 @@
       const config = configService.getSync();
       config.colorFor = config.colorFor || {};
       config.aliasFor = config.aliasFor || {};
-      let ret = lodash.map(root.profile.credentials, c => ({
-        m: c.m,
-        n: c.n,
-        is_complete: (c.publicKeyRing && c.publicKeyRing.length === c.n),
-        name: config.aliasFor[c.walletId] || c.walletName,
-        id: c.walletId,
-        network: c.network,
-        color: config.colorFor[c.walletId] || '#2C3E50',
-      }));
-      ret = lodash.filter(ret, w => (w.network === network && w.is_complete));
+      let ret = lodash.map(root.profile.credentials, (c) => {
+        return ({
+              m: c.m,
+              n: c.n,
+              is_complete: (c.publicKeyRing && c.publicKeyRing.length === c.n),
+              name: config.aliasFor[c.walletId] || c.walletName,
+              id: c.walletId,
+              network: c.network,
+              color: config.colorFor[c.walletId] || '#2C3E50'
+            });
+      });
+      ret = lodash.filter(ret, (w) => { return (w.network === network && w.is_complete); });
       return lodash.sortBy(ret, 'name');
     };
 
@@ -701,7 +705,7 @@
       root.profile.my_device_address = myDeviceAddress;
       device.setNewDeviceAddress(myDeviceAddress);
 
-      storageService.storeProfile(root.profile, () => cb());
+      storageService.storeProfile(root.profile, () => { return cb(); });
     };
     return root;
   });

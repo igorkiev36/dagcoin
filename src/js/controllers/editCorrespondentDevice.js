@@ -37,7 +37,7 @@
         const modalInstance = $modal.open({
           templateUrl: 'views/modals/confirmation.html',
           windowClass: animationService.modalAnimated.slideUp,
-          controller: ['$scope', '$modalInstance', '$sce', ModalInstanceCtrl],
+          controller: ['$scope', '$modalInstance', '$sce', ModalInstanceCtrl]
         });
 
         modalInstance.result.finally(() => {

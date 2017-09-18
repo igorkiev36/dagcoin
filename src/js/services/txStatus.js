@@ -15,7 +15,7 @@
       const modalInstance = $modal.open({
         templateUrl: root.templateUrl(type, txp),
         windowClass: 'popup-tx-status full',
-        controller: ModalInstanceCtrl,
+        controller: ModalInstanceCtrl
       });
 
       modalInstance.result.finally(() => {

@@ -16,7 +16,7 @@
       '#9B59B6',
       '#E856EF',
       '#FF599E',
-      '#7A8C9E',
+      '#7A8C9E'
     ];
 
     const constants = require('byteballcore/constants.js');
@@ -26,7 +26,7 @@
     const defaultConfig = {
       // wallet limits
       limits: {
-        totalCosigners: 6,
+        totalCosigners: 6
       },
 
       hub: (constants.alt === '2' && isTestnet) ? 'testnetexplorer.dagcoin.org/wss/' : 'byteball.org/bb',
@@ -55,13 +55,13 @@
           dagUnitDecimals: 6,
           dagUnitCode: 'one',
           alternativeName: 'US Dollar',
-          alternativeIsoCode: 'USD',
-        },
+          alternativeIsoCode: 'USD'
+        }
       },
 
 
       rates: {
-        url: 'https://insight.bitpay.com:443/api/rates',
+        url: 'https://insight.bitpay.com:443/api/rates'
       },
 
       pushNotifications: {
@@ -69,17 +69,17 @@
         config: {
           android: {
             icon: 'push',
-            iconColor: '#2F4053',
+            iconColor: '#2F4053'
           },
           ios: {
             alert: 'true',
             badge: 'true',
-            sound: 'true',
+            sound: 'true'
           },
-          windows: {},
-        },
+          windows: {}
+        }
       },
-      autoUpdateWitnessesList: true,
+      autoUpdateWitnessesList: true
     };
 
     let configCache = null;

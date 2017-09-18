@@ -38,7 +38,7 @@
           return cb(err);
         }
         return dir.getFile(k, {
-          create: false,
+          create: false
         }, (fileEntry) => {
           if (!fileEntry) {
             return cb();
@@ -71,7 +71,7 @@
           return cb(err);
         }
         return dir.getFile(k, {
-          create: true,
+          create: true
         }, (fileEntry) => {
           // Create a FileWriter object for our FileEntry (log.txt).
           fileEntry.createWriter((fileWriter) => {
@@ -112,7 +112,7 @@
       // This could be needed for windows
       // if (cordova.file === undefined) {
       //   url = 'ms-appdata:///local/';
-      return window.resolveLocalFileSystemURL(url, dir => cb(null, dir), (err) => {
+      return window.resolveLocalFileSystemURL(url, (dir) => { return cb(null, dir); }, (err) => {
         $log.warn(err);
         return cb(err || `Could not resolve filesystem:${url}`);
       });
@@ -124,7 +124,7 @@
           return cb(err);
         }
         return dir.getFile(k, {
-          create: false,
+          create: false
         }, (fileEntry) => {
           // Create a FileWriter object for our FileEntry (log.txt).
           fileEntry.remove(() => {

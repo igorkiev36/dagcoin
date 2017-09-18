@@ -53,7 +53,7 @@
       } */
 
       function isDiscoveryServiceAddress(deviceAddress) {
-        return !!discoveryServiceAddresses.find(obj => obj === deviceAddress);
+        return !!discoveryServiceAddresses.find((obj) => { return obj === deviceAddress; });
       }
 
       function isJsonString(str) {
@@ -163,7 +163,7 @@
             .then((correspondent) => {
               console.log(`CORRESPONDENT: ${JSON.stringify(correspondent)}`);
               return readMyAddress()
-                .then(address => askForFundingAddress(correspondent.device_address, address))
+                .then((address) => { return askForFundingAddress(correspondent.device_address, address); })
                 .then(() => {
                   const promise = new Promise((resolve, reject) => {
                     // Timed rejection: can't wait more than 30 seconds
@@ -184,8 +184,8 @@
 
                   return promise;
                 });
-            }, err => console.log(err))
-            .then(() => Promise.resolve(true));
+            }, (err) => { return console.log(err); })
+            .then(() => { return Promise.resolve(true); });
           default:
             return Promise.resolve(false);
         }

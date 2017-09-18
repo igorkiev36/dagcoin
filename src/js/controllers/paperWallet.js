@@ -102,7 +102,7 @@
 
             return fc.broadcastRawTx({
               rawTx: tx.serialize(),
-              network: 'livenet',
+              network: 'livenet'
             }, (broadcastRawTxError, txid) => {
               if (broadcastRawTxError) {
                 return cb(broadcastRawTxError);
@@ -126,7 +126,7 @@
               $log.error(err);
             } else {
               txStatus.notify({
-                status: 'broadcasted',
+                status: 'broadcasted'
               }, () => {
                 go.walletHome();
               });

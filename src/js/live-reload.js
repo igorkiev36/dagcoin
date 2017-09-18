@@ -13,7 +13,7 @@
   if (window.location.href.indexOf('chrome') > -1) {
     const watcher = chokidar.watch('public', {
       ignored: /[\/\\]\./,
-      persistent: true,
+      persistent: true
     });
     let reloading = false;
 

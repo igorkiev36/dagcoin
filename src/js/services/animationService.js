@@ -12,7 +12,7 @@
       slideUp: isCordova ? 'full animated slideInUp' : 'full',
       slideRight: isCordova ? 'full animated slideInRight' : 'full',
       slideOutDown: isCordova ? 'slideOutDown' : 'hideModal',
-      slideOutRight: isCordova ? 'slideOutRight' : 'hideModal',
+      slideOutRight: isCordova ? 'slideOutRight' : 'hideModal'
     };
 
     const pageWeight = {
@@ -44,7 +44,7 @@
       add: 11,
       create: 12,
       import: 12,
-      importLegacy: 13,
+      importLegacy: 13
     };
 
     function cleanUpLater(e, e2) {

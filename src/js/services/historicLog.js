@@ -9,7 +9,7 @@
     root.add = function (level, msg) {
       logs.push({
         level,
-        msg,
+        msg
       });
     };
 

@@ -9,11 +9,11 @@
     };
 
     this.addonMenuItems = function () {
-      return lodash.map(addons, addonSpec => addonSpec.menuItem);
+      return lodash.map(addons, (addonSpec) => { return addonSpec.menuItem; });
     };
 
     this.addonViews = function () {
-      return lodash.map(addons, addonSpec => addonSpec.view);
+      return lodash.map(addons, (addonSpec) => { return addonSpec.view; });
     };
 
     this.formatPendingTxp = function (txp) {

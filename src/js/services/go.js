@@ -154,7 +154,7 @@
             } else {
               throw Error(`unknown url type: ${objRequest.type}`);
             }
-          },
+          }
         });
       }
 

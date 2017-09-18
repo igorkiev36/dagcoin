@@ -39,7 +39,7 @@ const isProduction = !constants.version.match(/t$/);
 
 Raven
   .config('https://2b16cb28f5864d1db14e1db9cc2407ef@sentry.io/215634', {
-    shouldSendCallback: () => isProduction,
+    shouldSendCallback: () => { return isProduction; },
     release: constants.version
   })
   .addPlugin(Raven.Plugins.Angular)

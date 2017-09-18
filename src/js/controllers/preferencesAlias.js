@@ -12,7 +12,7 @@
       this.save = function () {
         const self = this;
         const opts = {
-          aliasFor: {},
+          aliasFor: {}
         };
         opts.aliasFor[walletId] = self.alias;
 

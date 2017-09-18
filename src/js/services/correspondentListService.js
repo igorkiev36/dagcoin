@@ -61,14 +61,14 @@ angular.module('copayApp.services').factory('correspondentListService',
             bIncoming: false,
             message: 'new messages',
             type: 'system',
-            new_message_delim: true,
+            new_message_delim: true
           });
         }
       }
       const msgObj = {
         bIncoming,
         message: body,
-        timestamp: Math.floor(Date.now() / 1000),
+        timestamp: Math.floor(Date.now() / 1000)
       };
       checkAndInsertDate(root.messageEventsByCorrespondent[peerAddress], msgObj);
       root.messageEventsByCorrespondent[peerAddress].push(msgObj);
@@ -105,8 +105,10 @@ angular.module('copayApp.services').factory('correspondentListService',
         return `<a ng-click="sendPayment('${address}', ${objPaymentRequest.amount}, '${objPaymentRequest.asset}',` +
         `'${objPaymentRequest.device_address}')">${objPaymentRequest.amountStr}</a>`;
       }).replace(/\[(.+?)\]\(command:(.+?)\)/g,
-        (str, description, command) => `<a ng-click="sendCommand('${escapeQuotes(command)}', 
-        '${escapeQuotes(description)}')" class="command">${description}</a>`).replace(/\[(.+?)\]\(payment:(.+?)\)/g,
+        (str, description, command) => {
+        return `<a ng-click="sendCommand('${escapeQuotes(command)}', 
+        '${escapeQuotes(description)}')" class="command">${description}</a>`;
+      }).replace(/\[(.+?)\]\(payment:(.+?)\)/g,
         (str, description, paymentJsonBase64) => {
           const arrMovements = getMovementsFromJsonBase64PaymentRequest(paymentJsonBase64, true);
           const newDescription = `Payment request: ${arrMovements.join(', ')}`;
@@ -116,7 +118,7 @@ angular.module('copayApp.services').factory('correspondentListService',
           return `<a ng-click="sendMultiPayment('${paymentJsonBase64}')">${newDescription}</a>`;
         })
         .replace(/\bhttps?:\/\/\S+/g,
-          str => `<a ng-click="openExternalLink('${escapeQuotes(str)}')" class="external-link">${str}</a>`);
+          (str) => { return `<a ng-click="openExternalLink('${escapeQuotes(str)}')" class="external-link">${str}</a>`; });
     }
 
     function getMovementsFromJsonBase64PaymentRequest(paymentJsonBase64, bAggregatedByAsset) {
@@ -152,7 +154,7 @@ angular.module('copayApp.services').factory('correspondentListService',
           arrMovements.push(getAmountText(assocPaymentsByAsset[asset], asset));
         });
       } else {
-        arrMovements = objMultiPaymentRequest.payments.map(objPayment => `${getAmountText(objPayment.amount, objPayment.asset || 'base')} to ${objPayment.address}`);
+        arrMovements = objMultiPaymentRequest.payments.map((objPayment) => { return `${getAmountText(objPayment.amount, objPayment.asset || 'base')} to ${objPayment.address}`; });
       }
       return arrMovements;
     }
@@ -192,7 +194,7 @@ angular.module('copayApp.services').factory('correspondentListService',
         }
         return `<i>Payment request: ${arrMovements.join(', ')}</i>`;
       }).replace(/\bhttps?:\/\/\S+/g,
-        str => `<a ng-click="openExternalLink('${escapeQuotes(str)}')" class="external-link">${str}</a>`);
+        (str) => { return `<a ng-click="openExternalLink('${escapeQuotes(str)}')" class="external-link">${str}</a>`; });
     }
 
     function parsePaymentRequestQueryString(queryString) {
@@ -223,7 +225,7 @@ angular.module('copayApp.services').factory('correspondentListService',
         amount,
         asset,
         device_address: deviceAddress,
-        amountStr,
+        amountStr
       };
     }
 
@@ -310,7 +312,7 @@ angular.module('copayApp.services').factory('correspondentListService',
           case 'r of set':
             return `at least ${args.required} of the following is true:<br />${args.set.map(parseAndIndent).join(',')}`;
           case 'weighted and':
-            return `the total weight of the true conditions below is at least ${args.required}:<br />${args.set.map(arg => `${arg.weight}: ${parseAndIndent(arg.value)}`).join(',')}`;
+            return `the total weight of the true conditions below is at least ${args.required}:<br />${args.set.map((arg) => { return `${arg.weight}: ${parseAndIndent(arg.value)}`; }).join(',')}`;
           case 'in data feed':
             arrAddresses = args[0];
             feedName = args[1];
@@ -399,7 +401,7 @@ angular.module('copayApp.services').factory('correspondentListService',
                 type: 'system',
                 bIncoming: false,
                 message: lastMsgTs.toDateString(),
-                timestamp: Math.floor(msgTs.getTime() / 1000),
+                timestamp: Math.floor(msgTs.getTime() / 1000)
               });
             }
             lastMsgTs = msgTs;
@@ -417,7 +419,7 @@ angular.module('copayApp.services').factory('correspondentListService',
               bIncoming: message.is_incoming,
               message: message.message,
               timestamp: Math.floor(msgTs.getTime() / 1000),
-              chat_recording_status: message.chat_recording_status,
+              chat_recording_status: message.chat_recording_status
             });
           });
           if (historyEndForCorrespondent[correspondent.device_address] && messageEvents.length > 1) {
@@ -425,7 +427,7 @@ angular.module('copayApp.services').factory('correspondentListService',
               type: 'system',
               bIncoming: false,
               message: (lastMsgTs || new Date()).toDateString(),
-              timestamp: Math.floor((lastMsgTs || new Date()).getTime() / 1000),
+              timestamp: Math.floor((lastMsgTs || new Date()).getTime() / 1000)
             });
           }
           $rootScope.$digest();
@@ -444,7 +446,7 @@ angular.module('copayApp.services').factory('correspondentListService',
           type: 'system',
           bIncoming: false,
           message: msgTs.toDateString(),
-          timestamp: Math.floor(msgTs.getTime() / 1000),
+          timestamp: Math.floor(msgTs.getTime() / 1000)
         });
       }
     }
@@ -517,7 +519,7 @@ angular.module('copayApp.services').factory('correspondentListService',
 
     function readCorrespondentAndForwardMessage(fromAddress, body) {
       const promise = new Promise((resolve) => {
-        device.readCorrespondent(fromAddress, correspondent => resolve(correspondent));
+        device.readCorrespondent(fromAddress, (correspondent) => { return resolve(correspondent); });
       }).then((correspondent) => {
         if (correspondent == null) {
           return Promise.reject(`CORRESPONDENT WITH ADDRESS ${fromAddress} NOT FOUND`);
@@ -562,7 +564,7 @@ angular.module('copayApp.services').factory('correspondentListService',
             type: 'system',
             message: JSON.stringify({ state: newState }),
             timestamp: Math.floor(Date.now() / 1000),
-            chat_recording_status: true,
+            chat_recording_status: true
           };
           root.messageEventsByCorrespondent[correspondentAddress].push(parseMessage(message));
           $rootScope.$digest();
@@ -681,7 +683,7 @@ angular.module('copayApp.services').factory('correspondentListService',
         device.startWaitingForPairing((reversePairingInfo) => {
           device.sendPairingMessage(hubHost, devicePubkey, pairingSecret, reversePairingInfo.pairing_secret, {
             ifOk: cb,
-            ifError: cb,
+            ifError: cb
           });
         });
         // this continues in parallel

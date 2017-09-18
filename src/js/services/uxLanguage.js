@@ -7,54 +7,54 @@
 
     root.availableLanguages = [{
       name: 'English',
-      isoCode: 'en',
+      isoCode: 'en'
     }, {
       name: 'Français',
-      isoCode: 'fr',
+      isoCode: 'fr'
     }, {
       name: 'Italiano',
-      isoCode: 'it',
+      isoCode: 'it'
     }, {
       name: 'Deutsch',
-      isoCode: 'de',
+      isoCode: 'de'
     }, {
       name: 'Español',
-      isoCode: 'es',
+      isoCode: 'es'
     }, {
       name: 'Português',
-      isoCode: 'pt',
+      isoCode: 'pt'
     }, {
       name: 'Nederlands',
-      isoCode: 'nl',
+      isoCode: 'nl'
     }, {
       name: 'Svenska',
-      isoCode: 'sv',
+      isoCode: 'sv'
     }, {
       name: 'Polski',
-      isoCode: 'pl',
+      isoCode: 'pl'
     }, {
       name: 'Magyar',
-      isoCode: 'hu',
+      isoCode: 'hu'
     }, {
       name: 'Ελληνικά',
-      isoCode: 'el',
+      isoCode: 'el'
     }, {
       name: '日本語',
       isoCode: 'ja',
-      useIdeograms: true,
+      useIdeograms: true
     }, {
       name: '中文',
       isoCode: 'zh',
-      useIdeograms: true,
+      useIdeograms: true
     }, {
       name: 'Pусский',
-      isoCode: 'ru',
+      isoCode: 'ru'
     }, {
       name: 'Bahasa Indonesia',
-      isoCode: 'id',
+      isoCode: 'id'
     }, {
       name: 'Türk',
-      isoCode: 'tr',
+      isoCode: 'tr'
     }];
 
     root.currentLanguage = null;
@@ -95,7 +95,7 @@
 
     root.getCurrentLanguageInfo = function () {
       return lodash.find(root.availableLanguages, {
-        isoCode: root.currentLanguage,
+        isoCode: root.currentLanguage
       });
     };
 
@@ -122,7 +122,7 @@
 
     root.getName = function (lang) {
       return lodash.result(lodash.find(root.availableLanguages, {
-        isoCode: lang,
+        isoCode: lang
       }), 'name');
     };
 

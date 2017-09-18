@@ -35,9 +35,9 @@
 
           ctrl.$parsers.unshift(validator);
           ctrl.$formatters.unshift(validator);
-        },
+        }
       };
-    },
+    }
   ])
   .directive('validAmount', ['configService',
     function (configService) {
@@ -86,11 +86,12 @@
           };
           ctrl.$parsers.unshift(val);
           ctrl.$formatters.unshift(val);
-        },
+        }
       };
-    },
+    }
   ])
-  .directive('loading', () => ({
+  .directive('loading', () => {
+ return ({
     restrict: 'A',
     link($scope, element, attr) {
       const a = element.html();
@@ -103,16 +104,19 @@
           element.html(a);
         }
       });
-    },
-  }))
-  .directive('ngFileSelect', () => ({
+    }
+  });
+})
+  .directive('ngFileSelect', () => {
+ return ({
     link($scope, el) {
       el.bind('change', (e) => {
         $scope.file = (e.srcElement || e.target).files[0];
         $scope.getFile();
       });
-    },
-  }))
+    }
+  });
+})
   .directive('contact', ['addressbookService', function (addressbookService) {
     return {
       restrict: 'E',
@@ -125,10 +129,11 @@
             element.append(addr);
           }
         });
-      },
+      }
     };
   }])
-  .directive('highlightOnChange', () => ({
+  .directive('highlightOnChange', () => {
+ return ({
     restrict: 'A',
     link(scope, element, attrs) {
       scope.$watch(attrs.highlightOnChange, () => {
@@ -137,9 +142,11 @@
           element.removeClass('highlight');
         }, 500);
       });
-    },
-  }))
-  .directive('checkStrength', () => ({
+    }
+  });
+})
+  .directive('checkStrength', () => {
+ return ({
     replace: false,
     restrict: 'EACM',
     require: 'ngModel',
@@ -175,7 +182,7 @@
         return {
           strength: passwordStrength,
           message: MESSAGES[passwordStrength] + text,
-          color: COLOR[passwordStrength],
+          color: COLOR[passwordStrength]
         };
       }
 
@@ -184,9 +191,11 @@
           scope[attrs.checkStrength] = evaluateMeter(newValue);
         }
       });
-    },
-  }))
-  .directive('showFocus', $timeout => function (scope, element, attrs) {
+    }
+  });
+})
+  .directive('showFocus', ($timeout) => {
+ return function (scope, element, attrs) {
     scope.$watch(attrs.showFocus,
       (newValue) => {
         $timeout(() => {
@@ -194,23 +203,27 @@
           return isFocused;
         });
       }, true);
-  })
-  .directive('match', () => ({
+  };
+})
+  .directive('match', () => {
+return ({
     require: 'ngModel',
     restrict: 'A',
     scope: {
-      match: '=',
+      match: '='
     },
     link(scope, elem, attrs, ctrl) {
-      scope.$watch(() => (ctrl.$pristine && angular.isUndefined(ctrl.$modelValue)) || scope.match === ctrl.$modelValue, (currentValue) => {
+      scope.$watch(() => { return (ctrl.$pristine && angular.isUndefined(ctrl.$modelValue)) || scope.match === ctrl.$modelValue; }, (currentValue) => {
         ctrl.$setValidity('match', currentValue);
       });
-    },
-  }))
-  .directive('clipCopy', () => ({
+    }
+  });
+})
+  .directive('clipCopy', () => {
+return ({
     restrict: 'A',
     scope: {
-      clipCopy: '=clipCopy',
+      clipCopy: '=clipCopy'
     },
     link(scope, elm) {
       // TODO this does not work (FIXME)
@@ -220,18 +233,22 @@
       elm.bind('click', () => {
         selectText(elm[0]);
       });
-    },
-  }))
-  .directive('menuToggle', () => ({
+    }
+  });
+})
+  .directive('menuToggle', () => {
+return ({
     restrict: 'E',
     replace: true,
-    templateUrl: 'views/includes/menu-toggle.html',
-  }))
-  .directive('logo', () => ({
+    templateUrl: 'views/includes/menu-toggle.html'
+  });
+})
+  .directive('logo', () => {
+ return ({
     restrict: 'E',
     scope: {
       width: '@',
-      negative: '=',
+      negative: '='
     },
     controller($scope) {
       // $scope.logo_url = $scope.negative ? 'img/logo-negative.svg' : 'img/logo.svg';
@@ -239,11 +256,14 @@
     },
     replace: true,
     // template: '<img ng-src="{{ logo_url }}" alt="Byteball">'
-    template: '<div><img ng-src="{{ logo_url }}" alt="Byteball"><br>Byteball</div>',
-  }))
-  .directive('availableBalance', () => ({
+    template: '<div><img ng-src="{{ logo_url }}" alt="Byteball"><br>Byteball</div>'
+  });
+})
+  .directive('availableBalance', () => {
+ return ({
     restrict: 'E',
     replace: true,
-    templateUrl: 'views/includes/available-balance.html',
-  }));
+    templateUrl: 'views/includes/available-balance.html'
+  });
+});
 }());

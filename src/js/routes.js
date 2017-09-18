@@ -77,7 +77,7 @@
             };
           });
           return $delegate;
-        },
+        }
       ]);
 
       // whitelist 'chrome-extension:' for chromeApp to work with image URLs processed by Angular
@@ -90,9 +90,9 @@
           needProfile: false,
           views: {
             main: {
-              templateUrl: 'views/splash.html',
-            },
-          },
+              templateUrl: 'views/splash.html'
+            }
+          }
         })
         .state('intro', {
           url: '/intro',
@@ -100,8 +100,8 @@
           views: {
             main: {
               templateUrl: 'controllers/intro/intro.template.html'
-            },
-          },
+            }
+          }
         })
         .state('translators', {
           url: '/translators',
@@ -109,18 +109,18 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/translators.html',
-            },
-          },
+              templateUrl: 'views/translators.html'
+            }
+          }
         })
         .state('disclaimer', {
           url: '/disclaimer',
           needProfile: false,
           views: {
             main: {
-              templateUrl: 'views/disclaimer.html',
-            },
-          },
+              templateUrl: 'views/disclaimer.html'
+            }
+          }
         })
         .state('walletHome', {
           url: '/',
@@ -130,16 +130,16 @@
           sticky: true,
           views: {
             main: {
-              templateUrl: 'views/walletHome.html',
-            },
-          },
+              templateUrl: 'views/walletHome.html'
+            }
+          }
         })
         .state('unsupported', {
           url: '/unsupported',
           needProfile: false,
           views: {
             main: {
-              templateUrl: 'views/unsupported.html',
+              templateUrl: 'views/unsupported.html'
             }
           }
         })
@@ -151,35 +151,35 @@
               templateUrl: 'views/paymentUri.html'
             }
           },
-          needProfile: true,
+          needProfile: true
         })
         .state('selectWalletForPayment', {
           url: '/selectWalletForPayment',
           controller: 'walletForPaymentController',
-          needProfile: true,
+          needProfile: true
         })
         .state('import', {
           url: '/import',
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/import.html',
-            },
-          },
+              templateUrl: 'views/import.html'
+            }
+          }
         })
         .state('importProfile', {
           url: '/importProfile',
           templateUrl: 'views/importProfile.html',
-          needProfile: false,
+          needProfile: false
         })
         .state('importLegacy', {
           url: '/importLegacy',
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/importLegacy.html',
-            },
-          },
+              templateUrl: 'views/importLegacy.html'
+            }
+          }
 
         })
         .state('create', {
@@ -188,18 +188,18 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/create.html',
-            },
-          },
+              templateUrl: 'views/create.html'
+            }
+          }
         })
         .state('copayers', {
           url: '/copayers',
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/copayers.html',
-            },
-          },
+              templateUrl: 'views/copayers.html'
+            }
+          }
         })
         .state('preferences', {
           url: '/preferences',
@@ -208,9 +208,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferences.html',
-            },
-          },
+              templateUrl: 'views/preferences.html'
+            }
+          }
         })
         .state('correspondentDevices', {
           url: '/correspondentDevices',
@@ -220,9 +220,9 @@
           sticky: true,
           views: {
             chat: {
-              templateUrl: 'views/correspondentDevices.html',
-            },
-          },
+              templateUrl: 'views/correspondentDevices.html'
+            }
+          }
         })
         .state('correspondentDevices.correspondentDevice', {
           url: '/correspondentDevice',
@@ -230,9 +230,9 @@
           needProfile: true,
           views: {
             dialog: {
-              templateUrl: 'views/correspondentDevice.html',
-            },
-          },
+              templateUrl: 'views/correspondentDevice.html'
+            }
+          }
         })
         .state('correspondentDevices.editCorrespondentDevice', {
           url: '/editCorrespondentDevice',
@@ -240,18 +240,18 @@
           needProfile: true,
           views: {
             dialog: {
-              templateUrl: 'views/editCorrespondentDevice.html',
-            },
-          },
+              templateUrl: 'views/editCorrespondentDevice.html'
+            }
+          }
         })
         .state('correspondentDevices.addCorrespondentDevice', {
           url: '/addCorrespondentDevice',
           needProfile: true,
           views: {
             dialog: {
-              templateUrl: 'views/addCorrespondentDevice.html',
-            },
-          },
+              templateUrl: 'views/addCorrespondentDevice.html'
+            }
+          }
         })
         .state('correspondentDevices.inviteCorrespondentDevice', {
           url: '/inviteCorrespondentDevice',
@@ -259,9 +259,9 @@
           needProfile: true,
           views: {
             dialog: {
-              templateUrl: 'views/inviteCorrespondentDevice.html',
-            },
-          },
+              templateUrl: 'views/inviteCorrespondentDevice.html'
+            }
+          }
         })
         .state('correspondentDevices.acceptCorrespondentInvitation', {
           url: '/acceptCorrespondentInvitation',
@@ -269,9 +269,9 @@
           needProfile: true,
           views: {
             dialog: {
-              templateUrl: 'views/acceptCorrespondentInvitation.html',
-            },
-          },
+              templateUrl: 'views/acceptCorrespondentInvitation.html'
+            }
+          }
         })
         .state('authConfirmation', {
           url: '/authConfirmation',
@@ -279,9 +279,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/authConfirmation.html',
-            },
-          },
+              templateUrl: 'views/authConfirmation.html'
+            }
+          }
         })
         .state('preferencesDeviceName', {
           url: '/preferencesDeviceName',
@@ -289,9 +289,9 @@
           needProfile: false,
           views: {
             main: {
-              templateUrl: 'views/preferencesDeviceName.html',
-            },
-          },
+              templateUrl: 'views/preferencesDeviceName.html'
+            }
+          }
         })
         .state('preferencesLanguage', {
           url: '/preferencesLanguage',
@@ -299,9 +299,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesLanguage.html',
-            },
-          },
+              templateUrl: 'views/preferencesLanguage.html'
+            }
+          }
         })
 
         .state('preferencesAdvanced', {
@@ -311,9 +311,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesAdvanced.html',
-            },
-          },
+              templateUrl: 'views/preferencesAdvanced.html'
+            }
+          }
         })
         .state('preferencesDeleteWallet', {
           url: '/delete',
@@ -323,7 +323,7 @@
           views: {
             'main@': {
               templateUrl: 'views/preferencesDeleteWallet.html'
-            },
+            }
           }
         })
         .state('preferencesColor', {
@@ -333,9 +333,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesColor.html',
-            },
-          },
+              templateUrl: 'views/preferencesColor.html'
+            }
+          }
         })
 
         .state('preferencesAlias', {
@@ -345,10 +345,10 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesAlias.html',
-            },
+              templateUrl: 'views/preferencesAlias.html'
+            }
 
-          },
+          }
         })
         .state('preferencesEmail', {
           url: '/preferencesEmail',
@@ -357,10 +357,10 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesEmail.html',
-            },
+              templateUrl: 'views/preferencesEmail.html'
+            }
 
-          },
+          }
         })
         .state('information', {
           url: '/information',
@@ -368,9 +368,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesInformation.html',
-            },
-          },
+              templateUrl: 'views/preferencesInformation.html'
+            }
+          }
         })
 
         .state('about', {
@@ -380,9 +380,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesAbout.html',
-            },
-          },
+              templateUrl: 'views/preferencesAbout.html'
+            }
+          }
         })
         .state('logs', {
           url: '/logs',
@@ -391,9 +391,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesLogs.html',
-            },
-          },
+              templateUrl: 'views/preferencesLogs.html'
+            }
+          }
         })
         .state('export', {
           url: '/export',
@@ -402,9 +402,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/export.html',
-            },
-          },
+              templateUrl: 'views/export.html'
+            }
+          }
         })
         .state('paperWallet', {
           url: '/paperWallet',
@@ -413,9 +413,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/paperWallet.html',
-            },
-          },
+              templateUrl: 'views/paperWallet.html'
+            }
+          }
         })
         .state('backup', {
           url: '/backup',
@@ -424,9 +424,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/backup.html',
-            },
-          },
+              templateUrl: 'views/backup.html'
+            }
+          }
         })
         .state('recoveryFromSeed', {
           url: '/recoveryFromSeed',
@@ -435,30 +435,30 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/recoveryFromSeed.html',
-            },
-          },
+              templateUrl: 'views/recoveryFromSeed.html'
+            }
+          }
         })
         .state('preferencesGlobal', {
           url: '/preferencesGlobal',
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/preferencesGlobal.html',
-            },
-          },
+              templateUrl: 'views/preferencesGlobal.html'
+            }
+          }
         })
         .state('settings', {
           url: '/settings',
           controller: 'settingsController',
           templateUrl: 'views/settings.html',
-          needProfile: false,
+          needProfile: false
         })
         .state('warning', {
           url: '/warning',
           controller: 'warningController',
           templateUrl: 'views/warning.html',
-          needProfile: false,
+          needProfile: false
         })
 
         .state('add', {
@@ -466,9 +466,9 @@
           needProfile: true,
           views: {
             main: {
-              templateUrl: 'views/add.html',
-            },
-          },
+              templateUrl: 'views/add.html'
+            }
+          }
         })
         .state('cordova', { // never used
           url: '/cordova/:status/:isHome',
@@ -497,10 +497,10 @@
                  }, 100);
                  go.walletHome();
                  */
-              },
-            },
+              }
+            }
           },
-          needProfile: false,
+          needProfile: false
         });
     })
     .run(($rootScope, $state, $stateParams, $log, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService, backButton, go) => {
@@ -525,7 +525,7 @@
 
         if (platform.indexOf('win') === -1) {
           const nativeMenuBar = new gui.Menu({
-            type: 'menubar',
+            type: 'menubar'
           });
           try {
             nativeMenuBar.createMacBuiltin('DAGCOIN');

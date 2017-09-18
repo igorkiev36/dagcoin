@@ -20,7 +20,7 @@
         return cb(null);
       }
 
-      return window.plugins.uniqueDeviceID.get(uuid => cb(uuid), cb);
+      return window.plugins.uniqueDeviceID.get((uuid) => { return cb(uuid); }, cb);
     };
 
     const encryptOnMobile = function (text, cb) {
@@ -66,7 +66,7 @@
           inputText = sjcl.decrypt(uuid, text);
 
           $log.info('Migrating to unencrypted profile');
-          return storage.set('profile', inputText, err => cb(err, inputText));
+          return storage.set('profile', inputText, (err) => { return cb(err, inputText); });
         } catch (e) {
           $log.warn('Decrypt error: ', e);
           return cb('Could not decrypt storage: device ID mismatch');

@@ -54,7 +54,7 @@
           if (setAddressbookError) {
             return cb('Error adding new entry');
           }
-          return root.list((err, addressList) => cb(err, addressList));
+          return root.list((err, addressList) => { return cb(err, addressList); });
         });
       });
     };
@@ -76,7 +76,7 @@
           if (error) {
             return cb('Error deleting entry');
           }
-          return root.list((listError, addressBook) => cb(listError, addressBook));
+          return root.list((listError, addressBook) => { return cb(listError, addressBook); });
         });
       });
     };

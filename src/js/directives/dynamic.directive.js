@@ -13,7 +13,7 @@
             ele.html(html);
             $compile(ele.contents())(scope);
           });
-        },
+        }
       };
     });
 }());

@@ -12,8 +12,7 @@
     const deviceConnectionPromiseMap = new Map();
 
     function pairAndConnectDevice(code, connectionCheckLifeSpan) {
-      return checkOrPairDevice(code).then(correspondent =>
-        makeSureDeviceIsConnected(correspondent.device_address, connectionCheckLifeSpan)
+      return checkOrPairDevice(code).then((correspondent) => { return makeSureDeviceIsConnected(correspondent.device_address, connectionCheckLifeSpan); }
       );
     }
 
@@ -40,8 +39,8 @@
 
         eventBus.on('dagcoin.connected', listener);
       }).then(
-        () => getCorrespondent(deviceAddress),
-        () => eventBus.removeListener('dagcoin.connected', listener)
+        () => { return getCorrespondent(deviceAddress); },
+        () => { return eventBus.removeListener('dagcoin.connected', listener); }
       );
 
       const keepAlive = {

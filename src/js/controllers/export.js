@@ -33,7 +33,7 @@
           if (err) {
             return cb(err);
           }
-          const fileNameList = listFilenames.filter(name => (name === 'conf.json' || /\.sqlite/.test(name)));
+          const fileNameList = listFilenames.filter((name) => { return (name === 'conf.json' || /\.sqlite/.test(name)); });
           if (isCordova) {
             return async.forEachSeries(fileNameList, (name, callback) => {
               fileSystemService.readFile(`${dbDirPath}/${name}`, (fileSystemServiceError, data) => {
@@ -121,7 +121,7 @@
           const cipher = crypto.createCipheriv('aes-256-ctr', crypto.pbkdf2Sync(password, '', 100000, 32, 'sha512'), crypto.createHash('sha1').update(password).digest().slice(0, 16));
           jsZip = new Zip(path, {
             compressed: self.bCompression ? 6 : 0,
-            cipher,
+            cipher
           });
           storageService.getProfile((err, profile) => {
             storageService.getConfig((storageServiceError, config) => {

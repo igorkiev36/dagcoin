@@ -18,40 +18,40 @@
       const settings = {
         info: {
           duration: 6000,
-          enabled: true,
+          enabled: true
         },
         funds: {
           duration: 7000,
-          enabled: true,
+          enabled: true
         },
         version: {
           duration: 60000,
-          enabled: true,
+          enabled: true
         },
         warning: {
           duration: 7000,
-          enabled: true,
+          enabled: true
         },
         error: {
           duration: 7000,
-          enabled: true,
+          enabled: true
         },
         success: {
           duration: 5000,
-          enabled: true,
+          enabled: true
         },
         progress: {
           duration: 0,
-          enabled: true,
+          enabled: true
         },
         custom: {
           duration: 35000,
-          enabled: true,
+          enabled: true
         },
         details: true,
         localStorage: false,
         html5Mode: false,
-        html5DefaultIcon: 'img/icons/dagcoin.ico',
+        html5DefaultIcon: 'img/icons/dagcoin.ico'
       };
 
       function html5Notify(icon, title, content, ondisplay, onclose) {
@@ -198,7 +198,7 @@
             title,
             content,
             timestamp: +new Date(),
-            userData,
+            userData
           };
 
           notifications.push(notification);
@@ -227,7 +227,7 @@
           if (document.hidden && (type === 'info' || type === 'funds')) {
             window.Notification(title, {
               body: content,
-              icon: 'img/notification.png',
+              icon: 'img/notification.png'
             });
           }
 
@@ -252,10 +252,10 @@
         clear() {
           notifications = [];
           this.save();
-        },
+        }
 
       };
-    },
+    }
   ]).directive('notifications', (notification) => {
     /**
      *
@@ -287,8 +287,8 @@
           $scope.removeNotification = function (noti) {
             $scope.queue.splice($scope.queue.indexOf(noti), 1);
           };
-        },
-      ],
+        }
+      ]
 
     };
   });

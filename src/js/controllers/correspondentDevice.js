@@ -39,7 +39,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
               type: 'system',
               message: JSON.stringify({ state: newState }),
               timestamp: Math.floor(Date.now() / 1000),
-              chat_recording_status: true,
+              chat_recording_status: true
             };
             $scope.autoScrollEnabled = true;
             $scope.messageEvents.push(correspondentListService.parseMessage(message));
@@ -52,7 +52,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
         },
         ifError() {
           // ignore
-        },
+        }
       });
     });
 
@@ -95,7 +95,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
           const msgObj = {
             bIncoming: false,
             message: correspondentListService.formatOutgoingMessage(message),
-            timestamp: Math.floor(Date.now() / 1000),
+            timestamp: Math.floor(Date.now() / 1000)
           };
           correspondentListService.checkAndInsertDate($scope.messageEvents, msgObj);
           $scope.messageEvents.push(msgObj);
@@ -109,7 +109,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
           if (!isHandled) {
             setError(error);
           }
-        },
+        }
       });
     };
 
@@ -129,7 +129,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
 
     $scope.sendPayment = function (address, amount, asset) {
       console.log(`will send payment to ${address}`);
-      if (asset && $scope.index.arrBalances.filter(balance => (balance.asset === asset)).length === 0) {
+      if (asset && $scope.index.arrBalances.filter((balance) => { return (balance.asset === asset); }).length === 0) {
         console.log(`i do not own anything of asset ${asset}`);
         return;
       }
@@ -145,7 +145,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
       if (!asset) {
         throw Error('no asset in showPayment');
       }
-      if (asset && $scope.index.arrBalances.filter(balance => (balance.asset === asset)).length === 0) {
+      if (asset && $scope.index.arrBalances.filter((balance) => { return (balance.asset === asset); }).length === 0) {
         console.log(`i do not own anything of asset ${asset}`);
         return;
       }
@@ -175,7 +175,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
         $scopeModal.arrParties = [{ value: 'me', display_value: 'me' }, { value: 'peer', display_value: 'the peer' }];
         $scopeModal.arrPeerPaysTos = [{ value: 'me', display_value: 'me' }, {
           value: 'contract',
-          display_value: 'this contract',
+          display_value: 'this contract'
         }];
         $scopeModal.arrAssetInfos = indexScope.arrBalances.map((b) => {
           const info = { asset: b.asset, is_private: b.is_private };
@@ -190,7 +190,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
           }
           return info;
         });
-        $scopeModal.arrPublicAssetInfos = $scopeModal.arrAssetInfos.filter(b => !b.is_private);
+        $scopeModal.arrPublicAssetInfos = $scopeModal.arrAssetInfos.filter((b) => { return !b.is_private; });
         const contract = {
           timeout: 4,
           myAsset: 'base',
@@ -199,7 +199,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
           relation: '>',
           expiry: 7,
           data_party: 'me',
-          expiry_party: 'peer',
+          expiry_party: 'peer'
         };
         $scopeModal.contract = contract;
 
@@ -281,7 +281,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                 what: 'output',
                 address: (contract.peer_pays_to === 'contract') ? 'this address' : myAddress,
                 asset: contract.peerAsset,
-                amount: peerAmount,
+                amount: peerAmount
               }];
               readLastMainChainIndex((errorMci, lastMci) => {
                 if (errorMci) {
@@ -304,36 +304,36 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                     ['or', [
                       ['and', [
                         ['address', dataAddress],
-                        arrEventCondition,
+                        arrEventCondition
                       ]],
                       ['and', [
                         ['address', expiryAddress],
-                        ['in data feed', [[configService.TIMESTAMPER_ADDRESS], 'timestamp', '>', Date.now() + Math.round(contract.expiry * 24 * 3600 * 1000)]],
-                      ]],
-                    ]],
+                        ['in data feed', [[configService.TIMESTAMPER_ADDRESS], 'timestamp', '>', Date.now() + Math.round(contract.expiry * 24 * 3600 * 1000)]]
+                      ]]
+                    ]]
                   ]],
                   ['and', [
                     ['address', myAddress],
                     ['not', arrSeenCondition],
-                    ['in data feed', [[configService.TIMESTAMPER_ADDRESS], 'timestamp', '>', Date.now() + Math.round(contract.timeout * 3600 * 1000)]],
-                  ]],
+                    ['in data feed', [[configService.TIMESTAMPER_ADDRESS], 'timestamp', '>', Date.now() + Math.round(contract.timeout * 3600 * 1000)]]
+                  ]]
                 ]];
                 const assocSignersByPath = {
                   'r.0.1.0.0': {
                     address: dataAddress,
                     member_signing_path: 'r',
-                    device_address: dataDeviceAddress,
+                    device_address: dataDeviceAddress
                   },
                   'r.0.1.1.0': {
                     address: expiryAddress,
                     member_signing_path: 'r',
-                    device_address: expiryDeviceAddress,
+                    device_address: expiryDeviceAddress
                   },
                   'r.1.0': {
                     address: myAddress,
                     member_signing_path: 'r',
-                    device_address: device.getMyDeviceAddress(),
-                  },
+                    device_address: device.getMyDeviceAddress()
+                  }
                 };
                 walletDefinedByAddresses.createNewSharedAddress(arrDefinition, assocSignersByPath, {
                   ifError(errNsa) {
@@ -345,7 +345,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                   },
                   ifOk(sharedAddress) {
                     composeAndSend(sharedAddress, arrDefinition, assocSignersByPath, myAddress);
-                  },
+                  }
                 });
               });
             });
@@ -360,7 +360,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                   }
                 });
               } else if (indexScope.shared_address) {
-                arrSigningDeviceAddresses = indexScope.copayers.map(copayer => copayer.device_address);
+                arrSigningDeviceAddresses = indexScope.copayers.map((copayer) => { return copayer.device_address; });
               }
               profileService.bKeepUnlocked = true;
               const opts = {
@@ -369,7 +369,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                 to_address: sharedAddress,
                 amount: myAmount,
                 arrSigningDeviceAddresses,
-                recipient_device_address: correspondent.device_address,
+                recipient_device_address: correspondent.device_address
               };
               fc.sendMultiPayment(opts, (errSmp) => {
                 // if multisig, it might take very long before the callback is called
@@ -397,7 +397,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                   const assocDefinitions = {};
                   assocDefinitions[sharedAddress] = {
                     definition: arrDefinition,
-                    signers: assocSignersByPath,
+                    signers: assocSignersByPath
                   };
                   const objPaymentRequest = { payments: arrPayments, definitions: assocDefinitions };
                   const paymentJson = JSON.stringify(objPaymentRequest);
@@ -410,7 +410,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                 device.sendMessageToDevice(correspondent.device_address, 'text', paymentRequestText);
                 correspondentListService.messageEventsByCorrespondent[correspondent.device_address].push({
                   bIncoming: false,
-                  message: correspondentListService.formatOutgoingMessage(paymentRequestText),
+                  message: correspondentListService.formatOutgoingMessage(paymentRequestText)
                 });
                 if (contract.peer_pays_to === 'me') {
                   issueNextAddress();
@@ -432,7 +432,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
         templateUrl: 'views/modals/offer-contract.html',
         windowClass: animationService.modalAnimated.slideUp,
         controller: ['$scope', '$modalInstance', ModalInstanceCtrl],
-        scope: $scope,
+        scope: $scope
       });
 
       const disableCloseModal = $rootScope.$on('closeModal', () => {
@@ -499,7 +499,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
               'SELECT shared_address AS address FROM shared_addresses WHERE shared_address IN(?)',
               [arrAllMemberAddresses, arrAllMemberAddresses],
               (rows) => {
-                const arrMyAddresses = rows.map(row => row.address);
+                const arrMyAddresses = rows.map((row) => { return row.address; });
                 Object.keys(assocMemberAddressesByDestAddress).forEach((destinationAddress) => {
                   const arrMemberAddresses = assocMemberAddressesByDestAddress[destinationAddress];
                   if (lodash.intersection(arrMemberAddresses, arrMyAddresses).length > 0) {
@@ -512,7 +512,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                   const arrDef = objMultiPaymentRequest.definitions[da].definition;
                   $scopeModal.arrHumanReadableDefinitions.push({
                     destinationAddress: da,
-                    humanReadableDefinition: correspondentListService.getHumanReadableDefinition(arrDef, arrMyAddresses, []),
+                    humanReadableDefinition: correspondentListService.getHumanReadableDefinition(arrDef, arrMyAddresses, [])
                   });
                 });
                 cb();
@@ -540,12 +540,12 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
             return walletDefinedByAddresses.handleNewSharedAddress({
               address: sharedAddress,
               definition: arrDefinitionSa,
-              signers,
+              signers
             }, {
               ifOk: cb,
               ifError(err) {
                 throw Error(`failed to create shared address ${sharedAddress}: ${err}`);
-              },
+              }
             });
           });
         }
@@ -597,7 +597,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                 }
                 assocOutputsByAsset[asset].push({ address: objPayment.address, amount: objPayment.amount });
               });
-              const arrNonBaseAssets = Object.keys(assocOutputsByAsset).filter(asset => (asset !== 'base'));
+              const arrNonBaseAssets = Object.keys(assocOutputsByAsset).filter((asset) => { return (asset !== 'base'); });
               if (arrNonBaseAssets.length > 1) {
                 $scopeModal.error = 'more than 1 non-base asset not supported';
                 $scopeModal.$apply();
@@ -614,7 +614,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                   }
                 });
               } else if (indexScope.shared_address) {
-                arrSigningDeviceAddresses = indexScope.copayers.map(copayer => copayer.device_address);
+                arrSigningDeviceAddresses = indexScope.copayers.map((copayer) => { return copayer.device_address; });
               }
               const currentMultiPaymentKey = require('crypto').createHash('sha256').update(paymentJson).digest('base64');
               if (currentMultiPaymentKey === indexScope.current_multi_payment_key) {
@@ -629,7 +629,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
                 arrSigningDeviceAddresses,
                 recipient_device_address: recipientDeviceAddress,
                 base_outputs: arrBaseOutputs,
-                asset_outputs: arrAssetOutputs,
+                asset_outputs: arrAssetOutputs
               }, (errSmp) => { // can take long if multisig
                 delete indexScope.current_multi_payment_key;
                 if (errSmp) {
@@ -691,7 +691,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
         templateUrl: 'views/modals/multi-payment.html',
         windowClass: animationService.modalAnimated.slideUp,
         controller: ['$scope', '$modalInstance', ModalInstanceCtrl],
-        scope: $scope,
+        scope: $scope
       });
 
       const disableCloseModal = $rootScope.$on('closeModal', () => {
@@ -747,7 +747,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
         bIncoming: false,
         message: JSON.stringify({ state: (!!(correspondent.peer_record_pref && correspondent.my_record_pref)) }),
         timestamp: Math.floor(+new Date() / 1000),
-        chat_recording_status: true,
+        chat_recording_status: true
       };
       chatStorage.store(correspondent.device_address, message.message, 0, 'system');
       $scope.messageEvents.push(correspondentListService.parseMessage(message));
@@ -779,7 +779,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
       if (indexScope.shared_address) {
         return cb(indexScope.shared_address);
       }
-      addressService.getAddress(profileService.focusedClient.credentials.walletId, false, (err, address) => cb(address));
+      addressService.getAddress(profileService.focusedClient.credentials.walletId, false, (err, address) => { return cb(address); });
       return null;
     }
 
@@ -854,7 +854,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
               $scopeModal.customAmount = newValue;
             },
             enumerable: true,
-            configurable: true,
+            configurable: true
           });
 
         $scopeModal.submitForm = function (form) {
@@ -904,7 +904,7 @@ angular.module('copayApp.controllers').controller('correspondentDeviceController
         templateUrl: 'views/modals/customized-amount.html',
         windowClass: animationService.modalAnimated.slideUp,
         controller: ['$scope', '$modalInstance', ModalInstanceCtrl],
-        scope: $scope,
+        scope: $scope
       });
 
       const disableCloseModal = $rootScope.$on('closeModal', () => {

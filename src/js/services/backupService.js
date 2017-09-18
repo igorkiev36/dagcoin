@@ -11,7 +11,7 @@
 
         try {
           out = new Blob([data], {
-            type: datatype,
+            type: datatype
           });
           $log.debug('case 1');
         } catch (e) {
@@ -28,7 +28,7 @@
           } else if (e.name === 'InvalidStateError') {
             // InvalidStateError (tested on FF13 WinXP)
             out = new Blob([data], {
-              type: datatype,
+              type: datatype
             });
             $log.debug('case 3');
           } else {
@@ -71,7 +71,7 @@
         let b = fc.export(options);
         if (options.historyCache || options.addressBook) b = root.addMetadata(b, options);
         return sjcl.encrypt(password, b, {
-          iter: 10000,
+          iter: 10000
         });
       } catch (err) {
         $log.debug('Error exporting wallet: ', err);

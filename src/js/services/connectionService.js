@@ -17,7 +17,7 @@
       }
 
       function tryHandleError(error) {
-        const isConnectionError = !!connectionErrors.find(e => error && error.toLowerCase() === e.toLowerCase());
+        const isConnectionError = !!connectionErrors.find((e) => { return error && error.toLowerCase() === e.toLowerCase(); });
         if (isConnectionError) {
           notify(false);
         }

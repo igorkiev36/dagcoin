@@ -22,7 +22,7 @@
       restrict: 'E',
       scope: {
         onScan: '&',
-        beforeScan: '&',
+        beforeScan: '&'
       },
       controller: ($scope) => {
         $scope.cordovaOpenScanner = function () {
@@ -39,7 +39,7 @@
 
                 $timeout(() => {
                   const data = result.text;
-                  $scope.onScan({data});
+                  $scope.onScan({ data });
                 }, 1000);
               },
               (error) => {
@@ -57,7 +57,7 @@
 
         $scope.modalOpenScanner = function () {
           const parentScope = $scope;
-          const ModalInstanceCtrl = function ($scope, $rootScope, $modalInstance) {
+          const ModalInstanceCtrl = function ($modalScope, $modalRootScope, $modalInstance) {
             // QR code Scanner
             let video;
             let canvas;
@@ -66,22 +66,22 @@
             let localMediaStream;
             let prevResult;
 
-            var _scan = function (evt) {
+            const scan = function (evt) {
               if (localMediaStream) {
                 context.drawImage(video, 0, 0, 300, 225);
                 try {
-                  qrcode.decode();
+                  window.qrcode.decode();
                 } catch (e) {
                   // qrcodeError(e);
                 }
               }
-              $timeout(_scan, 800);
+              $timeout(scan, 800);
             };
 
-            const _scanStop = function () {
+            const scanStop = function () {
               if (localMediaStream && localMediaStream.active) {
                 const localMediaStreamTrack = localMediaStream.getTracks();
-                for (let i = 0; i < localMediaStreamTrack.length; i++) {
+                for (let i = 0; i < localMediaStreamTrack.length; i += 1) {
                   localMediaStreamTrack[i].stop();
                 }
               } else {
@@ -97,25 +97,25 @@
               }
             };
 
-            qrcode.callback = function (data) {
-              if (prevResult != data) {
+            window.qrcode.callback = function (data) {
+              if (prevResult !== data) {
                 prevResult = data;
                 return;
               }
-              _scanStop();
+              scanStop();
               $modalInstance.close(data);
             };
 
-            const _successCallback = function (stream) {
+            const successCallback = function (stream) {
               video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
               localMediaStream = stream;
               video.play();
-              $timeout(_scan, 1000);
+              $timeout(scan, 1000);
             };
 
-            const _videoError = function (err) {
+            const videoErrorCallback = function (err) {
               breadcrumbs.add('qr scanner video error');
-              $scope.cancel();
+              $modalScope.cancel();
             };
 
             const setScanner = function () {
@@ -126,7 +126,7 @@
                 window.mozURL || window.msURL;
             };
 
-            $scope.init = function () {
+            $modalScope.init = function () {
               setScanner();
               $timeout(() => {
                 if (parentScope.beforeScan) {
@@ -145,14 +145,14 @@
                 context.clearRect(0, 0, 300, 225);
 
                 navigator.getUserMedia({
-                  video: true,
-                }, _successCallback, _videoError);
+                  video: true
+                }, successCallback, videoErrorCallback);
               }, 500);
             };
 
-            $scope.cancel = function () {
+            $modalScope.cancel = function () {
               breadcrumbs.add('qr scanner cancel');
-              _scanStop();
+              scanStop();
               try {
                 $modalInstance.dismiss('cancel');
               } catch (e) {
@@ -164,12 +164,12 @@
           const modalInstance = $modal.open({
             templateUrl: 'views/modals/scanner.html',
             windowClass: 'full',
-            controller: ModalInstanceCtrl,
+            controller: ['$scope', '$rootScope', '$modalInstance', ModalInstanceCtrl],
             backdrop: 'static',
-            keyboard: false,
+            keyboard: false
           });
           modalInstance.result.then((data) => {
-            parentScope.onScan({data});
+            parentScope.onScan({ data });
           });
         };
 
@@ -182,7 +182,7 @@
         };
       },
       replace: true,
-      template: '<a id="qr-scanner" ng-click="openScanner()"><svg-icon name="barcode-scan"></svg-icon></a>',
+      template: '<a id="qr-scanner" ng-click="openScanner()"><svg-icon name="barcode-scan"></svg-icon></a>'
     };
   }
 })();

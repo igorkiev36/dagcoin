@@ -13,7 +13,7 @@
             console.log('clicked', attrs);
             $scope.sendPayment(attrs.address);
           });
-        },
+        }
       };
     });
 }());

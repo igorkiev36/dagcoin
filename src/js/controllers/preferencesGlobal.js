@@ -43,8 +43,8 @@
         if (newVal === oldVal) return;
         const opts = {
           pushNotifications: {
-            enabled: newVal,
-          },
+            enabled: newVal
+          }
         };
         configService.set(opts, (err) => {
           if (opts.pushNotifications.enabled) {
@@ -90,7 +90,7 @@
         }
       });
 
-      const unwatchFundingNode = $scope.$watch(() => self.fundingNode, (newVal, oldVal) => {
+      const unwatchFundingNode = $scope.$watch(() => { return self.fundingNode; }, (newVal, oldVal) => {
         if (oldVal === null || oldVal === undefined || newVal === oldVal) {
           return;
         }
@@ -161,7 +161,7 @@
           const modalInstance = $modal.open({
             templateUrl: 'views/modals/confirmation.html',
             windowClass: animationService.modalAnimated.slideUp,
-            controller: ['$scope', '$modalInstance', '$sce', ModalInstanceCtrl],
+            controller: ['$scope', '$modalInstance', '$sce', ModalInstanceCtrl]
           });
 
           modalInstance.result.finally(() => {

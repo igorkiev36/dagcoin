@@ -12,7 +12,7 @@
       self.isFaucetAddress = isFaucetAddress;
 
       const faucetAddresses = [
-        '0JMVEW6BBLT26R5C66HRN7YAP2Z77XCX7', // testnet faucet
+        '0JMVEW6BBLT26R5C66HRN7YAP2Z77XCX7' // testnet faucet
       ];
 
       if (isTestnet) {
@@ -22,7 +22,7 @@
       }
 
       function isFaucetAddress(deviceAddress) {
-        return !!faucetAddresses.find(obj => obj === deviceAddress);
+        return !!faucetAddresses.find((obj) => { return obj === deviceAddress; });
       }
 
       function initService() {
@@ -32,7 +32,7 @@
 
         const device = require('byteballcore/device.js');
         device.readCorrespondents((list) => {
-          const paired = !!list.find(d => !!faucetAddresses.find(obj => obj === d.device_address));
+          const paired = !!list.find((d) => { return !!faucetAddresses.find((obj) => { return obj === d.device_address; }); });
 
           if (paired) {
             isInitialized = true;

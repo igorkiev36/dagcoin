@@ -51,7 +51,7 @@
 
         ctrl.$parsers.unshift(validator);
         ctrl.$formatters.unshift(validator);
-      },
+      }
     };
   }
 }());

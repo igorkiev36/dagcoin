@@ -141,7 +141,7 @@
               const reader = fileSystem.createReader();
               reader.readEntries(
                 (entries) => {
-                  cb(null, entries.map(entry => entry.name));
+                  cb(null, entries.map((entry) => { return entry.name; }));
                 },
                 (err) => {
                   cb(err);

@@ -4,7 +4,6 @@
   angular.module('copayApp.services').factory('confirmDialog', ($log, $timeout, gettextCatalog, isCordova) => {
     const root = {};
 
-
     const acceptMsg = gettextCatalog.getString('Accept');
     const cancelMsg = gettextCatalog.getString('Cancel');
     const confirmMsg = gettextCatalog.getString('Confirm');
@@ -15,7 +14,7 @@
           msg,
           (buttonIndex) => {
             if (buttonIndex === 1) {
-              return $timeout(() => cb(true), 1);
+              return $timeout(() => { return cb(true); }, 1);
             }
             return cb(false);
           },

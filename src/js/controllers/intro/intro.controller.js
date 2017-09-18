@@ -11,7 +11,7 @@
     $scope.active_index = 0;
 
     $scope.isLastSlide = () => {
-      return ($scope.active_index === 2 ? true : false);
+      return ($scope.active_index === 2);
     };
 
     $scope.next = () => {

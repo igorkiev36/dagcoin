@@ -84,8 +84,8 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         const walletDefinedByKeys = require('byteballcore/wallet_defined_by_keys.js');
         walletDefinedByKeys.readCosigners(walletClient.credentials.walletId, (arrCosigners) => {
           const arrApprovedDevices = arrCosigners
-          .filter(cosigner => cosigner.approval_date)
-          .map(cosigner => cosigner.device_address);
+          .filter((cosigner) => { return cosigner.approval_date; })
+          .map((cosigner) => { return cosigner.device_address; });
           console.log(`approved devices: ${arrApprovedDevices.join(', ')}`);
           walletClient.credentials.addPublicKeyRing(arrApprovedDevices);
 
@@ -305,7 +305,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         const modalInstance = $modal.open({
           templateUrl: 'views/modals/confirmation.html',
           windowClass: animationService.modalAnimated.slideUp,
-          controller: ModalInstanceCtrl,
+          controller: ModalInstanceCtrl
         });
 
         modalInstance.result.finally(() => {
@@ -339,7 +339,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         const walletDefinedByKeys = require('byteballcore/wallet_defined_by_keys.js');
         device.readCorrespondentsByDeviceAddresses(arrDeviceAddresses, (arrCorrespondentInfos) => {
           // my own address is not included in arrCorrespondentInfos because I'm not my correspondent
-          const arrNames = arrCorrespondentInfos.map(correspondent => correspondent.name);
+          const arrNames = arrCorrespondentInfos.map((correspondent) => { return correspondent.name; });
           const nameList = arrNames.join(', ');
           const question = gettextCatalog.getString(`Create new wallet ${walletName} together with ${nameList} ?`);
           requestApproval(question, {
@@ -380,7 +380,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
             ifNo() {
               console.log('===== NO CLICKED');
               walletDefinedByKeys.cancelWallet(walletId, arrDeviceAddresses, arrOtherCosigners);
-            },
+            }
           });
         });
       });
@@ -442,11 +442,11 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
           }
 
           return walletDefinedByKeys.readChangeAddresses(objAddress.wallet, (arrChangeAddressInfos) => {
-            const arrAuthorAddresses = objUnit.authors.map(author => author.address);
-            let arrChangeAddresses = arrChangeAddressInfos.map(info => info.address);
+            const arrAuthorAddresses = objUnit.authors.map((author) => { return author.address; });
+            let arrChangeAddresses = arrChangeAddressInfos.map((info) => { return info.address; });
             arrChangeAddresses = arrChangeAddresses.concat(arrAuthorAddresses);
             arrChangeAddresses.push(topAddress);
-            const arrPaymentMessages = objUnit.messages.filter(objMessage => (objMessage.app === 'payment'));
+            const arrPaymentMessages = objUnit.messages.filter((objMessage) => { return (objMessage.app === 'payment'); });
             if (arrPaymentMessages.length === 0) {
               throw Error('no payment message found');
             }
@@ -512,7 +512,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
                     refuseSignature();
                     assocChoicesByUnit[unit] = 'refuse';
                     unlock();
-                  },
+                  }
                 });
               }); // eachSeries
           });
@@ -568,7 +568,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         const modalInstance = $modal.open({
           templateUrl: 'views/modals/select-subwallet.html',
           windowClass: animationService.modalAnimated.slideUp,
-          controller: ModalInstanceCtrl,
+          controller: ModalInstanceCtrl
         });
 
         const disableCloseModal = $rootScope.$on('closeModal', () => {
@@ -591,19 +591,19 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
       self.menu = [{
         title: gettext('Home'),
         icon: 'icon-home',
-        link: 'walletHome',
+        link: 'walletHome'
       }, {
         title: gettext('Receive'),
         icon: 'icon-recieve',
-        link: 'receive',
+        link: 'receive'
       }, {
         title: gettext('Send'),
         icon: 'icon-send',
-        link: 'send',
+        link: 'send'
       }, {
         title: gettext('History'),
         icon: 'icon-history',
-        link: 'history',
+        link: 'history'
       }];
 
       self.getSvgSrc = function (id) {
@@ -833,7 +833,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
             }
           });
 
-          self.otherWallets = lodash.filter(profileService.getWallets(self.network), w => (w.id !== self.walletId || self.shared_address));
+          self.otherWallets = lodash.filter(profileService.getWallets(self.network), (w) => { return (w.id !== self.walletId || self.shared_address); });
 
           // $rootScope.$apply();
 
@@ -883,7 +883,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
             }
             $log.debug('Wallet Opened');
             self.updateAll(lodash.isObject(walletStatus) ? {
-              walletStatus,
+              walletStatus
             } : null);
             // $rootScope.$apply();
           });
@@ -1210,7 +1210,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
           close(err) {
             self.showAlert = null;
             if (cb) return cb(err);
-          },
+          }
         };
         $timeout(() => {
           $rootScope.$apply();
@@ -1465,7 +1465,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         self.updateAll({
           walletStatus: null,
           untilItChanges: true,
-          triggerTxUpdate: true,
+          triggerTxUpdate: true
         });
       });
 
@@ -1475,18 +1475,18 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         self.updateAll({
           walletStatus: null,
           untilItChanges: true,
-          triggerTxUpdate: true,
+          triggerTxUpdate: true
         });
       });
 
       lodash.each(['NewTxProposal', 'TxProposalFinallyRejected', 'TxProposalRemoved', 'NewOutgoingTxByThirdParty',
-        'Local/NewTxProposal', 'Local/TxProposalAction',
+        'Local/NewTxProposal', 'Local/TxProposalAction'
       ], (eventName) => {
         $rootScope.$on(eventName, (event, untilItChanges) => {
           self.updateAll({
             walletStatus: null,
             untilItChanges,
-            triggerTxUpdate: true,
+            triggerTxUpdate: true
           });
         });
       });
@@ -1495,7 +1495,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
         $log.debug('Scan Finished. Updating history');
         self.updateAll({
           walletStatus: null,
-          triggerTxUpdate: true,
+          triggerTxUpdate: true
         });
       });
 
@@ -1553,7 +1553,7 @@ no-nested-ternary,no-shadow,no-plusplus,consistent-return,import/no-extraneous-d
           callback(err, pass) {
             self.askPassword = null;
             return cb(err, pass);
-          },
+          }
         };
         $timeout(() => {
           $rootScope.$apply();

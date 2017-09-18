@@ -2,7 +2,8 @@
   'use strict';
 
   angular.module('copayApp.controllers').controller('createController',
-    function ($scope, $rootScope, $location, $timeout, $log, lodash, go, profileService, configService, isCordova, gettext, isMobile, derivationPathHelper, correspondentListService) {
+    function ($scope, $rootScope, $location, $timeout, $log, lodash, go, profileService, configService, isCordova, gettext,
+              isMobile, derivationPathHelper, correspondentListService) {
       const self = this;
       const defaults = configService.getDefaults();
       this.isWindowsPhoneApp = isMobile.Windows() && isCordova;
@@ -25,10 +26,10 @@
       const updateSeedSourceSelect = function () {
         self.seedOptions = [{
           id: 'new',
-          label: gettext('New Random Seed'),
+          label: gettext('New Random Seed')
         }, {
           id: 'set',
-          label: gettext('Specify Seed...'),
+          label: gettext('Specify Seed...')
         }];
         $scope.seedSource = self.seedOptions[0];
       };
@@ -138,10 +139,10 @@
           n: $scope.totalCosigners,
           name: form.walletName.$modelValue,
           networkName: 'livenet',
-          cosigners: [],
+          cosigners: []
         };
         if ($scope.totalCosigners > 1) {
-          opts.cosigners = lodash.uniq(self.cosigners.map(cosigner => cosigner.device_address));
+          opts.cosigners = lodash.uniq(self.cosigners.map((cosigner) => { return cosigner.device_address; }));
           if (opts.cosigners.length !== $scope.totalCosigners - 1) {
             setError('Please select different co-signers');
             return;

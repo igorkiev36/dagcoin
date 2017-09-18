@@ -4,7 +4,6 @@
   angular
     .module('copayApp.directives')
 
-
     /**
      * @desc collection of tabs
      * @example <dag-tabset></dag-tabset>
@@ -26,7 +25,7 @@
       scope: {},
       templateUrl: 'directives/dagTabs/dagTabs.template.html',
       controllerAs: 'tabset',
-      controller: function ($scope, $element) {
+      controller: ($scope, $element) => {
         const self = this;
         self.tabs = [];
         self.activeTab = 0;
@@ -45,7 +44,7 @@
         function moveSlide(index) {
           if (!$rootScope.no_animation) {
             TweenMax.to($element[0].getElementsByClassName('dag_tabs_slider')[0], 0.3, {
-              ease: Expo.easeOut,
+              ease: window.Expo.easeOut,
               x: (self.slider_width * index)
             });
           }

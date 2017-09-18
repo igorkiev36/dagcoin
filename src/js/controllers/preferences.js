@@ -28,8 +28,8 @@
         if (newVal === oldVal) return;
         const opts = {
           wallet: {
-            spendUnconfirmed: newVal,
-          },
+            spendUnconfirmed: newVal
+          }
         };
         configService.set(opts, (err) => {
           $rootScope.$emit('Local/SpendUnconfirmedUpdated');
@@ -46,7 +46,7 @@
         const walletId = profileService.focusedClient.credentials.walletId;
 
         const opts = {
-          touchIdFor: {},
+          touchIdFor: {}
         };
         opts.touchIdFor[walletId] = newVal;
 

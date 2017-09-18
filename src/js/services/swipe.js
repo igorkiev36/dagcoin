@@ -20,8 +20,8 @@
           start: 'touchstart',
           move: 'touchmove',
           end: 'touchend',
-          cancel: 'touchcancel',
-        },
+          cancel: 'touchcancel'
+        }
       };
 
       function getCoordinates(event) {
@@ -31,7 +31,7 @@
 
         return {
           x: e.clientX,
-          y: e.clientY,
+          y: e.clientY
         };
       }
 
@@ -145,8 +145,8 @@
             active = false;
             eventHandlers.end && eventHandlers.end(getCoordinates(event), event);
           });
-        },
+        }
       };
-    },
+    }
   ]);
 }());
