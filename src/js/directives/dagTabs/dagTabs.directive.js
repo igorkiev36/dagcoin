@@ -25,7 +25,7 @@
       scope: {},
       templateUrl: 'directives/dagTabs/dagTabs.template.html',
       controllerAs: 'tabset',
-      controller: ($scope, $element) => {
+      controller($scope, $element) {
         const self = this;
         self.tabs = [];
         self.activeTab = 0;
