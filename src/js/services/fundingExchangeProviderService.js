@@ -93,7 +93,7 @@
           self.update(conf.fundingNode || false);
         }, () => {
           if (fundingNode) {
-            self.update(false).then(() => { }, err => console.log(err));
+            self.update(false).then(() => { }, (err) => { console.log(err); });
           }
         });
       }
@@ -166,12 +166,12 @@
         }
 
         const sendMessPromise = discoveryService.sendMessage(discoveryService.messages.startingTheBusiness);
-        const setSettingsPromise = sendMessPromise.then(() => setSettings(settings));
-        const aliveAndWellPromise = setSettingsPromise.then(() => aliveAndWell());
+        const setSettingsPromise = sendMessPromise.then(() => { setSettings(settings); });
+        const aliveAndWellPromise = setSettingsPromise.then(() => { aliveAndWell(); });
 
         return aliveAndWellPromise.then(() => {
           messageInterval = setInterval(() => {
-            aliveAndWell().then(() => { }, err => console.log(err));
+            aliveAndWell().then(() => { }, (err) => { console.log(err); });
           }, messageIntervalTimeout);
         });
       }
@@ -216,7 +216,7 @@
         const hasBytesPromise = hasBytes();
 
         $q.all([isLatestVersionPromise, hasBytesPromise]).then((results) => {
-          const successResults = results.filter(item => item);
+          const successResults = results.filter((item) => { return item; });
           if (successResults.length !== results.length) {
             d.reject();
             return;

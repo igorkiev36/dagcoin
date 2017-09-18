@@ -36,7 +36,7 @@
               self.arrBackupFiles.push({
                 name: name.replace(dateNow, new Date(dateNow).toLocaleString()),
                 originalName: name,
-                time: dateNow,
+                time: dateNow
               });
             });
           }
@@ -98,7 +98,7 @@
             },
             function (callback) {
               fileSystemService.readdir(`${dbDirPath}temp/`, (err, fileNames) => {
-                const names = fileNames.filter(name => /\.sqlite/.test(name));
+                const names = fileNames.filter((name) => { return /\.sqlite/.test(name); });
                 async.forEach(names, (name, callback2) => {
                   fileSystemService.nwMoveFile(`${dbDirPath}temp/${name}`, dbDirPath + name, callback2);
                 }, (error) => {
@@ -137,7 +137,7 @@
                   });
                 });
               });
-            },
+            }
           ], (err) => {
             cb(err);
           });

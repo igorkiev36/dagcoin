@@ -9,9 +9,9 @@
         const opts = {
           wallet: {
             settings: {
-              defaultLanguage: newLang,
-            },
-          },
+              defaultLanguage: newLang
+            }
+          }
         };
 
         configService.set(opts, (err) => {
