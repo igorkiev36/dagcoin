@@ -6,6 +6,7 @@ describe('svgIcon directive', () => {
   let element;
   let scope;
   let $httpBackend;
+  let $rs;
   const svgName = 'menu';
 
   beforeEach(module('templates'));
@@ -21,35 +22,49 @@ describe('svgIcon directive', () => {
   beforeEach(() => {
     element = angular.element(`<svg-icon name="${svgName}"></svg-icon>`);
     inject(($rootScope, $compile) => {
+      $rs = $rootScope;
       scope = $rootScope.$new();
 
       scope.name = name;
       $compile(element)(scope);
-
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
-      }
+      scope.$digest();
     });
   });
 
   it('Element must contain a class', () => {
+    if (!$rs.$$phase) {
+      $rs.$apply();
+    }
+
     $httpBackend.flush();
     expect(element.hasClass(`svg-icon-${svgName}`)).toBe(true);
   });
 
   it('Element should contain svg', () => {
+    if (!$rs.$$phase) {
+      $rs.$apply();
+    }
+
     $httpBackend.flush();
     const svg = element.find('svg');
     expect(svg).toBeDefined();
   });
 
   it('Element should contain title', () => {
+    if (!$rs.$$phase) {
+      $rs.$apply();
+    }
+
     $httpBackend.flush();
     const title = element.find('title');
     expect(title).toBeDefined();
   });
 
   it('Title should contain name of the icon', () => {
+    if (!$rs.$$phase) {
+      $rs.$apply();
+    }
+
     $httpBackend.flush();
     const title = element.find('title');
     expect(title.text()).toEqual(svgName);
