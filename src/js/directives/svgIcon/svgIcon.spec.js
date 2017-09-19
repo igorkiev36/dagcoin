@@ -25,7 +25,10 @@ describe('svgIcon directive', () => {
 
       scope.name = name;
       $compile(element)(scope);
-      scope.$digest();
+
+      if (!$rootScope.$$phase) {
+        $rootScope.$apply();
+      }
     });
   });
 
