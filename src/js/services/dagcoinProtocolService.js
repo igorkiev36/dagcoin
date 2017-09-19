@@ -9,8 +9,7 @@
     const deviceConnectionPromiseMap = new Map();
 
     function pairAndConnectDevice(code, connectionCheckLifeSpan) {
-      return checkOrPairDevice(code).then((correspondent) => { return makeSureDeviceIsConnected(correspondent.device_address, connectionCheckLifeSpan); }
-      );
+      return checkOrPairDevice(code).then((correspondent) => { return makeSureDeviceIsConnected(correspondent.device_address, connectionCheckLifeSpan); });
     }
 
     function makeSureDeviceIsConnected(deviceAddress, connectionCheckLifeSpan) {
@@ -37,7 +36,7 @@
         eventBus.on('dagcoin.connected', listener);
       }).then(
         () => { return getCorrespondent(deviceAddress); },
-        () => { return eventBus.removeListener('dagcoin.connected', listener); }
+        () => { eventBus.removeListener('dagcoin.connected', listener); }
       );
 
       const keepAlive = {
@@ -130,7 +129,7 @@
 
     function lookupDeviceByPublicKey(pubkey) {
       const db = require('byteballcore/db.js');
-      const promise = new Promise((resolve) => {
+      return new Promise((resolve) => {
         db.query('SELECT device_address FROM correspondent_devices WHERE pubkey = ? AND is_confirmed = 1', [pubkey], (rows) => {
           if (rows.length === 0) {
             console.log(`DEVICE WITH PUBKEY ${pubkey} NOT YET PAIRED`);
@@ -142,8 +141,6 @@
           }
         });
       });
-
-      return promise;
     }
 
     function checkOrPairDevice(pairCode) {

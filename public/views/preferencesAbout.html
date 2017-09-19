@@ -1,4 +1,6 @@
-<dag-nav-bar title="About" go-back invert></dag-nav-bar>
+<div ng-include="'views/includes/topbar.html'"
+  ng-init="titleSection='About'; goBackToState = 'preferencesGlobal'; invert = true;">
+</div>
 
 <div class="content preferences" ng-controller="preferencesAbout as about">
   <h4 translate>Release Information</h4>
@@ -6,7 +8,7 @@
     <ul>
       <li dag-right-icon="chevron-thin-right" ng-conf>
         <div translate>Version</div>
-        v{{v.version}} Beta
+        <div class="value">v{{v.version}} Beta</div>
       </li>
       <!--<li  ng-conf ng-click="$root.openExternalLink('https://github.com/byteball/byteball/tree/'+v.commitHash)">-->
       <!--<span translate>Commit hash</span>-->
