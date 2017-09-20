@@ -3,6 +3,7 @@
   "description": "A wallet for decentralized value",
   "author": "Dagcoin",
   "version": "1.3.0",
+  "discoveryServicePairingCode": "AnqLjlEMkQsoP6yZ/vDwT41F3IE6ItfggF0oxyYsUj42@byteball.org/bb-test#0000",
   "keywords": [
     "wallet",
     "dagcoin",

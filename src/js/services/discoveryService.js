@@ -8,18 +8,6 @@
 
       const self = {};
 
-      // LIVE
-      self.code = 'A7MiDQd+H7S6kFXfEdIKrM6oW6YF2oq4ewU+eSH30YGp@byteball.org/bb#0000';
-
-      // Testnet
-      // self.code = 'AnqLjlEMkQsoP6yZ/vDwT41F3IE6ItfggF0oxyYsUj42@byteball.org/bb-test#0000';
-
-      // Yary's public testnet server
-      // self.code = 'AhHZrVJAABB2fVTbO2CNZjvXjUi0QwaazL1uy5OMbn5O@byteball.org/bb-test#0000';
-
-      // Local to Yary's machine
-      // self.code = 'A8EImXA5RtFDBstX3u1CzcVmcKm8jmBBYlMm93FAHQ0z@byteball.org/bb-test#0000';
-
       const discoveryServiceAddresses = [];
 
       const messages = {
@@ -35,11 +23,28 @@
       let waitingForFundingAddress = false;
 
       self.messages = messages;
-      self.processMessage = processMessage;
+      // self.processMessage = processMessage;
       self.sendMessage = sendMessage;
       self.isDiscoveryServiceAddress = isDiscoveryServiceAddress;
       self.setFundingAddressPair = setFundingAddressPair;
       self.getUserConfig = getUserConfig;
+      self.messageCounter = 0;
+
+      function getPairingCode() {
+        console.log('GETTING THE PAIRING CODE');
+
+        return new Promise((resolve, reject) => {
+          fileSystemService.readFile('package.json', (err, data) => {
+            if (err) {
+              reject(`COULD NOT OPEN package.json: ${err}`);
+            } else {
+              const env = JSON.parse(data);
+              console.log(`PAIRING CODE: ${env.discoveryServicePairingCode}`);
+              resolve(env.discoveryServicePairingCode);
+            }
+          });
+        });
+      }
 
       function setIsWaitingForFundingAddress(value) {
         waitingForFundingAddress = value;
@@ -54,24 +59,26 @@
       } */
 
       function isDiscoveryServiceAddress(deviceAddress) {
+        console.log(`DISCOVERY SERVICE ADDRESSES: ${JSON.stringify(discoveryServiceAddresses)}`);
         return !!discoveryServiceAddresses.find((obj) => { return obj === deviceAddress; });
       }
 
-      function isJsonString(str) {
+      /* function isJsonString(str) {
         try {
           JSON.parse(str);
           return true;
         } catch (err) {
           return false;
         }
-      }
+      } */
 
       /**
        * Ensures the discovery service is connected and responsive.
        */
       function makeSureDiscoveryServiceIsConnected() {
-        return checkOrPairDevice(self.code)
-        .then((correspondent) => {
+        return getPairingCode().then((discoveryServicePairingCode) => {
+          return checkOrPairDevice(discoveryServicePairingCode);
+        }).then((correspondent) => {
           const discoveryServiceDeviceAddress = correspondent.device_address;
 
           if (!discoveryServiceAddresses.includes(discoveryServiceDeviceAddress)) {
@@ -136,7 +143,7 @@
         });
       }
 
-      function processMessage(resp) {
+      /* function processMessage(resp) {
         if (!resp || !isJsonString(resp)) {
           return Promise.resolve(false);
         }
@@ -190,7 +197,7 @@
           default:
             return Promise.resolve(false);
         }
-      }
+      } */
 
       function lookupDeviceByPublicKey(pubkey) {
         return new Promise((resolve) => {
@@ -330,6 +337,12 @@
         });
       }
 
+      function nextMessageId() {
+        const id = self.messageCounter;
+        self.messageCounter += 1;
+        return id;
+      }
+
       function sendMessage(messageType, messageBody) {
         return makeSureDiscoveryServiceIsConnected().then(
           (correspondent) => {
@@ -338,6 +351,7 @@
               const message = {
                 protocol: 'dagcoin',
                 title: `request.${messageType}`,
+                id: nextMessageId(),
                 messageType,
                 messageBody
               };

@@ -3,8 +3,23 @@
   'use strict';
 
   angular.module('copayApp.services')
-    .factory('fundingExchangeClientService', (discoveryService, configService, dagcoinProtocolService, promiseService, fileSystemService) => {
+    .factory('fundingExchangeClientService', (
+      $rootScope,
+      discoveryService,
+      configService,
+      dagcoinProtocolService,
+      promiseService,
+      fileSystemService
+    ) => {
       const self = {};
+
+      // Statuses
+      self.active = false;
+      self.activating = false;
+
+      self.bytesProviderDeviceAddress = null;
+      self.byteOrigin = null;
+      self.dagcoinDestination = null;
 
       function clearRequireCache(module) {
         if (typeof require.resolve === 'function') {
@@ -35,26 +50,24 @@
       }
 
       function isFundingPairPresent() {
-        return getConfiguration().then((config) => {
           let fundingPairAvailable = true;
 
-          if (!config.bytesProviderDeviceAddress) {
+          if (!self.bytesProviderDeviceAddress) {
             console.log('MISSING bytesProviderDeviceAddress IN THE CONFIGURATION');
             fundingPairAvailable = false;
           }
 
-          if (!config.byteOrigin) {
+          if (!self.byteOrigin) {
             console.log('MISSING byteOrigin IN THE CONFIGURATION');
             fundingPairAvailable = false;
           }
 
-          if (!config.dagcoinDestination) {
+          if (!self.dagcoinDestination) {
             console.log('MISSING dagcoinDestination IN THE CONFIGURATION');
             fundingPairAvailable = false;
           }
 
-          return Promise.resolve(fundingPairAvailable);
-        });
+          return fundingPairAvailable;
       }
 
       function askForFundingNode() {
@@ -110,37 +123,59 @@
       }
 
       function activate() {
-        let appConfig = null;
+        if (self.active) {
+          return Promise.resolve(true);
+        }
 
-        getConfiguration()
-        .then((config) => {
-          console.log(JSON.stringify(config));
+        if (self.activating) {
+          return Promise.resolve(false);
+        }
 
-          /* if (!config.canUseExternalBytesProvider) {
-            return Promise.reject('NOT POSSIBLE TO ACTIVATE THE FUNDING EXCHANGE CLIENT. THE USER MUST FIRST AUTHORIZE IT.');
-          } */
+        self.activating = true;
 
-          appConfig = config;
+        if (isFundingPairPresent()) {
+          self.activating = false;
+          self.active = true;
+          return Promise.resolve(true);
+        }
 
-          return isFundingPairPresent();
-        })
-        .then((fundingPairAvailable) => {
-          if (!fundingPairAvailable) {
-            return askForFundingNode().then((result) => {
-              console.log(`TRADERS AVAILABLE: ${result}`);
-            });
+        return askForFundingNode().then((fundingNode) => {
+          console.log(`TRADERS AVAILABLE: ${JSON.stringify(fundingNode)}`);
 
-            // TODO: pair and get a funding pair from the provider. Still pairing in discoveryService.js
-          }
+          self.bytesProviderDeviceAddress = fundingNode.deviceAddress;
 
-          return dagcoinProtocolService.pairAndConnectDevice(appConfig.bytesProviderDeviceAddress);
-        })
-        .catch((error) => {
-          console.log(`COULD NOT ACTIVATE THE FUNDING EXCHANGE CLIENT: ${error}`);
+          return dagcoinProtocolService.pairAndConnectDevice(fundingNode.pairCode);
+        }).then((correspondent) => {
+          console.log(`PAIRED WITH ${correspondent.device_address}`);
+
+          return Promise.resolve();
+        }).then(
+          (result) => {
+            self.activating = false;
+            self.active = true;
+            return Promise.resolve(result);
+          },
+          (err) => {
+            self.activating = false;
+            return Promise.reject(err);
         });
       }
 
-      activate();
+      $rootScope.$on('Local/BalanceUpdatedAndWalletUnlocked', () => {
+        console.log('ACTIVATING');
+        self.activate().then(
+          (active) => {
+            if (active) {
+              console.log('FUNDING EXCHANGE CLIENT ACTIVATED');
+            } else {
+              console.log('FUNDING EXCHANGE CLIENT STILL ACTIVATING. BE PATIENT');
+            }
+          },
+          (err) => {
+            console.log(`COULD NOT ACTIVATE FUNDING EXCHANGE CLIENT: ${err}`);
+          }
+        );
+      });
 
       self.activate = activate;
 

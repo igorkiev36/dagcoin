@@ -147,6 +147,10 @@
     }
 
     function checkOrPairDevice(pairCode) {
+      if (!pairCode) {
+        return Promise.reject('NO PAIRING CODE PROVIDED');
+      }
+
       const matches = pairCode.match(/^([\w\/+]+)@([\w.:\/-]+)#([\w\/+-]+)$/);
       const pubkey = matches[1];
       const hub = matches[2];
