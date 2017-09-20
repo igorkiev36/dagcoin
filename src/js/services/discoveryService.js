@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('copayApp.services')
-    .factory('discoveryService', ($q, fileSystemService, promiseService) => {
+    .factory('discoveryService', ($q, fileSystemService, promiseService, isCordova) => {
       const eventBus = require('byteballcore/event_bus.js');
       const objectHash = require('byteballcore/object_hash.js');
 
@@ -34,15 +34,27 @@
         console.log('GETTING THE PAIRING CODE');
 
         return new Promise((resolve, reject) => {
-          fileSystemService.readFile('package.json', (err, data) => {
-            if (err) {
-              reject(`COULD NOT OPEN package.json: ${err}`);
+          if (!isCordova) {
+            fileSystemService.readFile('package.json', (err, data) => {
+              if (err) {
+                reject(`COULD NOT OPEN package.json: ${err}`);
+              } else {
+                const env = JSON.parse(data);
+                console.log(`PAIRING CODE: ${env.discoveryServicePairingCode}`);
+                resolve(env.discoveryServicePairingCode);
+              }
+            });
+          } else {
+            const constants = require('byteballcore/constants.js');
+
+            if (constants.version.match(/t$/)) {
+              // TESTNET
+              resolve('AnqLjlEMkQsoP6yZ/vDwT41F3IE6ItfggF0oxyYsUj42@byteball.org/bb-test#0000');
             } else {
-              const env = JSON.parse(data);
-              console.log(`PAIRING CODE: ${env.discoveryServicePairingCode}`);
-              resolve(env.discoveryServicePairingCode);
+              // LIVENET
+              resolve('A7MiDQd+H7S6kFXfEdIKrM6oW6YF2oq4ewU+eSH30YGp@byteball.org/bb#0000');
             }
-          });
+          }
         });
       }
 
@@ -77,6 +89,7 @@
        */
       function makeSureDiscoveryServiceIsConnected() {
         return getPairingCode().then((discoveryServicePairingCode) => {
+          console.log(`GOT PAIRING CODE: ${discoveryServicePairingCode}`);
           return checkOrPairDevice(discoveryServicePairingCode);
         }).then((correspondent) => {
           const discoveryServiceDeviceAddress = correspondent.device_address;
