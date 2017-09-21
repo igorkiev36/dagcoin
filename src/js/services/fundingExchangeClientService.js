@@ -3,71 +3,42 @@
   'use strict';
 
   angular.module('copayApp.services')
-    .factory('fundingExchangeClientService', (
-      $rootScope,
-      discoveryService,
-      configService,
-      dagcoinProtocolService,
-      promiseService,
-      fileSystemService
-    ) => {
+    .factory('fundingExchangeClientService', ($rootScope,
+                                              discoveryService,
+                                              configService,
+                                              dagcoinProtocolService,
+                                              promiseService) => {
       const self = {};
 
       // Statuses
       self.active = false;
       self.activating = false;
 
+      self.dagcoinOrigin = null;
+
       self.bytesProviderDeviceAddress = null;
       self.byteOrigin = null;
       self.dagcoinDestination = null;
 
-      function clearRequireCache(module) {
-        if (typeof require.resolve === 'function') {
-          delete require.cache[require.resolve(module)];
-        }
-      }
-
-      function requireUncached(module) {
-        clearRequireCache(module);
-        return require(module.toString());
-      }
-
-      function getConfiguration() {
-        return new Promise((resolve, reject) => {
-          configService.get((err, config) => {
-            if (err) {
-              reject(err);
-            }
-
-            try {
-              const userConfFile = fileSystemService.getUserConfFilePath();
-              resolve(Object.assign({}, config, requireUncached(userConfFile)));
-            } catch (e) {
-              reject(e);
-            }
-          });
-        });
-      }
-
       function isFundingPairPresent() {
-          let fundingPairAvailable = true;
+        let fundingPairAvailable = true;
 
-          if (!self.bytesProviderDeviceAddress) {
-            console.log('MISSING bytesProviderDeviceAddress IN THE CONFIGURATION');
-            fundingPairAvailable = false;
-          }
+        if (!self.bytesProviderDeviceAddress) {
+          console.log('MISSING bytesProviderDeviceAddress IN THE CONFIGURATION');
+          fundingPairAvailable = false;
+        }
 
-          if (!self.byteOrigin) {
-            console.log('MISSING byteOrigin IN THE CONFIGURATION');
-            fundingPairAvailable = false;
-          }
+        if (!self.byteOrigin) {
+          console.log('MISSING byteOrigin IN THE CONFIGURATION');
+          fundingPairAvailable = false;
+        }
 
-          if (!self.dagcoinDestination) {
-            console.log('MISSING dagcoinDestination IN THE CONFIGURATION');
-            fundingPairAvailable = false;
-          }
+        if (!self.dagcoinDestination) {
+          console.log('MISSING dagcoinDestination IN THE CONFIGURATION');
+          fundingPairAvailable = false;
+        }
 
-          return fundingPairAvailable;
+        return fundingPairAvailable;
       }
 
       function askForFundingNode() {
@@ -139,25 +110,168 @@
           return Promise.resolve(true);
         }
 
+        const db = require('byteballcore/db');
+
+        return readMyAddress().then((myAddress) => {
+          if (!myAddress) {
+            return Promise.reject('COULD NOT FIND ANY ADDRESS IN THE DATABASE');
+          }
+
+          self.dagcoinOrigin = myAddress;
+
+          return new Promise((resolve, reject) => {
+            db.query(
+              'SELECT shared_address, address, device_address FROM shared_address_signing_paths WHERE address <> ?',
+              [myAddress],
+              (rows) => {
+                if (rows.length === 0) {
+                  console.log('NO SHARED ADDRESSES FOUND. QUERYING THE DISCOVERY SERVICE FOR A FUNING NODE');
+                  resolve(false);
+                }
+
+                if (rows.length > 1) {
+                  reject(`THERE ARE TOO MANY SHARED ADDRESSES: ${JSON.stringify(rows)}`);
+                }
+
+                self.byteOrigin = rows[0].shared_address;
+                self.dagcoinDestination = rows[0].address;
+                self.bytesProviderDeviceAddress = rows[0].device_address;
+
+                resolve(true);
+              }
+            );
+          });
+        }).then((ready) => {
+          if (ready) {
+            console.log('A SHARED ADDRESS WAS FOUND IN THE DATABASE USED THAT ONE TO INITIALIZE');
+            self.activating = false;
+            self.active = true;
+            self.index.selectSubWallet(self.byteOrigin);
+            return Promise.resolve();
+          }
+
+          return queryDiscoveryService();
+        });
+      }
+
+      function queryDiscoveryService() {
         return askForFundingNode().then((fundingNode) => {
           console.log(`TRADERS AVAILABLE: ${JSON.stringify(fundingNode)}`);
 
           self.bytesProviderDeviceAddress = fundingNode.deviceAddress;
 
           return dagcoinProtocolService.pairAndConnectDevice(fundingNode.pairCode);
-        }).then((correspondent) => {
-          console.log(`PAIRED WITH ${correspondent.device_address}`);
+        }).then(() => {
+          console.log(`SUCCESSFULLY PAIRED WITH ${self.bytesProviderDeviceAddress}`);
 
-          return Promise.resolve();
-        }).then(
+          if (self.dagcoinOrigin) {
+            return Promise.resolve(self.dagcoinOrigin);
+          }
+
+          return readMyAddress();
+        }).then((myAddress) => {
+          if (!myAddress) {
+            return Promise.reject('COULD NOT FIND ANY ADDRESS IN THE DATABASE');
+          }
+
+          self.dagcoinOrigin = myAddress;
+
+          const device = require('byteballcore/device');
+
+          self.myDeviceAddress = device.getMyDeviceAddress();
+
+          return askForFundingAddress();
+        })
+          .then(
           (result) => {
             self.activating = false;
             self.active = true;
+            self.index.selectSubWallet(self.byteOrigin);
             return Promise.resolve(result);
           },
           (err) => {
             self.activating = false;
             return Promise.reject(err);
+          }
+        );
+      }
+
+      function askForFundingAddress() {
+        if (self.isWaitingForFundingAddress) {
+          return Promise.reject('Already requesting a funding address');
+        }
+
+        console.log(`REQUESTING A FUNDING ADDRESS TO ${self.bytesProviderDeviceAddress} TO BE USED WITH ${self.dagcoinOrigin}`);
+
+        self.isWaitingForFundingAddress = true;
+
+        const messageTitle = 'request.share-funded-address';
+        const device = require('byteballcore/device.js');
+        const messageId = discoveryService.nextMessageId();
+
+        console.log(`Sending ${messageTitle} to ${device.getMyDeviceAddress()}:${self.dagcoinOrigin}`);
+
+        const promise = listenToCreateNewSharedAddress();
+
+        device.sendMessageToDevice(
+          self.bytesProviderDeviceAddress,
+          'text',
+          JSON.stringify({
+            protocol: 'dagcoin',
+            title: messageTitle,
+            id: messageId,
+            deviceAddress: device.getMyDeviceAddress(),
+            address: self.dagcoinOrigin
+          })
+        );
+
+        return promise;
+      }
+
+      function listenToCreateNewSharedAddress() {
+        return new Promise((resolve) => {
+          const eventBus = require('byteballcore/event_bus');
+          const device = require('byteballcore/device');
+
+          eventBus.on('create_new_shared_address', (template, signers) => {
+            console.log(`CREATE NEW SHARED ADDRESS FOR ${self.dagcoinOrigin} TEMPLATE: ${JSON.stringify(template)}`);
+            console.log(`CREATE NEW SHARED ADDRESS FOR ${self.dagcoinOrigin} SIGNERS: ${JSON.stringify(signers)}`);
+
+            const localSigners = {
+              r: {
+                address: self.dagcoinOrigin,
+                device_address: device.getMyDeviceAddress()
+              }
+            };
+
+            const objectHash = require('byteballcore/object_hash');
+            const addressTemplateCHash = objectHash.getChash160(template);
+
+            device.sendMessageToDevice(self.bytesProviderDeviceAddress, 'approve_new_shared_address', {
+              address_definition_template_chash: addressTemplateCHash,
+              address: self.dagcoinOrigin,
+              device_addresses_by_relative_signing_paths: localSigners
+            });
+
+            self.byteOrigin = addressTemplateCHash;
+
+            resolve();
+          });
+        });
+      }
+
+      // TODO: should have some dagcoins on it
+      function readMyAddress() {
+        return new Promise((resolve, reject) => {
+          const walletGeneral = require('byteballcore/wallet_general.js');
+          walletGeneral.readMyAddresses((arrMyAddresses) => {
+            if (arrMyAddresses.length === 0) {
+              reject('NO ADDRESSES AVAILABLE');
+            } else {
+              console.log(`FOUND AN ADDRESS: ${arrMyAddresses[0]}`);
+              resolve(arrMyAddresses[0]);
+            }
+          });
         });
       }
 
@@ -178,6 +292,10 @@
       });
 
       self.activate = activate;
+
+      self.setIndex = (index) => {
+        self.index = index;
+      };
 
       return self;
     });

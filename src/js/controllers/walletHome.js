@@ -26,7 +26,8 @@
       addressbookService,
       correspondentListService,
       discoveryService,
-      isMobile) {
+      isMobile,
+      fundingExchangeClientService) {
       const constants = require('byteballcore/constants.js');
       const eventBus = require('byteballcore/event_bus.js');
       const breadcrumbs = require('byteballcore/breadcrumbs.js');
@@ -483,7 +484,6 @@
 
 
           $scope.shareAddress = function (uri) {
-            debugger
             if (isCordova) {
               if (isMobile.Android() || isMobile.Windows()) {
                 window.ignoreMobilePause = true;
@@ -863,14 +863,8 @@
                 amount,
                 send_all: self.bSendAll,
                 arrSigningDeviceAddresses,
-                recipientDeviceAddress,
+                recipientDeviceAddress
               };
-
-              /* const userConfig = discoveryService.getUserConfig();
-
-              if (userConfig.byteOrigin) {
-                opts.shared_address = [userConfig.byteOrigin];
-              } */
 
               console.log(`PAYMENT OPTIONS BEFORE: ${JSON.stringify(opts)}`);
 

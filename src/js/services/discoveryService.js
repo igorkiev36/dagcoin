@@ -4,7 +4,6 @@
   angular.module('copayApp.services')
     .factory('discoveryService', ($q, fileSystemService, promiseService, isCordova) => {
       const eventBus = require('byteballcore/event_bus.js');
-      const objectHash = require('byteballcore/object_hash.js');
 
       const self = {};
 
@@ -20,7 +19,6 @@
       };
 
       let discoveryServiceAvailabilityCheckingPromise = null;
-      let waitingForFundingAddress = false;
 
       self.messages = messages;
       // self.processMessage = processMessage;
@@ -58,31 +56,12 @@
         });
       }
 
-      function setIsWaitingForFundingAddress(value) {
-        waitingForFundingAddress = value;
-      }
-
-      function isWaitingForFundingAddress() {
-        return waitingForFundingAddress;
-      }
-
-      /* function setCorrespondent(cor) {
-        correspondent = cor;
-      } */
-
       function isDiscoveryServiceAddress(deviceAddress) {
         console.log(`DISCOVERY SERVICE ADDRESSES: ${JSON.stringify(discoveryServiceAddresses)}`);
-        return !!discoveryServiceAddresses.find((obj) => { return obj === deviceAddress; });
+        return !!discoveryServiceAddresses.find((obj) => {
+          return obj === deviceAddress;
+        });
       }
-
-      /* function isJsonString(str) {
-        try {
-          JSON.parse(str);
-          return true;
-        } catch (err) {
-          return false;
-        }
-      } */
 
       /**
        * Ensures the discovery service is connected and responsive.
@@ -140,77 +119,6 @@
           return discoveryServiceAvailabilityCheckingPromise;
         });
       }
-
-      function fundingPairListener(fromAddress, body, callback) {
-        const device = require('byteballcore/device.js');
-        device.readCorrespondent(fromAddress, () => {
-          try {
-            const jsonBody = JSON.parse(body);
-
-            if (jsonBody.title && jsonBody.title === 'funding_address_pair') {
-              return callback(jsonBody);
-            }
-          } catch (e) {
-            console.log(e);
-          }
-        });
-      }
-
-      /* function processMessage(resp) {
-        if (!resp || !isJsonString(resp)) {
-          return Promise.resolve(false);
-        }
-
-        const respObj = JSON.parse(resp);
-        let fundingNode;
-        let pairCode;
-
-        switch (respObj.messageType) {
-          case messages.listTraders:
-            if (!respObj.messageBody || !respObj.messageBody.traders || !respObj.messageBody.traders.length) {
-              console.log('NO TRADERS AVAILABLE');
-              return Promise.resolve(true);
-            }
-
-            respObj.messageBody.traders.sort((a, b) => {
-              if (a.exchangeFee > b.exchangeFee) {
-                return 1;
-              }
-              return -1;
-            });
-
-            fundingNode = respObj.messageBody.traders[0];
-            pairCode = fundingNode.pairCode;
-
-            return checkOrPairDevice(pairCode)
-            .then((correspondent) => {
-              console.log(`CORRESPONDENT: ${JSON.stringify(correspondent)}`);
-              return readMyAddress()
-                .then((address) => { return askForFundingAddress(correspondent.device_address, address); })
-                .then(() => {
-                  return new Promise((resolve, reject) => {
-                    // Timed rejection: can't wait more than 30 seconds
-                    const err = `No funding pair received from ${correspondent.device_address} on time (30s timeout)`;
-                    const timeoutId = setTimeout(reject(err), 30000);
-
-                    eventBus.on('text', (fromAddress, body) => {
-                      clearTimeout(timeoutId);
-                      fundingPairListener(fromAddress, body, resolve);
-                    });
-                  }).then((jsonBody) => {
-                    setFundingAddressPair(jsonBody.byteOrigin, jsonBody.dagcoinDestination);
-                  }).then(() => {
-                    eventBus.removeListener('text', fundingPairListener);
-                  }).catch(() => {
-                    eventBus.removeListener('text', fundingPairListener);
-                  });
-                });
-            }, (err) => { console.log(err); })
-            .then(() => { Promise.resolve(true); });
-          default:
-            return Promise.resolve(false);
-        }
-      } */
 
       function lookupDeviceByPublicKey(pubkey) {
         return new Promise((resolve) => {
@@ -277,58 +185,6 @@
             resolve(cor);
           });
         });
-      }
-
-      // TODO: should have some dagcoins on it
-      function readMyAddress() {
-        return new Promise((resolve, reject) => {
-          const walletGeneral = require('byteballcore/wallet_general.js');
-          walletGeneral.readMyAddresses((arrMyAddresses) => {
-            if (arrMyAddresses.length === 0) {
-              reject('No addresses available');
-            } else {
-              resolve(arrMyAddresses[0]);
-            }
-          });
-        });
-      }
-
-      function askForFundingAddress(deviceAddress, address) {
-        if (isWaitingForFundingAddress()) {
-          return Promise.reject('Already requesting a funding address');
-        }
-
-        console.log(`REQUESTING A FUNDING ADDRESS TO ${deviceAddress} TO BE USED WITH ${address}`);
-
-        setIsWaitingForFundingAddress(true);
-
-        const userConfig = getUserConfig();
-
-        if (userConfig.byteOrigin && userConfig.dagcoinDestination) {
-          console.log('No need to ask for funding addresses');
-          setIsWaitingForFundingAddress(false);
-          return Promise.resolve(false);
-        }
-
-        const messageTitle = 'funding-address-request';
-        const device = require('byteballcore/device.js');
-
-        console.log(`Sending ${messageTitle} to ${device.getMyDeviceAddress()}:${address}`);
-
-        const promise = listenToCreateNewSharedAddress(deviceAddress);
-
-        device.sendMessageToDevice(
-          deviceAddress,
-          'text',
-          JSON.stringify({
-            protocol: 'dagcoin',
-            title: messageTitle,
-            deviceAddress: device.getMyDeviceAddress(),
-            address
-          })
-        );
-
-        return promise;
       }
 
       function checkOrPairDevice(pairCode) {
@@ -427,48 +283,7 @@
         return updateConfig(userConfig);
       }
 
-      function listenToCreateNewSharedAddress(deviceAddress) {
-        return new Promise((mainResolve) => {
-          eventBus.on('create_new_shared_address', (template, signers) => {
-            const device = require('byteballcore/device.js');
-            return new Promise((resolve, reject) => {
-              const walletGeneral = require('byteballcore/wallet_general.js');
-              walletGeneral.readMyAddresses((arrMyAddresses) => {
-                if (arrMyAddresses.length === 0) {
-                  reject('No addresses available');
-                } else {
-                  resolve(arrMyAddresses[0]);
-                }
-              });
-            }).then((address) => {
-              console.log(`CREATE NEW SHARED ADDRESS FOR ${address} TEMPLATE: ${JSON.stringify(template)}`);
-              console.log(`CREATE NEW SHARED ADDRESS FOR ${address} SIGNERS: ${JSON.stringify(signers)}`);
-
-              if (!deviceAddress) {
-                return Promise.reject();
-              }
-
-              const localSigners = {
-                r: {
-                  address,
-                  device_address: device.getMyDeviceAddress()
-                }
-              };
-
-              const addressTemplateCHash = objectHash.getChash160(template);
-
-              device.sendMessageToDevice(deviceAddress, 'approve_new_shared_address', {
-                address_definition_template_chash: addressTemplateCHash,
-                address,
-                device_addresses_by_relative_signing_paths: localSigners
-              });
-
-              mainResolve(true);
-              return Promise.resolve(true);
-            });
-          });
-        });
-      }
+      self.nextMessageId = nextMessageId;
 
       return self;
     });
