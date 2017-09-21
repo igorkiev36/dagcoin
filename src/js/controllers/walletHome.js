@@ -856,7 +856,8 @@
 
               profileService.bKeepUnlocked = true;
               const opts = {
-                shared_address: indexScope.shared_address,
+                from_address: fundingExchangeClientService.dagcoinOrigin,
+                shared_address: fundingExchangeClientService.byteOrigin,
                 merkleProof,
                 asset,
                 to_address: toAddress,

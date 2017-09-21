@@ -144,7 +144,7 @@
             console.log('A SHARED ADDRESS WAS FOUND IN THE DATABASE USED THAT ONE TO INITIALIZE');
             self.activating = false;
             self.active = true;
-            self.index.selectSubWallet(self.byteOrigin);
+            // self.index.selectSubWallet(self.byteOrigin);
             return Promise.resolve();
           }
 
