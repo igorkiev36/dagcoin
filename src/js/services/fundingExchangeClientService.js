@@ -125,19 +125,17 @@
               [myAddress],
               (rows) => {
                 if (rows.length === 0) {
-                  console.log('NO SHARED ADDRESSES FOUND. QUERYING THE DISCOVERY SERVICE FOR A FUNING NODE');
+                  console.log('NO SHARED ADDRESSES FOUND. QUERYING THE DISCOVERY SERVICE FOR A FUNDING NODE');
                   resolve(false);
-                }
-
-                if (rows.length > 1) {
+                } else if (rows.length > 1) {
                   reject(`THERE ARE TOO MANY SHARED ADDRESSES: ${JSON.stringify(rows)}`);
+                } else {
+                  self.byteOrigin = rows[0].shared_address;
+                  self.dagcoinDestination = rows[0].address;
+                  self.bytesProviderDeviceAddress = rows[0].device_address;
+
+                  resolve(true);
                 }
-
-                self.byteOrigin = rows[0].shared_address;
-                self.dagcoinDestination = rows[0].address;
-                self.bytesProviderDeviceAddress = rows[0].device_address;
-
-                resolve(true);
               }
             );
           });
